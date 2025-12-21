@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGNUM Empire</title>
+    <style>
+        body { 
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
+            color: white; font-family: sans-serif; text-align: center; margin: 0; 
+        }
+        .header { padding: 20px; color: #d4af37; font-weight: bold; font-size: 24px; letter-spacing: 3px; }
+        .balance-section { margin-top: 50px; }
+        .balance-value { font-size: 60px; font-weight: bold; color: #fff; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+        .currency-name { color: #d4af37; font-size: 20px; margin-bottom: 40px; }
+        
+        /* الزر الملكي */
+        .mine-button {
+            width: 240px; height: 240px; border-radius: 50%;
+            background: #111; border: 4px solid #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            cursor: pointer; font-size: 80px; transition: 0.2s;
+        }
+        .mine-button:active { transform: scale(0.9); box-shadow: 0 0 10px #d4af37; }
+
+        .footer-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 20px 0; border-top: 1px solid #222; }
+        .nav-item { color: #d4af37; font-size: 14px; text-decoration: none; opacity: 0.6; }
+        .nav-item.active { opacity: 1; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">REGNUM</div>
+
+    <div class="balance-section">
+        <div class="balance-value" id="score">0.0000</div>
+        <div class="currency-name">REG COINS</div>
+    </div>
+
+    <button class="mine-button" onclick="mine()">👑</button>
+
+    <div style="margin-top: 30px; color: #888;">Tap the Crown to Grow Your Empire</div>
+
+    <nav class="footer-nav">
+        <div class="nav-item active">🏰 Home</div>
+        <div class="nav-item">⚒️ Tasks</div>
+        <div class="nav-item">💰 Wallet</div>
+    </nav>
+
+    <script>
+        let balance = 0;
+        function mine() {
+            balance += 1.50;
+            document.getElementById('score').innerText = balance.toFixed(4);
+        }
+    </script>
+</body>
+</html>

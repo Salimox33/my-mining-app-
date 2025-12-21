@@ -4,28 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REGNUM Empire</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { 
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
-            color: white; font-family: sans-serif; text-align: center; margin: 0; 
+        body {
+            background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
         }
-        .header { padding: 20px; color: #d4af37; font-weight: bold; font-size: 24px; letter-spacing: 3px; }
-        .balance-section { margin-top: 50px; }
-        .balance-value { font-size: 60px; font-weight: bold; color: #fff; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
-        .currency-name { color: #d4af37; font-size: 20px; margin-bottom: 40px; }
-        
-        /* الزر الملكي */
-        .mine-button {
-            width: 240px; height: 240px; border-radius: 50%;
-            background: #111; border: 4px solid #d4af37;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-            cursor: pointer; font-size: 80px; transition: 0.2s;
-        }
-        .mine-button:active { transform: scale(0.9); box-shadow: 0 0 10px #d4af37; }
 
-        .footer-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 20px 0; border-top: 1px solid #222; }
-        .nav-item { color: #d4af37; font-size: 14px; text-decoration: none; opacity: 0.6; }
-        .nav-item.active { opacity: 1; font-weight: bold; }
+        .header { padding: 20px; color: #d4af37; font-size: 24px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        .balance-section { margin-top: 50px; }
+        .balance-value { font-size: 60px; font-weight: bold; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+        .currency-name { color: #d4af37; font-size: 18px; margin-top: 5px; }
+
+        .mine-button {
+            width: 240px; height: 240px;
+            background: #111; border: 4px solid #d4af37;
+            border-radius: 50%; margin-top: 40px;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 80px; transition: transform 0.1s;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mine-button:active { transform: scale(0.95); }
+        .footer-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: rgba(20, 20, 20, 0.9); padding: 15px 0; border-top: 1px solid #333; }
+        .nav-item { color: #888; text-decoration: none; font-size: 14px; }
+        .nav-item.active { color: #d4af37; }
     </style>
 </head>
 <body>
@@ -39,19 +53,30 @@
 
     <button class="mine-button" onclick="mine()">👑</button>
 
-    <div style="margin-top: 30px; color: #888;">Tap the Crown to Grow Your Empire</div>
+    <p style="margin-top: 30px; color: #666; font-size: 14px;">Tap the Crown to Grow Your Empire</p>
 
-    <nav class="footer-nav">
+    <div class="footer-nav">
         <div class="nav-item active">🏰 Home</div>
         <div class="nav-item">⚒️ Tasks</div>
         <div class="nav-item">💰 Wallet</div>
-    </nav>
+    </div>
 
     <script>
         let balance = 0;
+        const tg = window.Telegram.WebApp;
+        tg.expand(); 
+
         function mine() {
             balance += 1.50;
             document.getElementById('score').innerText = balance.toFixed(4);
+            
+            // إرسال التحديث للسيرفر لضمان الحفظ
+            if (tg.sendData) {
+                tg.sendData(JSON.stringify({
+                    "balance": balance,
+                    "action": "mine"
+                }));
+            }
         }
     </script>
 </body>

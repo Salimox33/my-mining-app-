@@ -3,80 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGNUM Empire</title>
+    <title>REGNUM - The Lion's Kingdom</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .header { padding: 20px; color: #d4af37; font-size: 24px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
-        .balance-section { margin-top: 50px; }
-        .balance-value { font-size: 60px; font-weight: bold; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
-        .currency-name { color: #d4af37; font-size: 18px; margin-top: 5px; }
-
-        .mine-button {
-            width: 240px; height: 240px;
-            background: #111; border: 4px solid #d4af37;
-            border-radius: 50%; margin-top: 40px;
-            cursor: pointer; display: flex;
-            align-items: center; justify-content: center;
-            font-size: 80px; transition: transform 0.1s;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        body { background: radial-gradient(circle, #0f0f0f 0%, #000 100%); color: white; font-family: sans-serif; margin: 0; text-align: center; overflow-x: hidden; }
+        .header { padding: 20px; color: #d4af37; font-size: 28px; font-weight: bold; letter-spacing: 3px; }
+        .score-container { margin: 20px 0; }
+        #score { font-size: 50px; font-weight: bold; color: white; }
+        .energy-bar-container { width: 80%; height: 12px; background: #333; border-radius: 10px; margin: 20px auto; overflow: hidden; border: 1px solid #d4af37; }
+        #energy-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #d4af37, #f2d379); transition: width 0.1s; }
+        
+        /* زر الأسد المتفاعل */
+        .lion-btn {
+            width: 250px; height: 250px;
+            background: url('https://img.freepik.com/premium-vector/golden-lion-head-luxury-logo_23987-147.jpg') no-repeat center;
+            background-size: cover; border-radius: 50%;
+            border: 5px solid #d4af37; margin: 20px auto;
+            cursor: pointer; transition: transform 0.05s;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
             -webkit-tap-highlight-color: transparent;
         }
+        .lion-btn:active { transform: scale(1.1); }
 
-        .mine-button:active { transform: scale(0.95); }
-        .footer-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: rgba(20, 20, 20, 0.9); padding: 15px 0; border-top: 1px solid #333; }
-        .nav-item { color: #888; text-decoration: none; font-size: 14px; }
+        .tasks-container { padding: 20px; text-align: left; background: #111; border-top-radius: 20px; margin-top: 20px; }
+        .task-card { background: #222; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #d4af37; }
+        .task-card a { color: white; text-decoration: none; font-size: 14px; }
+        .reward { color: #d4af37; font-weight: bold; }
+        
+        .nav-bar { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #000; padding: 15px 0; border-top: 1px solid #333; }
+        .nav-item { color: #888; font-size: 12px; cursor: pointer; }
         .nav-item.active { color: #d4af37; }
     </style>
 </head>
 <body>
-
     <div class="header">REGNUM</div>
-
-    <div class="balance-section">
-        <div class="balance-value" id="score">0.0000</div>
-        <div class="currency-name">REG COINS</div>
+    <div class="score-container">
+        <div id="score">0</div>
+        <div style="color: #d4af37;">REG COINS</div>
     </div>
 
-    <button class="mine-button" onclick="mine()">👑</button>
+    <div class="lion-btn" onclick="mine(event)"></div>
 
-    <p style="margin-top: 30px; color: #666; font-size: 14px;">Tap the Crown to Grow Your Empire</p>
+    <div>⚡ <span id="energy">10000</span> / 10000</div>
+    <div class="energy-bar-container"><div id="energy-fill"></div></div>
 
-    <div class="footer-nav">
+    <div class="tasks-container">
+        <h3 style="color: #d4af37;">Daily Tasks</h3>
+        <div class="task-card">
+            <a href="https://x.com/ReGnNetwoRk_AI" target="_blank">Follow on X (Twitter)</a>
+            <span class="reward">+1000 REG</span>
+        </div>
+        <div class="task-card">
+            <a href="https://t.me/REGNNETWORK" target="_blank">Join Telegram Channel 1</a>
+            <span class="reward">+1000 REG</span>
+        </div>
+        <div class="task-card">
+            <a href="https://t.me/XTAIRDRpP" target="_blank">Join Telegram Channel 2</a>
+            <span class="reward">+1000 REG</span>
+        </div>
+        <div class="task-card">
+            <a href="https://t.me/+4D6ZjKanoLg1NzI0" target="_blank">Join Group Community</a>
+            <span class="reward">+1000 REG</span>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 100px;">
+        <h3 style="color: #d4af37;">Referral System</h3>
+        <p>Invite friends and get 10,000 REG each!</p>
+        <button onclick="copyRef()" style="background:#d4af37; border:none; padding:10px; border-radius:5px; font-weight:bold;">Copy Referral Link</button>
+    </div>
+
+    <div class="nav-bar">
         <div class="nav-item active">🏰 Home</div>
         <div class="nav-item">⚒️ Tasks</div>
-        <div class="nav-item">💰 Wallet</div>
+        <div class="nav-item" onclick="alert('Wallet Coming Soon!')">💰 Wallet</div>
     </div>
 
     <script>
-        let balance = 0;
+        let score = 0;
+        let energy = 10000;
         const tg = window.Telegram.WebApp;
-        tg.expand(); 
+        tg.expand();
 
-        function mine() {
-            balance += 1.50;
-            document.getElementById('score').innerText = balance.toFixed(4);
-            
-            // إرسال التحديث للسيرفر لضمان الحفظ
-            if (tg.sendData) {
-                tg.sendData(JSON.stringify({
-                    "balance": balance,
-                    "action": "mine"
-                }));
+        function mine(event) {
+            if (energy >= 50) {
+                score += 50;
+                energy -= 50;
+                updateDisplay();
+                saveData();
+            } else {
+                tg.HapticFeedback.notificationOccurred('error');
             }
+        }
+
+        function updateDisplay() {
+            document.getElementById('score').innerText = score.toLocaleString();
+            document.getElementById('energy').innerText = energy;
+            document.getElementById('energy-fill').style.width = (energy / 10000 * 100) + '%';
+        }
+
+        // تعبئة الطاقة تدريجياً (ساعة كاملة تعني زيادة حوالي 2.7 طاقة كل ثانية)
+        setInterval(() => {
+            if (energy < 10000) {
+                energy = Math.min(10000, energy + 3);
+                updateDisplay();
+            }
+        }, 1000);
+
+        function copyRef() {
+            const user_id = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "user";
+            const refLink = `https://t.me/REGNNUMBOT?start=${user_id}`;
+            navigator.clipboard.writeText(refLink);
+            alert("Referral Link Copied!");
+        }
+
+        function saveData() {
+            tg.sendData(JSON.stringify({score: score, energy: energy}));
         }
     </script>
 </body>

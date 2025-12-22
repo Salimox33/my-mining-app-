@@ -18,12 +18,11 @@
         .score-container { margin: 10px 0; }
         #score { font-size: 45px; font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
         
-        /* زر الأسد المتفاعل */
+        /* زر الأسد المتفاعل بالرابط المباشر */
         .lion-btn {
             width: 280px; 
             height: 280px;
-            /* سيقوم الكود بسحب الصورة التي ترفعينها باسم lion.png */
-            background: url('lion.png') no-repeat center;
+            background: url('https://raw.githubusercontent.com/Salimox33/my-mining-app-/main/lion.png') no-repeat center;
             background-size: contain; 
             border-radius: 50%;
             margin: 20px auto;
@@ -34,6 +33,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            box-shadow: 0 0 20px rgba(212,175,55,0.2);
         }
         .lion-btn:active { transform: scale(0.95); }
 
@@ -102,10 +102,6 @@
             <a href="https://t.me/XTAIRDRpP" target="_blank">Join Telegram Channel 2</a>
             <span class="reward">+1000 REG</span>
         </div>
-        <div class="task-card">
-            <a href="https://t.me/+4D6ZjKanoLg1NzI0" target="_blank">Join Community Group</a>
-            <span class="reward">+1000 REG</span>
-        </div>
     </div>
 
     <div style="margin: 20px 0 100px 0;">
@@ -131,11 +127,7 @@
                 score += 50;
                 energy -= 50;
                 updateDisplay();
-                
-                // تأثير اهتزاز بسيط عند الضغط
                 if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            } else {
-                if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
             }
         }
 
@@ -145,7 +137,6 @@
             document.getElementById('energy-fill').style.width = (energy / 10000 * 100) + '%';
         }
 
-        // تعبئة الطاقة تلقائياً (3 نقاط كل ثانية)
         setInterval(() => {
             if (energy < 10000) {
                 energy = Math.min(10000, energy + 3);
@@ -157,7 +148,7 @@
             const user_id = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "user";
             const refLink = `https://t.me/REGNNUMBOT?start=${user_id}`;
             navigator.clipboard.writeText(refLink);
-            alert("Invite link copied to clipboard!");
+            alert("Invite link copied!");
         }
     </script>
 </body>

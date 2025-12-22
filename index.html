@@ -3,153 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGNUM - The Lion's Kingdom</title>
+    <title>REGNUM - Lion Mining</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { 
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
-            color: white; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            text-align: center; 
-            overflow-x: hidden; 
-        }
-        .header { padding: 20px; color: #d4af37; font-size: 28px; font-weight: bold; letter-spacing: 2px; }
-        .score-container { margin: 10px 0; }
-        #score { font-size: 45px; font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        body { background: #000; color: white; font-family: sans-serif; text-align: center; margin: 0; overflow: hidden; }
+        .header { padding: 20px; color: #d4af37; font-size: 24px; font-weight: bold; }
+        #score { font-size: 40px; margin: 10px; font-weight: bold; }
         
-        /* زر الأسد المتفاعل بالرابط المباشر */
+        /* زر الأسد المباشر */
         .lion-btn {
-            width: 280px; 
-            height: 280px;
+            width: 250px; height: 250px;
             background: url('https://raw.githubusercontent.com/Salimox33/my-mining-app-/main/lion.png') no-repeat center;
-            background-size: contain; 
+            background-size: contain;
+            margin: 30px auto;
             border-radius: 50%;
-            margin: 20px auto;
-            cursor: pointer; 
-            transition: transform 0.1s ease;
+            cursor: pointer;
+            transition: transform 0.1s;
             -webkit-tap-highlight-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 0 20px rgba(212,175,55,0.2);
         }
-        .lion-btn:active { transform: scale(0.95); }
-
-        .energy-container { margin: 20px 0; font-weight: bold; color: #d4af37; }
-        .energy-bar-container { 
-            width: 80%; 
-            height: 14px; 
-            background: #222; 
-            border-radius: 10px; 
-            margin: 5px auto; 
-            overflow: hidden; 
-            border: 1px solid #d4af37; 
-        }
-        #energy-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #d4af37, #f2d379); transition: width 0.2s; }
-
-        .tasks-section { padding: 20px; text-align: left; background: rgba(20,20,20,0.9); border-radius: 20px 20px 0 0; margin-top: 30px; }
-        .task-card { 
-            background: #2a2a2a; 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 12px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-right: 4px solid #d4af37; 
-        }
-        .task-card a { color: #eee; text-decoration: none; font-size: 14px; flex-grow: 1; }
-        .reward { color: #d4af37; font-weight: bold; font-size: 13px; }
-
-        .nav-bar { 
-            position: fixed; 
-            bottom: 0; 
-            width: 100%; 
-            display: flex; 
-            justify-content: space-around; 
-            background: #050505; 
-            padding: 15px 0; 
-            border-top: 1px solid #222; 
-        }
-        .nav-item { color: #666; font-size: 12px; cursor: pointer; transition: 0.3s; }
-        .nav-item.active { color: #d4af37; }
+        .lion-btn:active { transform: scale(0.9); }
+        
+        .energy-text { color: #d4af37; font-weight: bold; margin-top: 20px; }
+        .energy-bar { width: 80%; height: 10px; background: #333; margin: 10px auto; border-radius: 5px; overflow: hidden; }
+        #energy-fill { width: 100%; height: 100%; background: #d4af37; }
     </style>
 </head>
 <body>
-    <div class="header">REGNUM</div>
-    
-    <div class="score-container">
-        <div id="score">0</div>
-        <div style="color: #d4af37; font-size: 14px;">REG COINS</div>
-    </div>
+    <div class="header">REGNUM NETWORK</div>
+    <div id="score">0</div>
+    <div style="color: #aaa;">REG COINS</div>
 
-    <div class="lion-btn" onclick="mine(event)"></div>
+    <div class="lion-btn" onclick="mine()"></div>
 
-    <div class="energy-container">
-        ⚡ <span id="energy">10000</span> / 10000
-        <div class="energy-bar-container"><div id="energy-fill"></div></div>
-    </div>
-
-    <div class="tasks-section">
-        <h3 style="color: #d4af37; margin-bottom: 15px;">Royal Tasks</h3>
-        <div class="task-card">
-            <a href="https://t.me/REGNNETWORK" target="_blank">Join Telegram Channel 1</a>
-            <span class="reward">+1000 REG</span>
-        </div>
-        <div class="task-card">
-            <a href="https://t.me/XTAIRDRpP" target="_blank">Join Telegram Channel 2</a>
-            <span class="reward">+1000 REG</span>
-        </div>
-    </div>
-
-    <div style="margin: 20px 0 100px 0;">
-        <button onclick="copyRef()" style="background:#d4af37; color:black; border:none; padding:12px 25px; border-radius:25px; font-weight:bold; cursor:pointer;">
-            🔗 Invite Friends (+10,000 REG)
-        </button>
-    </div>
-
-    <div class="nav-bar">
-        <div class="nav-item active">🏰 Home</div>
-        <div class="nav-item" onclick="alert('Coming Soon')">⚒️ Tasks</div>
-        <div class="nav-item" onclick="alert('Wallet Coming Soon')">💰 Wallet</div>
-    </div>
+    <div class="energy-text">⚡ <span id="energy">10000</span> / 10000</div>
+    <div class="energy-bar"><div id="energy-fill"></div></div>
 
     <script>
-        let score = 0;
-        let energy = 10000;
+        let score = 0; let energy = 10000;
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        function mine(event) {
-            if (energy >= 50) {
-                score += 50;
-                energy -= 50;
-                updateDisplay();
-                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        function mine() {
+            if (energy >= 10) {
+                score += 10; energy -= 10;
+                update();
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             }
         }
 
-        function updateDisplay() {
+        function update() {
             document.getElementById('score').innerText = score.toLocaleString();
             document.getElementById('energy').innerText = energy;
-            document.getElementById('energy-fill').style.width = (energy / 10000 * 100) + '%';
+            document.getElementById('energy-fill').style.width = (energy/10000*100) + '%';
         }
 
-        setInterval(() => {
-            if (energy < 10000) {
-                energy = Math.min(10000, energy + 3);
-                updateDisplay();
-            }
-        }, 1000);
-
-        function copyRef() {
-            const user_id = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "user";
-            const refLink = `https://t.me/REGNNUMBOT?start=${user_id}`;
-            navigator.clipboard.writeText(refLink);
-            alert("Invite link copied!");
-        }
+        setInterval(() => { if(energy < 10000) { energy += 2; update(); } }, 1000);
     </script>
 </body>
 </html>

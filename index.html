@@ -1,191 +1,150 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lion King Bot - Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lion Mining App</title>
     <style>
-        :root {
-            --primary: #00d1ff; 
-            --bg: #0b0e11;      
-            --card: #1c2127;
-            --energy: #ffcc00;
-        }
-
         body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            user-select: none;
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .stat-box { text-align: center; font-size: 14px; color: var(--primary); }
-
-        .main-game {
-            flex: 1;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-        }
-
-        .balance-shine {
-            font-size: 50px;
-            font-weight: 900;
-            text-shadow: 0 0 20px var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .coin-btn {
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            /* تم إصلاح الرابط هنا ليعمل مع صورتك الجديدة */
-            background: url('lion.png') center/cover;
-            border: 8px solid var(--primary);
-            box-shadow: 0 0 50px var(--primary);
-            transition: transform 0.05s;
-            cursor: pointer;
-        }
-
-        .coin-btn:active { transform: scale(0.92); }
-
-        .energy-section {
-            width: 80%;
-            margin-top: 30px;
-        }
-
-        .energy-bar {
-            height: 12px;
-            background: #333;
-            border-radius: 6px;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
             overflow: hidden;
         }
 
-        .energy-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--energy), #ff9900);
+        /* Stats Bar */
+        .stats {
+            display: flex;
+            justify-content: space-around;
             width: 100%;
-            transition: width 0.3s;
+            padding: 15px 0;
+            font-size: 14px;
+        }
+        .stats div { text-align: center; }
+        .stats span { color: #00e5ff; display: block; font-weight: bold; }
+
+        /* Main Score */
+        .score-container {
+            font-size: 60px;
+            font-weight: bold;
+            margin-top: 20px;
         }
 
-        .nav-menu {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            background: var(--card);
+        /* Lion Image and Glow */
+        .lion-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .lion-container:active { transform: scale(0.95); }
+        .lion-glow {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #00e5ff 0%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid #00e5ff;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+        .lion-glow img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+        }
+
+        /* Energy Bar */
+        .energy-section { width: 80%; text-align: left; margin-bottom: 100px; }
+        .energy-text { margin-bottom: 5px; font-size: 14px; }
+        .energy-bar {
+            height: 12px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .energy-fill {
+            width: 95%; /* 995/1000 */
+            height: 100%;
+            background: linear-gradient(to right, #ffd700, #ff8c00);
+        }
+
+        /* Bottom Navigation - 5 Buttons */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #111;
+            display: flex;
+            justify-content: space-around;
             padding: 10px 0;
-            border-top: 1px solid var(--primary);
+            border-top: 1px solid #333;
         }
-
         .nav-item {
             text-align: center;
+            color: #888;
             font-size: 12px;
-            cursor: pointer;
-            opacity: 0.7;
+            text-decoration: none;
+            flex: 1;
         }
-
-        .nav-item.active { opacity: 1; color: var(--primary); }
-
-        .plus-one {
-            position: absolute;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 28px;
-            animation: flyUp 0.8s forwards;
-            pointer-events: none;
-        }
-
-        @keyframes flyUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-150px); opacity: 0; }
-        }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 3px; }
+        .nav-item.active { color: #00e5ff; }
     </style>
 </head>
 <body>
 
-    <div class="stats-bar">
-        <div class="stat-box">💰 النقاط<br><span id="total">0</span></div>
-        <div class="stat-box">🏆 المستوى<br><span>مستكشف</span></div>
-        <div class="stat-box">👥 إحالات<br><span>0</span></div>
+    <div class="stats">
+        <div>Points <span id="points-top">0</span></div>
+        <div>Rank <span id="rank">Explorer</span></div>
+        <div>Referrals <span id="ref">0</span></div>
     </div>
 
-    <div class="main-game">
-        <div class="balance-shine" id="balance">0</div>
-        
-        <div class="coin-btn" id="coin"></div>
+    <div class="score-container" id="main-score">11</div>
 
-        <div class="energy-section">
-            <div style="display:flex; justify-content: space-between; margin-bottom: 5px;">
-                <span>⚡ الطاقة</span>
-                <span id="energy-val">1000/1000</span>
-            </div>
-            <div class="energy-bar">
-                <div class="energy-fill" id="energy-fill"></div>
-            </div>
+    <div class="lion-container" onclick="mine()">
+        <div class="lion-glow">
+            <img src="lion.png" alt="Lion">
         </div>
     </div>
 
-    <nav class="nav-menu">
-        <div class="nav-item active">🏠<br>الرئيسية</div>
-        <div class="nav-item">📋<br>المهام</div>
-        <div class="nav-item">🤝<br>الأصدقاء</div>
-        <div class="nav-item">⚙️<br>الإعدادات</div>
+    <div class="energy-section">
+        <div class="energy-text">⚡ <span id="energy-val">995</span>/1000</div>
+        <div class="energy-bar">
+            <div class="energy-fill" id="energy-fill"></div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="#" class="nav-item"><i>⚙️</i>Settings</a>
+        <a href="#" class="nav-item"><i>🤝</i>Friends</a>
+        <a href="#" class="nav-item active"><i>🏠</i>Home</a>
+        <a href="#" class="nav-item"><i>📋</i>Tasks</a>
+        <a href="#" class="nav-item"><i>🔄</i>Exchange</a>
     </nav>
 
     <script>
-        let score = 0;
-        let energy = 1000;
-        const maxEnergy = 1000;
+        let score = 11;
+        let energy = 995;
 
-        const coin = document.getElementById('coin');
-        const balanceEl = document.getElementById('balance');
-        const energyEl = document.getElementById('energy-val');
-        const energyFill = document.getElementById('energy-fill');
-
-        coin.addEventListener('click', (e) => {
-            if (energy > 0) {
-                score += 1;
-                energy -= 1;
+        function mine() {
+            if(energy > 0) {
+                score++;
+                energy--;
+                document.getElementById('main-score').innerText = score;
+                document.getElementById('points-top').innerText = score;
+                document.getElementById('energy-val').innerText = energy;
                 
-                balanceEl.innerText = score.toLocaleString();
-                energyEl.innerText = `${energy}/${maxEnergy}`;
-                energyFill.style.width = (energy/maxEnergy * 100) + '%';
-
-                const rect = coin.getBoundingClientRect();
-                const x = e.clientX || rect.left + rect.width/2;
-                const y = e.clientY || rect.top;
-
-                const plus = document.createElement('div');
-                plus.className = 'plus-one';
-                plus.innerText = '+1';
-                plus.style.left = x + 'px';
-                plus.style.top = y + 'px';
-                document.body.appendChild(plus);
-
-                setTimeout(() => plus.remove(), 800);
+                // تحديث شريط الطاقة
+                let percent = (energy / 1000) * 100;
+                document.getElementById('energy-fill').style.width = percent + "%";
             }
-        });
-
-        setInterval(() => {
-            if (energy < maxEnergy) {
-                energy += 1;
-                energyEl.innerText = `${energy}/${maxEnergy}`;
-                energyFill.style.width = (energy/maxEnergy * 100) + '%';
-            }
-        }, 2000);
+        }
     </script>
 </body>
 </html>

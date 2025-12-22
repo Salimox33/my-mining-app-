@@ -3,47 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGNUM Solanix Style</title>
+    <title>REGNUM Pro - Solanix Style</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary-purple: #8a2be2; --bg-dark: #0b0e11; --card-bg: #1c2128; --text-gray: #8b949e; }
-        body { background: var(--bg-dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow: hidden; user-select: none; }
+        :root { --primary-purple: #8a2be2; --bg-dark: #0b0e11; --card-bg: #1c2128; --text-gray: #8b949e; --accent-blue: #0088cc; }
+        body { background: var(--bg-dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow: hidden; user-select: none; direction: ltr; }
         
-        /* شريط التوازن العلوي */
-        .header-stats { padding: 15px; }
+        /* Header Stats */
+        .header-stats { padding: 15px; margin-top: 10px; }
         .stat-box { background: var(--card-bg); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border: 1px solid #30363d; }
-        .stat-box img { width: 24px; height: 24px; border-radius: 50%; }
+        .stat-box img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--primary-purple); }
 
-        /* منطقة التعدين الرئيسية */
-        .mining-area { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .lion-container { width: 220px; height: 220px; position: relative; cursor: pointer; }
+        /* Mining Section */
+        .mining-area { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .lion-container { width: 240px; height: 240px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .lion-img { width: 100%; height: 100%; background: url('lion.png') no-repeat center; background-size: contain; transition: transform 0.1s; }
-        
-        /* انيميشن الدوران الاحترافي */
-        .rotating { animation: spin 3s linear infinite; }
+        .rotating { animation: spin 2.5s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .mining-value { font-size: 34px; font-weight: bold; margin: 25px 0 5px 0; color: #fff; text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
+        .ghs-info { color: #d4af37; font-size: 16px; font-weight: bold; margin-bottom: 20px; }
 
-        .mining-value { font-size: 32px; font-weight: bold; margin: 20px 0 5px 0; letter-spacing: 1px; }
-        .ghs-info { color: #d4af37; font-size: 16px; font-weight: bold; }
-
-        /* أزرار الإجراءات */
-        .action-btns { display: flex; gap: 10px; width: 90%; margin-top: 20px; }
-        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-claim { background: var(--primary-purple); color: white; }
-        .btn-boost { background: #2d333b; color: white; border: 1px solid #444; }
-
-        /* القائمة السفلية Navigation */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 75px; background: #161b22; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #30363d; padding-bottom: 10px; }
-        .nav-item { color: var(--text-gray); font-size: 11px; text-align: center; flex: 1; }
+        /* Navigation Bar */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 80px; background: #161b22; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #30363d; padding-bottom: 15px; z-index: 1000; }
+        .nav-item { color: var(--text-gray); font-size: 11px; text-align: center; flex: 1; transition: 0.3s; cursor: pointer; }
         .nav-item.active { color: var(--primary-purple); }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 4px; }
+        .nav-item i { font-size: 24px; display: block; margin-bottom: 5px; }
 
-        /* الصفحات */
-        .page { display: none; padding: 20px; height: 85vh; overflow-y: auto; }
-        .page.active { display: block; }
-        .task-card { background: var(--card-bg); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #30363d; }
-        .task-btn { background: var(--primary-purple); color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; }
+        /* Pages */
+        .page { display: none; padding: 20px; height: 82vh; overflow-y: auto; box-sizing: border-box; }
+        .page.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Friends Page Styles */
+        .invite-card { background: var(--card-bg); border-radius: 16px; padding: 20px; border: 1px solid #30363d; margin-top: 10px; }
+        .invite-link-box { background: #0d1117; border: 1px solid #444; padding: 12px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; margin: 15px 0; }
+        .invite-link-box span { font-size: 13px; color: var(--text-gray); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 80%; }
+        .btn-purple { background: var(--primary-purple); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-weight: bold; font-size: 16px; margin-bottom: 10px; cursor: pointer; }
+        .ref-rewards { margin-top: 25px; }
+        .reward-row { background: var(--card-bg); border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border: 1px solid #30363d; }
+        .lvl-badge { background: #2d333b; padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .reward-val { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .reward-val i { color: #d4af37; }
+
+        /* Task Cards */
+        .task-card { background: var(--card-bg); padding: 18px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #30363d; }
+        .task-btn { background: var(--primary-purple); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; }
+        .btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -51,51 +57,71 @@
     <div id="home" class="page active">
         <div class="header-stats">
             <div class="stat-box">
-                <div><small style="color:var(--text-gray)">Balance</small><br><b>0 REG</b></div>
+                <div><small style="color:var(--text-gray)">Total Balance</small><br><b id="display-balance">0.00</b> REG</div>
                 <img src="lion.png">
             </div>
         </div>
-
         <div class="mining-area">
-            <div class="lion-container" onclick="toggleMining()">
+            <div class="lion-container" onclick="handleTap()">
                 <div id="lion-sprite" class="lion-img"></div>
             </div>
             <div class="mining-value"><span id="balance">0.00000000</span> REG</div>
-            <div class="ghs-info">⚡ 2 GH/s</div>
-            
-            <div class="action-btns">
-                <button class="btn btn-claim"><i class="fas fa-coins"></i> Claim</button>
-                <button class="btn btn-boost"><i class="fas fa-rocket"></i> Boost</button>
+            <div class="ghs-info"><i class="fas fa-bolt"></i> 2 GH/s</div>
+            <button class="btn-purple" style="width: 80%;" onclick="claimCoins()"><i class="fas fa-hand-holding-dollar"></i> Claim</button>
+        </div>
+    </div>
+
+    <div id="friends" class="page">
+        <h2 style="text-align: center;">Invite Friends!</h2>
+        <p style="text-align: center; color: var(--text-gray); font-size: 14px;">You and your friend will receive bonuses</p>
+        
+        <div class="invite-card">
+            <b>Your Invite Link</b>
+            <div class="invite-link-box">
+                <span id="invite-url">https://t.me/REGNNUMBOT?start=user_id</span>
+                <i class="far fa-copy" style="color: var(--primary-purple); cursor: pointer;" onclick="copyLink()"></i>
+            </div>
+            <button class="btn-purple" onclick="shareInvite()"><i class="fas fa-user-plus"></i> Invite a friend</button>
+        </div>
+
+        <div class="ref-rewards">
+            <h4 style="margin-bottom: 15px;">Referral Rewards</h4>
+            <div class="reward-row">
+                <div class="lvl-badge">Level 1</div>
+                <div class="reward-val">100 REG <img src="lion.png" width="16"></div>
+                <div class="reward-val">100 MH/s <i class="fas fa-bolt"></i></div>
+            </div>
+            <div class="reward-row">
+                <div class="lvl-badge">Level 2</div>
+                <div class="reward-val">50 REG <img src="lion.png" width="16"></div>
+                <div class="reward-val">50 MH/s <i class="fas fa-bolt"></i></div>
+            </div>
+            <div class="reward-row">
+                <div class="lvl-badge">Level 3</div>
+                <div class="reward-val">15 REG <img src="lion.png" width="16"></div>
+                <div class="reward-val">5 MH/s <i class="fas fa-bolt"></i></div>
             </div>
         </div>
     </div>
 
     <div id="missions" class="page">
-        <h2 style="text-align: center;">Missions</h2>
+        <h2 style="text-align: center; margin-bottom: 25px;">New Missions</h2>
         <div class="task-card">
-            <div><b>Follow Twitter</b><br><small style="color:#d4af37">+1,000 REG</small></div>
-            <button class="task-btn" onclick="openLink('https://x.com/ReGnNetwoRk_AI')">Start</button>
+            <div><b>Follow X</b><br><small style="color:#d4af37">+1,000 REG</small></div>
+            <button class="task-btn" onclick="tg.openLink('https://x.com/ReGnNetwoRk_AI')">Start</button>
         </div>
         <div class="task-card">
-            <div><b>Main Telegram Channel</b><br><small style="color:#d4af37">+2,000 REG</small></div>
-            <button class="task-btn" onclick="openLink('https://t.me/REGNNETWORK')">Start</button>
-        </div>
-        <div class="task-card">
-            <div><b>Join Secondary Channel</b><br><small style="color:#d4af37">+1,500 REG</small></div>
-            <button class="task-btn" onclick="openLink('https://t.me/XTAIRDRpP')">Start</button>
-        </div>
-        <div class="task-card">
-            <div><b>Join Community Group</b><br><small style="color:#d4af37">+2,500 REG</small></div>
-            <button class="task-btn" onclick="openLink('https://t.me/+4D6ZjKanoLg1NzI0')">Start</button>
+            <div><b>Telegram Channel</b><br><small style="color:#d4af37">+2,000 REG</small></div>
+            <button class="task-btn" onclick="tg.openTelegramLink('https://t.me/REGNNETWORK')">Start</button>
         </div>
     </div>
 
     <nav class="nav-bar">
-        <div class="nav-item" onclick="changePage('wallet')"><i class="fas fa-wallet"></i>Wallet</div>
-        <div class="nav-item" onclick="changePage('friends')"><i class="fas fa-user-friends"></i>Friends</div>
-        <div class="nav-item active" onclick="changePage('home')"><i class="fas fa-dot-circle"></i>Home</div>
-        <div class="nav-item" onclick="changePage('missions')"><i class="fas fa-bullseye"></i>Missions</div>
-        <div class="nav-item" onclick="changePage('more')"><i class="fas fa-ellipsis-h"></i>More</div>
+        <div class="nav-item" onclick="changePage('wallet', this)"><i class="fas fa-wallet"></i>Wallet</div>
+        <div class="nav-item" onclick="changePage('friends', this)"><i class="fas fa-users"></i>Friends</div>
+        <div class="nav-item active" onclick="changePage('home', this)"><i class="fas fa-house"></i>Home</div>
+        <div class="nav-item" onclick="changePage('missions', this)"><i class="fas fa-bullseye"></i>Missions</div>
+        <div class="nav-item" onclick="changePage('more', this)"><i class="fas fa-bars"></i>More</div>
     </nav>
 
     <script>
@@ -105,32 +131,42 @@
         let isMining = false;
         let mineInterval;
 
-        function toggleMining() {
+        function handleTap() {
             const lion = document.getElementById('lion-sprite');
             isMining = !isMining;
-            
             if(isMining) {
                 lion.classList.add('rotating');
                 mineInterval = setInterval(() => {
                     balance += 0.00000005;
                     document.getElementById('balance').innerText = balance.toFixed(8);
                 }, 1000);
-                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
             } else {
                 lion.classList.remove('rotating');
                 clearInterval(mineInterval);
             }
         }
 
-        function changePage(pageId) {
+        function changePage(pageId, element) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            element.classList.add('active');
         }
 
-        function openLink(url) {
-            tg.openLink(url);
+        function copyLink() {
+            const link = document.getElementById('invite-url').innerText;
+            navigator.clipboard.writeText(link);
+            tg.showAlert("Link copied to clipboard!");
+        }
+
+        function shareInvite() {
+            const url = "https://t.me/share/url?url=https://t.me/REGNNUMBOT?start=ref&text=Join me on REGNUM Network!";
+            tg.openTelegramLink(url);
+        }
+
+        function claimCoins() {
+            document.getElementById('display-balance').innerText = balance.toFixed(2);
+            tg.showAlert("Successfully Claimed!");
         }
     </script>
 </body>

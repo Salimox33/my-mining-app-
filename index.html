@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGNUM - Lion Mining</title>
+    <title>REGNUM Mining</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { background: #000; color: white; font-family: sans-serif; text-align: center; margin: 0; overflow: hidden; }
         .header { padding: 20px; color: #d4af37; font-size: 24px; font-weight: bold; }
-        #score { font-size: 40px; margin: 10px; font-weight: bold; }
-        
-        /* زر الأسد المباشر */
+        #score { font-size: 45px; margin: 10px; font-weight: bold; text-shadow: 0 0 10px #d4af37; }
         .lion-btn {
             width: 250px; height: 250px;
             background: url('https://raw.githubusercontent.com/Salimox33/my-mining-app-/main/lion.png') no-repeat center;
@@ -21,43 +19,35 @@
             transition: transform 0.1s;
             -webkit-tap-highlight-color: transparent;
         }
-        .lion-btn:active { transform: scale(0.9); }
-        
+        .lion-btn:active { transform: scale(0.95); }
         .energy-text { color: #d4af37; font-weight: bold; margin-top: 20px; }
-        .energy-bar { width: 80%; height: 10px; background: #333; margin: 10px auto; border-radius: 5px; overflow: hidden; }
-        #energy-fill { width: 100%; height: 100%; background: #d4af37; }
+        .energy-bar { width: 80%; height: 12px; background: #222; margin: 10px auto; border-radius: 6px; border: 1px solid #d4af37; overflow: hidden; }
+        #energy-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #d4af37, #fff); transition: width 0.3s; }
     </style>
 </head>
 <body>
     <div class="header">REGNUM NETWORK</div>
     <div id="score">0</div>
-    <div style="color: #aaa;">REG COINS</div>
-
+    <div style="color: #aaa; letter-spacing: 2px;">REG COINS</div>
     <div class="lion-btn" onclick="mine()"></div>
-
     <div class="energy-text">⚡ <span id="energy">10000</span> / 10000</div>
     <div class="energy-bar"><div id="energy-fill"></div></div>
-
     <script>
         let score = 0; let energy = 10000;
         const tg = window.Telegram.WebApp;
         tg.expand();
-
         function mine() {
             if (energy >= 10) {
-                score += 10; energy -= 10;
-                update();
-                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+                score += 10; energy -= 10; update();
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             }
         }
-
         function update() {
             document.getElementById('score').innerText = score.toLocaleString();
             document.getElementById('energy').innerText = energy;
             document.getElementById('energy-fill').style.width = (energy/10000*100) + '%';
         }
-
-        setInterval(() => { if(energy < 10000) { energy += 2; update(); } }, 1000);
+        setInterval(() => { if(energy < 10000) { energy = Math.min(10000, energy + 5); update(); } }, 1000);
     </script>
 </body>
 </html>

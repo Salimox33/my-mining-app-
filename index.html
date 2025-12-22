@@ -3,66 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGNUM Mining & Tasks</title>
+    <title>REGNUM Mining</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #000; color: white; font-family: sans-serif; text-align: center; margin: 0; padding-bottom: 50px; }
+        body { background: #000; color: white; font-family: sans-serif; text-align: center; margin: 0; overflow-x: hidden; }
         .header { padding: 20px; color: #d4af37; font-size: 24px; font-weight: bold; }
-        #score { font-size: 40px; margin: 10px; font-weight: bold; text-shadow: 0 0 10px #d4af37; }
+        #score { font-size: 45px; margin: 10px; font-weight: bold; text-shadow: 0 0 10px #d4af37; }
         
-        /* زر الأسد - استخدمت رابط صورة ذهبية جاهزة */
+        /* تم تصحيح اسم الصورة هنا إلى lion.png */
         .lion-btn {
-            width: 200px; height: 200px;
-            background: url('https://cdn-icons-png.flaticon.com/512/616/616412.png') no-repeat center;
+            width: 250px; height: 250px;
+            background: url('lion.png') no-repeat center;
             background-size: contain;
-            margin: 20px auto;
+            margin: 30px auto;
+            border-radius: 50%;
             cursor: pointer;
             transition: transform 0.1s;
             -webkit-tap-highlight-color: transparent;
         }
-        .lion-btn:active { transform: scale(0.9); }
+        .lion-btn:active { transform: scale(0.95); }
+        
+        .energy-text { color: #d4af37; font-weight: bold; margin-top: 20px; }
+        .energy-bar { width: 80%; height: 12px; background: #222; margin: 10px auto; border-radius: 6px; border: 1px solid #d4af37; overflow: hidden; }
+        #energy-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #d4af37, #fff); transition: width 0.3s; }
 
-        .energy-bar { width: 80%; height: 10px; background: #222; margin: 10px auto; border-radius: 5px; overflow: hidden; border: 1px solid #d4af37; }
-        #energy-fill { width: 100%; height: 100%; background: #d4af37; transition: width 0.2s; }
-
-        /* قسم المهام */
-        .tasks-container { margin-top: 30px; padding: 0 20px; text-align: left; }
-        .task-card {
+        /* قسم المهام الجديد */
+        .tasks { margin-top: 30px; padding: 20px; }
+        .task-item {
             background: #111; border: 1px solid #333; padding: 15px;
-            border-radius: 10px; margin-bottom: 10px;
+            border-radius: 12px; margin-bottom: 10px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .task-info b { color: #d4af37; display: block; }
-        .task-btn { background: #d4af37; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .task-btn { background: #d4af37; color: black; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="header">REGNUM NETWORK</div>
     <div id="score">0</div>
-    <div style="color: #aaa; font-size: 14px;">REG COINS</div>
+    <div style="color: #aaa; letter-spacing: 2px;">REG COINS</div>
 
     <div class="lion-btn" onclick="mine()"></div>
-    
-    <div style="font-size: 14px;">⚡ <span id="energy">10000</span> / 10000</div>
+
+    <div class="energy-text">⚡ <span id="energy">10000</span> / 10000</div>
     <div class="energy-bar"><div id="energy-fill"></div></div>
 
-    <div class="tasks-container">
-        <h3 style="color: #d4af37;">📋 Daily Tasks</h3>
-        
-        <div class="task-card">
-            <div class="task-info">
-                <b>Join Channel</b>
-                <small>+5,000 REG</small>
-            </div>
-            <button class="task-btn" onclick="window.open('https://t.me/YourChannel')">Go</button>
+    <div class="tasks">
+        <h3 style="color: #d4af37;">TASKS</h3>
+        <div class="task-item">
+            <span>Join Channel</span>
+            <button class="task-btn" onclick="window.open('https://t.me/YourLink')">GO</button>
         </div>
-
-        <div class="task-card">
-            <div class="task-info">
-                <b>Follow Twitter</b>
-                <small>+3,000 REG</small>
-            </div>
-            <button class="task-btn" onclick="window.open('https://twitter.com/YourAccount')">Go</button>
+        <div class="task-item">
+            <span>Follow X</span>
+            <button class="task-btn" onclick="window.open('https://x.com/YourLink')">GO</button>
         </div>
     </div>
 
@@ -73,8 +66,7 @@
 
         function mine() {
             if (energy >= 10) {
-                score += 10; energy -= 10;
-                update();
+                score += 10; energy -= 10; update();
                 if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             }
         }

@@ -3,83 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGNUM Mining</title>
+    <title>REGNUM Solanix Style</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #000; color: white; font-family: sans-serif; text-align: center; margin: 0; overflow-x: hidden; }
-        .header { padding: 20px; color: #d4af37; font-size: 24px; font-weight: bold; }
-        #score { font-size: 45px; margin: 10px; font-weight: bold; text-shadow: 0 0 10px #d4af37; }
+        :root { --primary-purple: #8a2be2; --bg-dark: #0b0e11; --card-bg: #1c2128; --text-gray: #8b949e; }
+        body { background: var(--bg-dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow: hidden; user-select: none; }
         
-        /* تم تصحيح اسم الصورة هنا إلى lion.png */
-        .lion-btn {
-            width: 250px; height: 250px;
-            background: url('lion.png') no-repeat center;
-            background-size: contain;
-            margin: 30px auto;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.1s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .lion-btn:active { transform: scale(0.95); }
-        
-        .energy-text { color: #d4af37; font-weight: bold; margin-top: 20px; }
-        .energy-bar { width: 80%; height: 12px; background: #222; margin: 10px auto; border-radius: 6px; border: 1px solid #d4af37; overflow: hidden; }
-        #energy-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #d4af37, #fff); transition: width 0.3s; }
+        /* شريط التوازن العلوي */
+        .header-stats { padding: 15px; }
+        .stat-box { background: var(--card-bg); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border: 1px solid #30363d; }
+        .stat-box img { width: 24px; height: 24px; border-radius: 50%; }
 
-        /* قسم المهام الجديد */
-        .tasks { margin-top: 30px; padding: 20px; }
-        .task-item {
-            background: #111; border: 1px solid #333; padding: 15px;
-            border-radius: 12px; margin-bottom: 10px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .task-btn { background: #d4af37; color: black; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; }
+        /* منطقة التعدين الرئيسية */
+        .mining-area { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .lion-container { width: 220px; height: 220px; position: relative; cursor: pointer; }
+        .lion-img { width: 100%; height: 100%; background: url('lion.png') no-repeat center; background-size: contain; transition: transform 0.1s; }
+        
+        /* انيميشن الدوران الاحترافي */
+        .rotating { animation: spin 3s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .mining-value { font-size: 32px; font-weight: bold; margin: 20px 0 5px 0; letter-spacing: 1px; }
+        .ghs-info { color: #d4af37; font-size: 16px; font-weight: bold; }
+
+        /* أزرار الإجراءات */
+        .action-btns { display: flex; gap: 10px; width: 90%; margin-top: 20px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-claim { background: var(--primary-purple); color: white; }
+        .btn-boost { background: #2d333b; color: white; border: 1px solid #444; }
+
+        /* القائمة السفلية Navigation */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 75px; background: #161b22; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #30363d; padding-bottom: 10px; }
+        .nav-item { color: var(--text-gray); font-size: 11px; text-align: center; flex: 1; }
+        .nav-item.active { color: var(--primary-purple); }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 4px; }
+
+        /* الصفحات */
+        .page { display: none; padding: 20px; height: 85vh; overflow-y: auto; }
+        .page.active { display: block; }
+        .task-card { background: var(--card-bg); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #30363d; }
+        .task-btn { background: var(--primary-purple); color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="header">REGNUM NETWORK</div>
-    <div id="score">0</div>
-    <div style="color: #aaa; letter-spacing: 2px;">REG COINS</div>
 
-    <div class="lion-btn" onclick="mine()"></div>
-
-    <div class="energy-text">⚡ <span id="energy">10000</span> / 10000</div>
-    <div class="energy-bar"><div id="energy-fill"></div></div>
-
-    <div class="tasks">
-        <h3 style="color: #d4af37;">TASKS</h3>
-        <div class="task-item">
-            <span>Join Channel</span>
-            <button class="task-btn" onclick="window.open('https://t.me/YourLink')">GO</button>
+    <div id="home" class="page active">
+        <div class="header-stats">
+            <div class="stat-box">
+                <div><small style="color:var(--text-gray)">Balance</small><br><b>0 REG</b></div>
+                <img src="lion.png">
+            </div>
         </div>
-        <div class="task-item">
-            <span>Follow X</span>
-            <button class="task-btn" onclick="window.open('https://x.com/YourLink')">GO</button>
+
+        <div class="mining-area">
+            <div class="lion-container" onclick="toggleMining()">
+                <div id="lion-sprite" class="lion-img"></div>
+            </div>
+            <div class="mining-value"><span id="balance">0.00000000</span> REG</div>
+            <div class="ghs-info">⚡ 2 GH/s</div>
+            
+            <div class="action-btns">
+                <button class="btn btn-claim"><i class="fas fa-coins"></i> Claim</button>
+                <button class="btn btn-boost"><i class="fas fa-rocket"></i> Boost</button>
+            </div>
         </div>
     </div>
 
+    <div id="missions" class="page">
+        <h2 style="text-align: center;">Missions</h2>
+        <div class="task-card">
+            <div><b>Follow Twitter</b><br><small style="color:#d4af37">+1,000 REG</small></div>
+            <button class="task-btn" onclick="openLink('https://x.com/ReGnNetwoRk_AI')">Start</button>
+        </div>
+        <div class="task-card">
+            <div><b>Main Telegram Channel</b><br><small style="color:#d4af37">+2,000 REG</small></div>
+            <button class="task-btn" onclick="openLink('https://t.me/REGNNETWORK')">Start</button>
+        </div>
+        <div class="task-card">
+            <div><b>Join Secondary Channel</b><br><small style="color:#d4af37">+1,500 REG</small></div>
+            <button class="task-btn" onclick="openLink('https://t.me/XTAIRDRpP')">Start</button>
+        </div>
+        <div class="task-card">
+            <div><b>Join Community Group</b><br><small style="color:#d4af37">+2,500 REG</small></div>
+            <button class="task-btn" onclick="openLink('https://t.me/+4D6ZjKanoLg1NzI0')">Start</button>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <div class="nav-item" onclick="changePage('wallet')"><i class="fas fa-wallet"></i>Wallet</div>
+        <div class="nav-item" onclick="changePage('friends')"><i class="fas fa-user-friends"></i>Friends</div>
+        <div class="nav-item active" onclick="changePage('home')"><i class="fas fa-dot-circle"></i>Home</div>
+        <div class="nav-item" onclick="changePage('missions')"><i class="fas fa-bullseye"></i>Missions</div>
+        <div class="nav-item" onclick="changePage('more')"><i class="fas fa-ellipsis-h"></i>More</div>
+    </nav>
+
     <script>
-        let score = 0; let energy = 10000;
         const tg = window.Telegram.WebApp;
         tg.expand();
+        let balance = 0;
+        let isMining = false;
+        let mineInterval;
 
-        function mine() {
-            if (energy >= 10) {
-                score += 10; energy -= 10; update();
-                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        function toggleMining() {
+            const lion = document.getElementById('lion-sprite');
+            isMining = !isMining;
+            
+            if(isMining) {
+                lion.classList.add('rotating');
+                mineInterval = setInterval(() => {
+                    balance += 0.00000005;
+                    document.getElementById('balance').innerText = balance.toFixed(8);
+                }, 1000);
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
+            } else {
+                lion.classList.remove('rotating');
+                clearInterval(mineInterval);
             }
         }
 
-        function update() {
-            document.getElementById('score').innerText = score.toLocaleString();
-            document.getElementById('energy').innerText = energy;
-            document.getElementById('energy-fill').style.width = (energy/10000*100) + '%';
+        function changePage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
 
-        setInterval(() => {
-            if(energy < 10000) { energy = Math.min(10000, energy + 5); update(); }
-        }, 1000);
+        function openLink(url) {
+            tg.openLink(url);
+        }
     </script>
 </body>
 </html>

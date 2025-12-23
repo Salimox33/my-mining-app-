@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lion Mining</title>
+    <title>Lion Mining - REGNUM</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -14,10 +14,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: hidden; /* يمنع التعرج عند السحب */
+            overflow: hidden;
         }
 
-        /* الإحصائيات الفوقانية */
+        /* Stats Bar */
         .stats-bar {
             display: flex;
             justify-content: space-between;
@@ -28,7 +28,7 @@
         .stat-item { text-align: center; flex: 1; }
         .stat-item span { display: block; color: #00e5ff; font-weight: bold; font-size: 16px; }
 
-        /* الرقم الكبير (النقاط) */
+        /* Main Score */
         .main-score {
             font-size: 70px;
             font-weight: bold;
@@ -36,7 +36,15 @@
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        /* حاوية الأسد - الحل النهائي للعوجاج */
+        /* Home Content */
+        #home-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            flex-grow: 1;
+        }
+
         .lion-wrapper {
             flex-grow: 1;
             display: flex;
@@ -55,18 +63,58 @@
             justify-content: center;
             background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%);
             position: relative;
+            cursor: pointer;
         }
+        .lion-circle:active { transform: scale(0.95); }
         .lion-circle img {
             width: 95%;
             height: 95%;
             border-radius: 50%;
-            object-fit: cover; /* يمنع تمدد الصورة بشكل معوج */
+            object-fit: cover;
         }
 
-        /* شريط الطاقة */
+        /* Tasks Section (Hidden by default) */
+        #tasks-section {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .task-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .task-header h2 { font-size: 28px; color: #00e5ff; }
+        
+        .task-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .task-info h4 { font-size: 16px; margin-bottom: 4px; }
+        .task-info p { font-size: 12px; color: #ffd700; }
+        
+        .task-btn {
+            background: #00e5ff;
+            color: #000;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* Energy Bar */
         .energy-container {
             width: 85%;
-            margin-bottom: 110px; /* مسافة للأزرار السفلية */
+            margin-bottom: 110px;
         }
         .energy-label { font-size: 14px; margin-bottom: 8px; text-align: left; }
         .energy-bg {
@@ -83,7 +131,7 @@
             transition: width 0.3s;
         }
 
-        /* شريط التنقل السفلي - حل مشكلة الميلان */
+        /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -95,6 +143,7 @@
             height: 85px;
             border-top: 2px solid #1a1a1a;
             padding-bottom: env(safe-area-inset-bottom);
+            z-index: 100;
         }
         .nav-link {
             flex: 1;
@@ -106,6 +155,7 @@
             flex-direction: column;
             align-items: center;
             gap: 5px;
+            cursor: pointer;
         }
         .nav-link.active { color: #00e5ff; }
         .nav-link i { font-size: 22px; font-style: normal; }
@@ -120,41 +170,105 @@
         <div class="stat-item">Referrals <span id="ref">0</span></div>
     </div>
 
-    <div class="main-score" id="score">11</div>
+    <div class="main-score" id="score">0</div>
 
-    <div class="lion-wrapper">
-        <div class="lion-circle" onclick="tap(event)">
-            <img src="lion.png" alt="Lion">
+    <div id="home-section">
+        <div class="lion-wrapper">
+            <div class="lion-circle" onclick="tap(event)">
+                <img src="lion.png" alt="Lion">
+            </div>
+        </div>
+
+        <div class="energy-container">
+            <div class="energy-label">⚡ <span id="e-val">1000</span>/1000</div>
+            <div class="energy-bg">
+                <div class="energy-progress" id="e-bar"></div>
+            </div>
         </div>
     </div>
 
-    <div class="energy-container">
-        <div class="energy-label">⚡ <span id="e-val">995</span>/1000</div>
-        <div class="energy-bg">
-            <div class="energy-progress" id="e-bar"></div>
+    <div id="tasks-section">
+        <div class="task-header">
+            <h2>Social Tasks</h2>
+            <p>Complete tasks to earn more points!</p>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Join Main Channel</h4>
+                <p>+5,000 Points</p>
+            </div>
+            <a href="https://t.me/REGNNETWORK" target="_blank" class="task-btn">Join</a>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Join Second Channel</h4>
+                <p>+5,000 Points</p>
+            </div>
+            <a href="https://t.me/XTAIRDRpP" target="_blank" class="task-btn">Join</a>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Join Community Group</h4>
+                <p>+3,000 Points</p>
+            </div>
+            <a href="https://t.me/+4D6ZjKanoLg1NzI0" target="_blank" class="task-btn">Join</a>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Follow Twitter (X)</h4>
+                <p>+10,000 Points</p>
+            </div>
+            <a href="https://x.com/ReGnNetwoRk_AI" target="_blank" class="task-btn">Follow</a>
         </div>
     </div>
 
     <nav class="bottom-nav">
-        <a href="#" class="nav-link"><i>⚙️</i>Settings</a>
-        <a href="#" class="nav-link"><i>🤝</i>Friends</a>
-        <a href="#" class="nav-link active"><i>🏠</i>Home</a>
-        <a href="#" class="nav-link"><i>📋</i>Tasks</a>
-        <a href="#" class="nav-link"><i>🔄</i>Exchange</a>
+        <a class="nav-link"><i>⚙️</i>Settings</a>
+        <a class="nav-link"><i>🤝</i>Friends</a>
+        <a onclick="showSection('home')" id="nav-home" class="nav-link active"><i>🏠</i>Home</a>
+        <a onclick="showSection('tasks')" id="nav-tasks" class="nav-link"><i>📋</i>Tasks</a>
+        <a class="nav-link"><i>🔄</i>Exchange</a>
     </nav>
 
     <script>
-        let count = 11;
-        let energy = 995;
+        let count = 0;
+        let energy = 1000;
 
         function tap(event) {
             if(energy > 0) {
-                count++;
-                energy--;
-                document.getElementById('score').innerText = count;
-                document.getElementById('top-points').innerText = count;
-                document.getElementById('e-val').innerText = energy;
-                document.getElementById('e-bar').style.width = (energy/10) + "%";
+                count += 1;
+                energy -= 1;
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('score').innerText = count;
+            document.getElementById('top-points').innerText = count;
+            document.getElementById('e-val').innerText = energy;
+            document.getElementById('e-bar').style.width = (energy/10) + "%";
+        }
+
+        function showSection(section) {
+            const home = document.getElementById('home-section');
+            const tasks = document.getElementById('tasks-section');
+            const navHome = document.getElementById('nav-home');
+            const navTasks = document.getElementById('nav-tasks');
+
+            if(section === 'home') {
+                home.style.display = 'flex';
+                tasks.style.display = 'none';
+                navHome.classList.add('active');
+                navTasks.classList.remove('active');
+            } else {
+                home.style.display = 'none';
+                tasks.style.display = 'block';
+                navHome.classList.remove('active');
+                navTasks.classList.add('active');
             }
         }
     </script>

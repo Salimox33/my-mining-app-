@@ -196,19 +196,19 @@
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Main Channel</h4><p>+5,000 Points</p></div>
-            <button onclick="doTask(this, 'https://t.me/REGNNETWORK', 5000)" class="task-btn">Join</button>
+            <button id="btn-task1" onclick="doTask(this, 'task1', 'https://t.me/REGNNETWORK', 5000)" class="task-btn">Join</button>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Second Channel</h4><p>+5,000 Points</p></div>
-            <button onclick="doTask(this, 'https://t.me/XTAIRDRpP', 5000)" class="task-btn">Join</button>
+            <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/XTAIRDRpP', 5000)" class="task-btn">Join</button>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Community Group</h4><p>+3,000 Points</p></div>
-            <button onclick="doTask(this, 'https://t.me/+4D6ZjKanoLg1NzI0', 3000)" class="task-btn">Join</button>
+            <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+4D6ZjKanoLg1NzI0', 3000)" class="task-btn">Join</button>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Follow Twitter (X)</h4><p>+10,000 Points</p></div>
-            <button onclick="doTask(this, 'https://x.com/ReGnNetwoRk_AI', 10000)" class="task-btn">Join</button>
+            <button id="btn-task4" onclick="doTask(this, 'task4', 'https://x.com/ReGnNetwoRk_AI', 10000)" class="task-btn">Join</button>
         </div>
     </div>
 
@@ -265,65 +265,78 @@
         let count = 0;
         let energy = 1000;
         let friendsInvited = 0;
+        let completedTasks = {};
 
         const userRef = ref(db, 'users/' + userId);
-        get(userRef).then((snapshot) => {
-            if (!snapshot.exists()) {
-                if (referrerId && referrerId !== userId) {
-                    rewardReferrer(referrerId);
-                    count = 5000; 
-                }
-                saveToFirebase();
-            }
-        });
 
+        // تحميل البيانات وفحص المهام المكتملة عند التشغيل
         onValue(userRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 count = data.points || 0;
                 friendsInvited = data.friendsCount || 0;
+                completedTasks = data.completedTasks || {};
                 updateDisplay();
+                checkPersistentTasks();
             }
         });
 
-        // --- وظيفة المهام الجديدة (التعديل الذي طلبتهِ) ---
-        window.doTask = function(btn, url, reward) {
-            if (btn.innerText === "Join") {
-                window.open(url, '_blank');
-                // يتغير الزر بعد ثانيتين إلى Claim باللون الأحمر الاحترافي
-                setTimeout(() => {
-                    btn.innerText = "🔴 Claim";
-                    btn.style.background = "#ff4d4d"; // أحمر راقي
-                    btn.style.color = "#fff";
-                }, 2000);
-            } else if (btn.innerText === "🔴 Claim") {
-                // تحديث النقاط
-                count += reward;
-                updateDisplay();
-                saveToFirebase();
-                
-                // رسالة تنبيه راقية
-                tg.showAlert(`🎉 مبروك! لقد حصلت على ${reward.toLocaleString()} نقطة.`);
-                
-                // تغيير الزر للون الأخضر المفتوح (الاحترافي) كما طلبتِ
-                btn.innerText = "Completed ✅";
-                btn.style.background = "#00ff88"; // أخضر مفتوح احترافي
-                btn.style.color = "#000";
-                btn.disabled = true;
+        // وظيفة تجعل المهام المكتملة تبقى ثابتة للأبد
+        function checkPersistentTasks() {
+            for (let i = 1; i <= 4; i++) {
+                let taskKey = 'task' + i;
+                if (completedTasks[taskKey]) {
+                    let btn = document.getElementById('btn-' + taskKey);
+                    if (btn) {
+                        btn.innerText = "Completed ✅";
+                        btn.style.background = "#222";
+                        btn.style.color = "#777";
+                        btn.disabled = true;
+                    }
+                }
             }
         }
 
-        function rewardReferrer(refId) {
-            const refUserPath = ref(db, 'users/' + refId);
-            get(refUserPath).then((snap) => {
-                if (snap.exists()) {
-                    const data = snap.val();
-                    update(refUserPath, {
-                        points: (data.points || 0) + 5000,
-                        friendsCount: (data.friendsCount || 0) + 1
+        // --- وظيفة المهام الجديدة الصارمة والذكية ---
+        window.doTask = async function(btn, taskId, url, reward) {
+            if (btn.innerText === "Join") {
+                window.open(url, '_blank');
+                setTimeout(() => {
+                    btn.innerText = "🔴 Claim";
+                    btn.style.background = "#ff4d4d";
+                    btn.style.color = "#fff";
+                }, 2000);
+            } else if (btn.innerText === "🔴 Claim") {
+                btn.innerText = "🔄 Verifying...";
+                
+                // جلب أحدث حالة من Firebase (التي حدثها البوت)
+                const snapshot = await get(userRef);
+                const userData = snapshot.val();
+
+                if (userData && userData.is_member === true) {
+                    // إذا البوت أكد العضوية
+                    count += reward;
+                    completedTasks[taskId] = true; // تسجيل المهمة كمكتملة
+                    
+                    await update(userRef, {
+                        points: count,
+                        completedTasks: completedTasks
                     });
+
+                    updateDisplay();
+                    tg.showAlert(`🎉 Success! +${reward.toLocaleString()} points.`);
+                    
+                    btn.innerText = "Completed ✅";
+                    btn.style.background = "#00ff88";
+                    btn.style.color = "#000";
+                    btn.disabled = true;
+                } else {
+                    // إذا لم يجد الاشتراك (البوت لم يرسل true)
+                    tg.showAlert("❌ You are not a member! Please join and click 'Verify' in the bot first.");
+                    btn.innerText = "Join";
+                    btn.style.background = "#00e5ff";
                 }
-            });
+            }
         }
 
         window.tap = function(event) {

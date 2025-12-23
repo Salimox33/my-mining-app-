@@ -74,7 +74,7 @@
             object-fit: cover;
         }
 
-        /* Sections (Tasks & Friends) */
+        /* Sections */
         #tasks-section, #friends-section {
             display: none;
             width: 100%;
@@ -256,23 +256,22 @@
         const user = tg.initDataUnsafe?.user;
         const userId = user ? user.id.toString() : "guest";
         const urlParams = new URLSearchParams(window.location.search);
-        const referrerId = urlParams.get('start'); // معرف الشخص الذي دعاك
+        const referrerId = urlParams.get('start'); 
 
         document.getElementById('user-id').innerText = userId;
-        document.getElementById('ref-link').innerText = `https://t.me/RegnNetwoRk_bot?start=${userId}`;
+        // تم تحديث الرابط هنا باسم بوتك الصحيح REGNNUMBOT
+        document.getElementById('ref-link').innerText = `https://t.me/REGNNUMBOT?start=${userId}`;
 
         let count = 0;
         let energy = 1000;
         let friendsInvited = 0;
 
-        // التحقق من الإحالة عند أول دخول
         const userRef = ref(db, 'users/' + userId);
         get(userRef).then((snapshot) => {
             if (!snapshot.exists()) {
-                // مستخدم جديد، إذا جاء من رابط إحالة نعطي المكافأة للطرفين
                 if (referrerId && referrerId !== userId) {
                     rewardReferrer(referrerId);
-                    count = 5000; // مكافأة للمنضم الجديد
+                    count = 5000; 
                 }
                 saveToFirebase();
             }
@@ -334,10 +333,8 @@
         window.showSection = function(section) {
             const sections = ['home-section', 'tasks-section', 'friends-section'];
             const navs = ['nav-home', 'nav-tasks', 'nav-friends'];
-            
             sections.forEach(s => document.getElementById(s).style.display = 'none');
             navs.forEach(n => document.getElementById(n)?.classList.remove('active'));
-
             document.getElementById(section + '-section').style.display = section === 'home' ? 'flex' : 'block';
             document.getElementById('nav-' + section).classList.add('active');
         }

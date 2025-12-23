@@ -8,42 +8,159 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: #000; color: #fff;
+            background-color: #000;
+            color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh; display: flex; flex-direction: column;
-            align-items: center; overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
         }
 
-        .stats-bar { display: flex; justify-content: space-between; width: 100%; padding: 20px; font-size: 13px; }
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px;
+            font-size: 13px;
+        }
         .stat-item { text-align: center; flex: 1; }
         .stat-item span { display: block; color: #00e5ff; font-weight: bold; font-size: 16px; }
 
-        .main-score { font-size: 70px; font-weight: bold; margin-top: 10px; text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        /* Main Score */
+        .main-score {
+            font-size: 70px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
 
-        #home-section { display: flex; flex-direction: column; align-items: center; width: 100%; flex-grow: 1; }
-        .lion-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        /* Home Content */
+        #home-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .lion-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
         .lion-circle {
-            width: 280px; height: 280px; border-radius: 50%;
-            border: 6px solid #00e5ff; box-shadow: 0 0 30px #00e5ff;
-            display: flex; align-items: center; justify-content: center;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 6px solid #00e5ff;
+            box-shadow: 0 0 30px #00e5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%);
-            position: relative; cursor: pointer; transition: transform 0.1s;
+            position: relative;
+            cursor: pointer;
         }
         .lion-circle:active { transform: scale(0.95); }
-        .lion-circle img { width: 95%; height: 95%; border-radius: 50%; object-fit: cover; }
+        .lion-circle img {
+            width: 95%;
+            height: 95%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
-        #tasks-section { display: none; width: 100%; padding: 20px; flex-grow: 1; overflow-y: auto; }
-        .task-header { text-align: center; margin-bottom: 25px; }
-        .task-card { background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .task-btn { background: #00e5ff; color: #000; text-decoration: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; }
+        /* Tasks Section (Hidden by default) */
+        #tasks-section {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .task-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .task-header h2 { font-size: 28px; color: #00e5ff; }
+        
+        .task-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .task-info h4 { font-size: 16px; margin-bottom: 4px; }
+        .task-info p { font-size: 12px; color: #ffd700; }
+        
+        .task-btn {
+            background: #00e5ff;
+            color: #000;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+        }
 
-        .energy-container { width: 85%; margin-bottom: 110px; }
-        .energy-bg { height: 14px; background: #222; border-radius: 20px; overflow: hidden; }
-        .energy-progress { width: 100%; height: 100%; background: linear-gradient(90deg, #ffd700, #ffa500); transition: width 0.3s; }
+        /* Energy Bar */
+        .energy-container {
+            width: 85%;
+            margin-bottom: 110px;
+        }
+        .energy-label { font-size: 14px; margin-bottom: 8px; text-align: left; }
+        .energy-bg {
+            height: 14px;
+            background: #222;
+            border-radius: 20px;
+            border: 1px solid #444;
+            overflow: hidden;
+        }
+        .energy-progress {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ffa500);
+            transition: width 0.3s;
+        }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; height: 85px; border-top: 2px solid #1a1a1a; z-index: 100; }
-        .nav-link { flex: 1; text-align: center; color: #777; font-size: 11px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; }
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 85px;
+            border-top: 2px solid #1a1a1a;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 100;
+        }
+        .nav-link {
+            flex: 1;
+            text-align: center;
+            color: #777;
+            text-decoration: none;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
         .nav-link.active { color: #00e5ff; }
+        .nav-link i { font-size: 22px; font-style: normal; }
+
     </style>
 </head>
 <body>
@@ -62,29 +179,67 @@
                 <img src="lion.png" alt="Lion">
             </div>
         </div>
+
         <div class="energy-container">
             <div class="energy-label">⚡ <span id="e-val">1000</span>/1000</div>
-            <div class="energy-bg"><div class="energy-progress" id="e-bar"></div></div>
+            <div class="energy-bg">
+                <div class="energy-progress" id="e-bar"></div>
+            </div>
         </div>
     </div>
 
     <div id="tasks-section">
-        <div class="task-header"><h2>Social Tasks</h2></div>
-        <div class="task-card"><div><h4>Main Channel</h4><p>+5,000</p></div><a href="https://t.me/REGNNETWORK" class="task-btn">Join</a></div>
-        <div class="task-card"><div><h4>X (Twitter)</h4><p>+10,000</p></div><a href="https://x.com/ReGnNetwoRk_AI" class="task-btn">Follow</a></div>
+        <div class="task-header">
+            <h2>Social Tasks</h2>
+            <p>Complete tasks to earn more points!</p>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Join Main Channel</h4>
+                <p>+5,000 Points</p>
+            </div>
+            <a href="https://t.me/REGNNETWORK" target="_blank" class="task-btn">Join</a>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Join Second Channel</h4>
+                <p>+5,000 Points</p>
+            </div>
+            <a href="https://t.me/XTAIRDRpP" target="_blank" class="task-btn">Join</a>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Join Community Group</h4>
+                <p>+3,000 Points</p>
+            </div>
+            <a href="https://t.me/+4D6ZjKanoLg1NzI0" target="_blank" class="task-btn">Join</a>
+        </div>
+
+        <div class="task-card">
+            <div class="task-info">
+                <h4>Follow Twitter (X)</h4>
+                <p>+10,000 Points</p>
+            </div>
+            <a href="https://x.com/ReGnNetwoRk_AI" target="_blank" class="task-btn">Follow</a>
+        </div>
     </div>
 
     <nav class="bottom-nav">
         <a class="nav-link"><i>⚙️</i>Settings</a>
+        <a class="nav-link"><i>🤝</i>Friends</a>
         <a onclick="showSection('home')" id="nav-home" class="nav-link active"><i>🏠</i>Home</a>
         <a onclick="showSection('tasks')" id="nav-tasks" class="nav-link"><i>📋</i>Tasks</a>
+        <a class="nav-link"><i>🔄</i>Exchange</a>
     </nav>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // إعدادات Firebase الخاصة بكِ
+        // إعداداتك التي نسختِها
         const firebaseConfig = {
             apiKey: "AIzaSyAa8mYXz-54q6kUbZIbKLThR8rKbBgmoAw",
             authDomain: "regnummining.firebaseapp.com",
@@ -98,55 +253,67 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // الحصول على بيانات المستخدم من تليجرام
+        // ربط تليجرام
         const tg = window.Telegram.WebApp;
         tg.expand();
         const user = tg.initDataUnsafe?.user;
-        const userId = user ? user.id : "test_user"; // "test_user" للتجربة في المتصفح
+        const userId = user ? user.id : "guest"; 
         document.getElementById('user-id').innerText = userId;
 
-        let points = 0;
+        let count = 0;
         let energy = 1000;
 
-        // جلب البيانات من Firebase عند فتح التطبيق
+        // جلب البيانات المخزنة فور فتح الموقع
         const userRef = ref(db, 'users/' + userId);
         onValue(userRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                points = data.points || 0;
-                updateUI();
+                count = data.points || 0;
+                updateDisplay();
             }
         });
 
-        // وظيفة النقر
+        // وظيفة النقر (Tap)
         window.tap = function(event) {
-            if (energy > 0) {
-                points++;
-                energy--;
-                updateUI();
-                saveData(); // حفظ في Firebase
+            if(energy > 0) {
+                count += 1;
+                energy -= 1;
+                updateDisplay();
+                saveToFirebase(); // حفظ النقطة فوراً
             }
         }
 
-        function updateUI() {
-            document.getElementById('score').innerText = points;
-            document.getElementById('top-points').innerText = points;
-            document.getElementById('e-val').innerText = energy;
-            document.getElementById('e-bar').style.width = (energy / 10) + "%";
-        }
-
-        function saveData() {
+        function saveToFirebase() {
             set(ref(db, 'users/' + userId), {
-                points: points,
+                points: count,
                 username: user ? user.username : "unknown"
             });
         }
 
+        function updateDisplay() {
+            document.getElementById('score').innerText = count;
+            document.getElementById('top-points').innerText = count;
+            document.getElementById('e-val').innerText = energy;
+            document.getElementById('e-bar').style.width = (energy/10) + "%";
+        }
+
         window.showSection = function(section) {
-            document.getElementById('home-section').style.display = section === 'home' ? 'flex' : 'none';
-            document.getElementById('tasks-section').style.display = section === 'tasks' ? 'block' : 'none';
-            document.getElementById('nav-home').classList.toggle('active', section === 'home');
-            document.getElementById('nav-tasks').classList.toggle('active', section === 'tasks');
+            const home = document.getElementById('home-section');
+            const tasks = document.getElementById('tasks-section');
+            const navHome = document.getElementById('nav-home');
+            const navTasks = document.getElementById('nav-tasks');
+
+            if(section === 'home') {
+                home.style.display = 'flex';
+                tasks.style.display = 'none';
+                navHome.classList.add('active');
+                navTasks.classList.remove('active');
+            } else {
+                home.style.display = 'none';
+                tasks.style.display = 'block';
+                navHome.classList.remove('active');
+                navTasks.classList.add('active');
+            }
         }
     </script>
 </body>

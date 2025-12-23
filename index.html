@@ -111,6 +111,7 @@
             font-size: 14px;
             border: none;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         /* Energy Bar */
@@ -195,19 +196,19 @@
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Main Channel</h4><p>+5,000 Points</p></div>
-            <a href="https://t.me/REGNNETWORK" target="_blank" class="task-btn">Join</a>
+            <button onclick="doTask(this, 'https://t.me/REGNNETWORK', 5000)" class="task-btn">Join</button>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Second Channel</h4><p>+5,000 Points</p></div>
-            <a href="https://t.me/XTAIRDRpP" target="_blank" class="task-btn">Join</a>
+            <button onclick="doTask(this, 'https://t.me/XTAIRDRpP', 5000)" class="task-btn">Join</button>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Community Group</h4><p>+3,000 Points</p></div>
-            <a href="https://t.me/+4D6ZjKanoLg1NzI0" target="_blank" class="task-btn">Join</a>
+            <button onclick="doTask(this, 'https://t.me/+4D6ZjKanoLg1NzI0', 3000)" class="task-btn">Join</button>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Follow Twitter (X)</h4><p>+10,000 Points</p></div>
-            <a href="https://x.com/ReGnNetwoRk_AI" target="_blank" class="task-btn">Follow</a>
+            <button onclick="doTask(this, 'https://x.com/ReGnNetwoRk_AI', 10000)" class="task-btn">Join</button>
         </div>
     </div>
 
@@ -259,7 +260,6 @@
         const referrerId = urlParams.get('start'); 
 
         document.getElementById('user-id').innerText = userId;
-        // تم تحديث الرابط هنا باسم بوتك الصحيح REGNNUMBOT
         document.getElementById('ref-link').innerText = `https://t.me/REGNNUMBOT?start=${userId}`;
 
         let count = 0;
@@ -285,6 +285,33 @@
                 updateDisplay();
             }
         });
+
+        // --- وظيفة المهام الجديدة (التعديل الذي طلبتهِ) ---
+        window.doTask = function(btn, url, reward) {
+            if (btn.innerText === "Join") {
+                window.open(url, '_blank');
+                // يتغير الزر بعد ثانيتين إلى Claim باللون الأحمر الاحترافي
+                setTimeout(() => {
+                    btn.innerText = "🔴 Claim";
+                    btn.style.background = "#ff4d4d"; // أحمر راقي
+                    btn.style.color = "#fff";
+                }, 2000);
+            } else if (btn.innerText === "🔴 Claim") {
+                // تحديث النقاط
+                count += reward;
+                updateDisplay();
+                saveToFirebase();
+                
+                // رسالة تنبيه راقية
+                tg.showAlert(`🎉 مبروك! لقد حصلت على ${reward.toLocaleString()} نقطة.`);
+                
+                // تغيير الزر للون الأخضر المفتوح (الاحترافي) كما طلبتِ
+                btn.innerText = "Completed ✅";
+                btn.style.background = "#00ff88"; // أخضر مفتوح احترافي
+                btn.style.color = "#000";
+                btn.disabled = true;
+            }
+        }
 
         function rewardReferrer(refId) {
             const refUserPath = ref(db, 'users/' + refId);
@@ -327,7 +354,7 @@
         window.copyLink = function() {
             const link = document.getElementById('ref-link').innerText;
             navigator.clipboard.writeText(link);
-            alert("Referral link copied!");
+            tg.showAlert("Referral link copied!");
         }
 
         window.showSection = function(section) {

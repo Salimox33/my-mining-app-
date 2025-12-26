@@ -260,7 +260,9 @@
         const referrerId = urlParams.get('start'); 
 
         document.getElementById('user-id').innerText = userId;
-        document.getElementById('ref-link').innerText = `https://t.me/REGNNUMBOT?start=${userId}`;
+        
+        // التعديل الوحيد هنا: تغيير اسم البوت في رابط الإحالة
+        document.getElementById('ref-link').innerText = `https://t.me/RegnumOfficialbot?start=${userId}`;
 
         let count = 0;
         let energy = 1000;
@@ -269,7 +271,6 @@
 
         const userRef = ref(db, 'users/' + userId);
 
-        // تحميل البيانات وفحص المهام المكتملة عند التشغيل
         onValue(userRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -281,7 +282,6 @@
             }
         });
 
-        // وظيفة تجعل المهام المكتملة تبقى ثابتة للأبد
         function checkPersistentTasks() {
             for (let i = 1; i <= 4; i++) {
                 let taskKey = 'task' + i;
@@ -297,7 +297,6 @@
             }
         }
 
-        // --- وظيفة المهام الجديدة الصارمة والذكية ---
         window.doTask = async function(btn, taskId, url, reward) {
             if (btn.innerText === "Join") {
                 window.open(url, '_blank');
@@ -309,14 +308,12 @@
             } else if (btn.innerText === "🔴 Claim") {
                 btn.innerText = "🔄 Verifying...";
                 
-                // جلب أحدث حالة من Firebase (التي حدثها البوت)
                 const snapshot = await get(userRef);
                 const userData = snapshot.val();
 
                 if (userData && userData.is_member === true) {
-                    // إذا البوت أكد العضوية
                     count += reward;
-                    completedTasks[taskId] = true; // تسجيل المهمة كمكتملة
+                    completedTasks[taskId] = true;
                     
                     await update(userRef, {
                         points: count,
@@ -331,7 +328,6 @@
                     btn.style.color = "#000";
                     btn.disabled = true;
                 } else {
-                    // إذا لم يجد الاشتراك (البوت لم يرسل true)
                     tg.showAlert("❌ You are not a member! Please join and click 'Verify' in the bot first.");
                     btn.innerText = "Join";
                     btn.style.background = "#00e5ff";

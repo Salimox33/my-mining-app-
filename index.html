@@ -10,7 +10,7 @@
         body {
             background-color: #000;
             color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -25,152 +25,138 @@
             width: 100%;
             padding: 20px;
             font-size: 13px;
+            z-index: 10;
         }
         .stat-item { text-align: center; flex: 1; }
         .stat-item span { display: block; color: #00e5ff; font-weight: bold; font-size: 16px; }
 
         /* Main Score */
         .main-score {
-            font-size: 70px;
+            font-size: 60px;
             font-weight: bold;
-            margin-top: 10px;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            margin-top: 5px;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+            z-index: 10;
         }
 
-        /* Home Content */
-        #home-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            flex-grow: 1;
-        }
-
-        .lion-wrapper {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .lion-circle {
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            border: 6px solid #00e5ff;
-            box-shadow: 0 0 30px #00e5ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%);
-            position: relative;
-            cursor: pointer;
-        }
-        .lion-circle:active { transform: scale(0.95); }
-        .lion-circle img {
-            width: 95%;
-            height: 95%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Sections */
+        /* Sections Handling */
+        #home-section { display: flex; flex-direction: column; align-items: center; width: 100%; flex-grow: 1; }
         #tasks-section, #friends-section {
             display: none;
             width: 100%;
             padding: 20px;
             flex-grow: 1;
-            overflow-y: auto;
+            overflow-y: auto; /* يسمح بالتمرير */
+            padding-bottom: 100px; /* مساحة للناف بار */
         }
-        .section-header {
+
+        /* Home Content */
+        .lion-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .lion-circle {
+            width: 260px; height: 260px; border-radius: 50%; border: 6px solid #00e5ff;
+            box-shadow: 0 0 30px #00e5ff; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%);
+            position: relative; cursor: pointer; transition: transform 0.1s;
+        }
+        .lion-circle:active { transform: scale(0.95); }
+        .lion-circle img { width: 95%; height: 95%; border-radius: 50%; object-fit: cover; }
+
+        /* Friends Section Styling (Professional Look) */
+        .invite-header-card {
+            background: linear-gradient(135deg, #111 0%, #000 100%);
+            border: 1px solid #00e5ff44;
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
             margin-bottom: 25px;
         }
-        .section-header h2 { font-size: 28px; color: #00e5ff; }
+        .invite-header-card h3 { font-size: 24px; color: #fff; margin-bottom: 10px; }
+        .invite-header-card p { color: #888; font-size: 14px; margin-bottom: 20px; }
         
-        .task-card, .friend-card {
+        .ref-box {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #00e5ff;
+            word-break: break-all;
+            margin-bottom: 15px;
+            border: 1px dashed #333;
+        }
+
+        .milestone-list { width: 100%; }
+        .milestone-item {
             background: #111;
-            border: 1px solid #222;
             border-radius: 15px;
             padding: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-        .task-info h4, .friend-info h4 { font-size: 16px; margin-bottom: 4px; }
-        .task-info p, .friend-info p { font-size: 12px; color: #ffd700; }
-        
-        .task-btn, .invite-btn {
-            background: #00e5ff;
-            color: #000;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
+            gap: 15px;
+            border-left: 4px solid #333;
             transition: 0.3s;
         }
+        .milestone-item.unlocked { border-left-color: #00e5ff; background: #161616; }
+        .m-icon { font-size: 24px; }
+        .m-info { flex-grow: 1; }
+        .m-info h4 { font-size: 16px; color: #fff; }
+        .m-info p { font-size: 12px; color: #ffd700; }
+        .m-status { font-size: 12px; font-weight: bold; color: #444; }
+        .unlocked .m-status { color: #00e5ff; }
 
-        /* Energy Bar */
-        .energy-container {
-            width: 85%;
-            margin-bottom: 110px;
+        /* Task Cards */
+        .task-card {
+            background: #111; border-radius: 15px; padding: 15px; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center; border: 1px solid #222;
         }
-        .energy-label { font-size: 14px; margin-bottom: 8px; text-align: left; }
-        .energy-bg {
-            height: 14px;
-            background: #222;
-            border-radius: 20px;
-            border: 1px solid #444;
-            overflow: hidden;
-        }
-        .energy-progress {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ffa500);
-            transition: width 0.3s;
-        }
+        .task-info h4 { font-size: 15px; }
+        .task-info p { color: #ffd700; font-size: 12px; }
 
-        /* Bottom Nav */
+        /* Buttons */
+        .task-btn, .invite-btn {
+            background: #00e5ff; color: #000; padding: 10px 20px; border-radius: 12px;
+            font-weight: bold; border: none; cursor: pointer; transition: 0.3s;
+        }
+        .invite-btn { width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3); }
+
+        /* Energy & Nav (Kept as requested) */
+        .energy-container { width: 85%; margin-bottom: 110px; }
+        .energy-bg { height: 12px; background: #222; border-radius: 10px; overflow: hidden; }
+        .energy-progress { width: 100%; height: 100%; background: linear-gradient(90deg, #ffd700, #ffa500); }
+        
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #0a0a0a;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 85px;
-            border-top: 2px solid #1a1a1a;
-            padding-bottom: env(safe-area-inset-bottom);
-            z-index: 100;
+            position: fixed; bottom: 0; width: 100%; background: #0a0a0a;
+            display: flex; justify-content: space-around; align-items: center;
+            height: 80px; border-top: 1px solid #222; z-index: 100;
         }
-        .nav-link {
-            flex: 1;
-            text-align: center;
-            color: #777;
-            text-decoration: none;
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-        }
+        .nav-link { color: #555; text-decoration: none; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
         .nav-link.active { color: #00e5ff; }
-        .nav-link i { font-size: 22px; font-style: normal; }
+        .nav-link i { font-size: 20px; font-style: normal; }
 
+        /* Professional Toast Notification (TonKombat Style) */
+        #toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95); color: #000;
+            padding: 12px 25px; border-radius: 30px; font-weight: bold;
+            display: flex; align-items: center; gap: 10px; z-index: 1000;
+            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #toast.show { top: 20px; }
     </style>
 </head>
 <body>
 
+    <div id="toast">
+        <span id="toast-icon">✅</span>
+        <span id="toast-msg">Link Copied!</span>
+    </div>
+
     <div class="stats-bar">
         <div class="stat-item">Points <span id="top-points">0</span></div>
         <div class="stat-item">Rank <span id="rank">Explorer</span></div>
-        <div class="stat-item">User ID <span id="user-id">Loading...</span></div>
+        <div class="stat-item">User ID <span id="user-id">...</span></div>
     </div>
 
     <div class="main-score" id="score">0</div>
@@ -182,17 +168,15 @@
             </div>
         </div>
         <div class="energy-container">
-            <div class="energy-label">⚡ <span id="e-val">1000</span>/1000</div>
-            <div class="energy-bg">
-                <div class="energy-progress" id="e-bar"></div>
-            </div>
+            <div class="energy-label" style="font-size: 12px; margin-bottom: 5px;">⚡ <span id="e-val">1000</span>/1000</div>
+            <div class="energy-bg"><div class="energy-progress" id="e-bar"></div></div>
         </div>
     </div>
 
     <div id="tasks-section">
-        <div class="section-header">
-            <h2>Social Tasks</h2>
-            <p>Complete tasks to earn more points!</p>
+        <div class="invite-header-card" style="margin-bottom: 15px; padding: 15px;">
+            <h3>Social Tasks</h3>
+            <p>Verify membership in the bot first!</p>
         </div>
         <div class="task-card">
             <div class="task-info"><h4>Join Main Channel</h4><p>+5,000 Points</p></div>
@@ -213,17 +197,51 @@
     </div>
 
     <div id="friends-section">
-        <div class="section-header">
-            <h2>Invite Friends</h2>
-            <p>Earn 5,000 for every successful friend!</p>
+        <div class="invite-header-card">
+            <h3 id="friend-count">0 Friends</h3>
+            <p>Your referral link:</p>
+            <div class="ref-box" id="ref-link">loading...</div>
+            <button onclick="copyLink()" class="invite-btn">Invite a Friend 🚀</button>
         </div>
-        <div class="friend-card" style="flex-direction: column; text-align: center; gap: 15px;">
-            <div class="friend-info">
-                <h4 id="friend-count">You invited: 0 friends</h4>
-                <p>Your referral link:</p>
-                <code style="display:block; background:#000; padding:10px; border-radius:10px; margin-top:10px; font-size:10px; color:#00e5ff;" id="ref-link">loading...</code>
+
+        <h3 style="margin: 0 0 15px 5px; font-size: 18px; color: #00e5ff;">Referral Rewards</h3>
+        
+        <div class="milestone-list">
+            <div class="milestone-item" id="m1">
+                <div class="m-icon">🥉</div>
+                <div class="m-info"><h4>1 Referral</h4><p>+5,000 Coins</p></div>
+                <div class="m-status" id="s1">Locked</div>
             </div>
-            <button onclick="copyLink()" class="invite-btn">Copy Link</button>
+            <div class="milestone-item" id="m3">
+                <div class="m-icon">🥈</div>
+                <div class="m-info"><h4>3 Referrals</h4><p>+15,000 Coins</p></div>
+                <div class="m-status" id="s3">Locked</div>
+            </div>
+            <div class="milestone-item" id="m5">
+                <div class="m-icon">🥇</div>
+                <div class="m-info"><h4>5 Referrals</h4><p>+30,000 Coins</p></div>
+                <div class="m-status" id="s5">Locked</div>
+            </div>
+            <div class="milestone-item" id="m10">
+                <div class="m-icon">💎</div>
+                <div class="m-info"><h4>10 Referrals</h4><p>+100,000 Coins</p></div>
+                <div class="m-status" id="s10">Locked</div>
+            </div>
+            <div class="milestone-item" id="m20">
+                <div class="m-icon">🔥</div>
+                <div class="m-info"><h4>20 Referrals</h4><p>+200,000 Coins</p></div>
+                <div class="m-status" id="s20">Locked</div>
+            </div>
+            <div class="milestone-item" id="m50">
+                <div class="m-icon">👑</div>
+                <div class="m-info"><h4>50 Referrals</h4><p>+500,000 Coins</p></div>
+                <div class="m-status" id="s50">Locked</div>
+            </div>
+            <div class="milestone-item" id="m100">
+                <div class="m-icon">🪐</div>
+                <div class="m-info"><h4>100 Referrals</h4><p>+1,000,000 Coins</p></div>
+                <div class="m-status" id="s100">Locked</div>
+            </div>
         </div>
     </div>
 
@@ -256,20 +274,15 @@
 
         const user = tg.initDataUnsafe?.user;
         const userId = user ? user.id.toString() : "guest";
-        const urlParams = new URLSearchParams(window.location.search);
-        const referrerId = urlParams.get('start'); 
-
-        document.getElementById('user-id').innerText = userId;
-        
-        // التعديل الوحيد هنا: تغيير اسم البوت في رابط الإحالة
-        document.getElementById('ref-link').innerText = `https://t.me/RegnumOfficialbot?start=${userId}`;
+        const userRef = ref(db, 'users/' + userId);
 
         let count = 0;
         let energy = 1000;
         let friendsInvited = 0;
         let completedTasks = {};
 
-        const userRef = ref(db, 'users/' + userId);
+        document.getElementById('user-id').innerText = userId;
+        document.getElementById('ref-link').innerText = `https://t.me/RegnumOfficialbot?start=${userId}`;
 
         onValue(userRef, (snapshot) => {
             const data = snapshot.val();
@@ -279,22 +292,38 @@
                 completedTasks = data.completedTasks || {};
                 updateDisplay();
                 checkPersistentTasks();
+                updateMilestones();
             }
         });
 
-        function checkPersistentTasks() {
-            for (let i = 1; i <= 4; i++) {
-                let taskKey = 'task' + i;
-                if (completedTasks[taskKey]) {
-                    let btn = document.getElementById('btn-' + taskKey);
-                    if (btn) {
-                        btn.innerText = "Completed ✅";
-                        btn.style.background = "#222";
-                        btn.style.color = "#777";
-                        btn.disabled = true;
-                    }
+        // ميزة الإشعار الاحترافية
+        window.showToast = function(msg, icon = "✅") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            document.getElementById('toast-icon').innerText = icon;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function updateMilestones() {
+            const milestones = [1, 3, 5, 10, 20, 50, 100];
+            milestones.forEach(m => {
+                const item = document.getElementById('m' + m);
+                const status = document.getElementById('s' + m);
+                if (friendsInvited >= m) {
+                    item.classList.add('unlocked');
+                    status.innerText = "Completed ✅";
+                } else {
+                    item.classList.remove('unlocked');
+                    status.innerText = `${friendsInvited}/${m}`;
                 }
-            }
+            });
+        }
+
+        window.copyLink = function() {
+            const link = document.getElementById('ref-link').innerText;
+            navigator.clipboard.writeText(link);
+            showToast("Referral Link Copied!"); // إشعار احترافي
         }
 
         window.doTask = async function(btn, taskId, url, reward) {
@@ -303,67 +332,53 @@
                 setTimeout(() => {
                     btn.innerText = "🔴 Claim";
                     btn.style.background = "#ff4d4d";
-                    btn.style.color = "#fff";
                 }, 2000);
             } else if (btn.innerText === "🔴 Claim") {
-                btn.innerText = "🔄 Verifying...";
-                
+                btn.innerText = "🔄...";
                 const snapshot = await get(userRef);
                 const userData = snapshot.val();
-
                 if (userData && userData.is_member === true) {
                     count += reward;
                     completedTasks[taskId] = true;
-                    
-                    await update(userRef, {
-                        points: count,
-                        completedTasks: completedTasks
-                    });
-
-                    updateDisplay();
-                    tg.showAlert(`🎉 Success! +${reward.toLocaleString()} points.`);
-                    
+                    await update(userRef, { points: count, completedTasks: completedTasks });
+                    showToast("Task Success! +" + reward, "💰");
                     btn.innerText = "Completed ✅";
-                    btn.style.background = "#00ff88";
-                    btn.style.color = "#000";
                     btn.disabled = true;
                 } else {
-                    tg.showAlert("❌ You are not a member! Please join and click 'Verify' in the bot first.");
+                    showToast("Join channel first!", "❌");
                     btn.innerText = "Join";
                     btn.style.background = "#00e5ff";
                 }
             }
         }
 
-        window.tap = function(event) {
-            if(energy > 0) {
-                count += 1;
-                energy -= 1;
-                updateDisplay();
-                saveToFirebase();
+        function updateDisplay() {
+            document.getElementById('score').innerText = count.toLocaleString();
+            document.getElementById('top-points').innerText = count.toLocaleString();
+            document.getElementById('e-val').innerText = energy;
+            document.getElementById('e-bar').style.width = (energy/10) + "%";
+            document.getElementById('friend-count').innerText = `${friendsInvited} Friends`;
+        }
+
+        function checkPersistentTasks() {
+            for (let i = 1; i <= 4; i++) {
+                let taskKey = 'task' + i;
+                if (completedTasks[taskKey]) {
+                    let btn = document.getElementById('btn-' + taskKey);
+                    if (btn) {
+                        btn.innerText = "Completed ✅";
+                        btn.style.background = "#222"; btn.disabled = true;
+                    }
+                }
             }
         }
 
-        function saveToFirebase() {
-            update(ref(db, 'users/' + userId), {
-                points: count,
-                username: user ? user.username : "unknown",
-                friendsCount: friendsInvited
-            });
-        }
-
-        function updateDisplay() {
-            document.getElementById('score').innerText = count;
-            document.getElementById('top-points').innerText = count;
-            document.getElementById('e-val').innerText = energy;
-            document.getElementById('e-bar').style.width = (energy/10) + "%";
-            document.getElementById('friend-count').innerText = `You invited: ${friendsInvited} friends`;
-        }
-
-        window.copyLink = function() {
-            const link = document.getElementById('ref-link').innerText;
-            navigator.clipboard.writeText(link);
-            tg.showAlert("Referral link copied!");
+        window.tap = function(event) {
+            if(energy > 0) {
+                count += 1; energy -= 1;
+                updateDisplay();
+                update(ref(db, 'users/' + userId), { points: count });
+            }
         }
 
         window.showSection = function(section) {

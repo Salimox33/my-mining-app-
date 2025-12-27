@@ -18,13 +18,13 @@
             overflow: hidden;
         }
 
-        /* Stats Bar - تعديل الإطارات مع الأيقونات وإنزالها قليلاً */
+        /* Stats Bar - تكبير الصور كما طلبتِ */
         .stats-bar {
             display: flex;
             justify-content: space-between;
             width: 95%;
             padding: 10px;
-            margin-top: 15px;
+            margin-top: 10px; /* تقليل المسافة لرفع المحتوى */
             gap: 8px;
             z-index: 10;
         }
@@ -33,40 +33,41 @@
             flex: 1; 
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(0, 229, 255, 0.2);
-            padding: 10px 5px;
+            padding: 12px 5px; /* زيادة الطول قليلاً لتناسب الصور الكبيرة */
             border-radius: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
-        .stat-icon-small { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; }
-        .stat-label { font-size: 10px; color: #888; text-transform: uppercase; font-weight: bold; }
+        /* تكبير الأيقونات للضعف */
+        .stat-icon-small { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
+        .stat-label { font-size: 9px; color: #888; text-transform: uppercase; font-weight: bold; }
         .stat-item span { 
             display: block; 
             color: #00e5ff; 
             font-weight: bold; 
-            font-size: 12px;
+            font-size: 11px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
         }
 
-        /* Main Score Area - إطار احترافي مع فاصل و USDT */
+        /* Main Score Area - مدمج لرفع الأسد */
         .score-box {
             text-align: center;
-            margin-top: 20px;
-            padding: 15px 35px;
+            margin-top: 10px; /* تقليل المسافة */
+            padding: 10px 30px;
             border: 2px solid rgba(0, 229, 255, 0.3);
             border-radius: 30px;
             background: linear-gradient(180deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
             box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
             z-index: 10;
-            min-width: 220px;
+            min-width: 200px;
         }
         .main-score {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 800;
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
             display: flex;
@@ -78,28 +79,18 @@
             height: 1px;
             width: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.5), transparent);
-            margin: 10px 0;
+            margin: 6px 0;
         }
         .usd-price {
             color: #00ff88;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             letter-spacing: 1px;
         }
 
-        /* Sections Handling */
+        /* Home Content - رفع الأسد للأعلى */
         #home-section { display: flex; flex-direction: column; align-items: center; width: 100%; flex-grow: 1; }
-        #tasks-section, #friends-section {
-            display: none;
-            width: 100%;
-            padding: 20px;
-            flex-grow: 1;
-            overflow-y: auto; 
-            padding-bottom: 100px; 
-        }
-
-        /* Home Content */
-        .lion-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .lion-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; margin-top: -20px; }
         .lion-circle {
             width: 260px; height: 260px; border-radius: 50%; border: 6px solid #00e5ff;
             box-shadow: 0 0 30px #00e5ff; display: flex; align-items: center; justify-content: center;
@@ -108,6 +99,16 @@
         }
         .lion-circle:active { transform: scale(0.95); }
         .lion-circle img { width: 95%; height: 95%; border-radius: 50%; object-fit: cover; }
+
+        /* Sections Handling */
+        #tasks-section, #friends-section {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto; 
+            padding-bottom: 100px; 
+        }
 
         /* Friends Section Styling */
         .invite-header-card {
@@ -168,8 +169,11 @@
         }
         .invite-btn { width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3); }
 
-        /* Energy & Nav */
+        /* Energy - إضافة نص الشحن التلقائي */
         .energy-container { width: 85%; margin-bottom: 110px; }
+        .energy-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px; }
+        .energy-label { font-size: 13px; font-weight: bold; }
+        .energy-recovery-info { font-size: 10px; color: #ffd700; display: flex; align-items: center; gap: 4px; }
         .energy-bg { height: 12px; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #444;}
         .energy-progress { width: 100%; height: 100%; background: linear-gradient(90deg, #ffd700, #ffa500); transition: width 0.3s;}
         
@@ -212,7 +216,7 @@
             <span id="rank">Explorer</span>
         </div>
         <div class="stat-item">
-            <img id="user-photo" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="stat-icon-small" style="border: 1px solid #00e5ff;">
+            <img id="user-photo" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="stat-icon-small" style="border: 2px solid #00e5ff;">
             <span class="stat-label">User</span>
             <span id="user-display">Loading...</span>
         </div>
@@ -234,7 +238,10 @@
             </div>
         </div>
         <div class="energy-container">
-            <div class="energy-label" style="font-size: 12px; margin-bottom: 5px;">⚡ <span id="e-val">1000</span>/1000</div>
+            <div class="energy-header">
+                <div class="energy-label">⚡ <span id="e-val">1000</span>/1000</div>
+                <div class="energy-recovery-info">⏳ Full charge every 3h</div>
+            </div>
             <div class="energy-bg"><div class="energy-progress" id="e-bar"></div></div>
         </div>
     </div>
@@ -335,7 +342,6 @@
         const maxEnergy = 1000;
         const price = 0.00005;
 
-        // تطبيق صورة واسم المستخدم بشكل احترافي
         if (user) {
             document.getElementById('user-display').innerText = user.username || user.first_name || "Lion";
             if (user.photo_url) {
@@ -409,12 +415,14 @@
             milestones.forEach(m => {
                 const item = document.getElementById('m' + m);
                 const status = document.getElementById('s' + m);
-                if (friendsInvited >= m) {
-                    item.classList.add('unlocked');
-                    status.innerText = "Completed ✅";
-                } else {
-                    item.classList.remove('unlocked');
-                    status.innerText = `${friendsInvited}/${m}`;
+                if (item && status) {
+                    if (friendsInvited >= m) {
+                        item.classList.add('unlocked');
+                        status.innerText = "Completed ✅";
+                    } else {
+                        item.classList.remove('unlocked');
+                        status.innerText = `${friendsInvited}/${m}`;
+                    }
                 }
             });
         }

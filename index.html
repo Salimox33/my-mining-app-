@@ -18,13 +18,13 @@
             overflow: hidden;
         }
 
-        /* Stats Bar - تكبير الصور كما طلبتِ */
+        /* Stats Bar */
         .stats-bar {
             display: flex;
             justify-content: space-between;
             width: 95%;
             padding: 10px;
-            margin-top: 10px; /* تقليل المسافة لرفع المحتوى */
+            margin-top: 10px;
             gap: 8px;
             z-index: 10;
         }
@@ -33,14 +33,13 @@
             flex: 1; 
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(0, 229, 255, 0.2);
-            padding: 12px 5px; /* زيادة الطول قليلاً لتناسب الصور الكبيرة */
+            padding: 12px 5px;
             border-radius: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
         }
-        /* تكبير الأيقونات للضعف */
         .stat-icon-small { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
         .stat-label { font-size: 9px; color: #888; text-transform: uppercase; font-weight: bold; }
         .stat-item span { 
@@ -54,10 +53,10 @@
             max-width: 100%;
         }
 
-        /* Main Score Area - مدمج لرفع الأسد */
+        /* Main Score Area */
         .score-box {
             text-align: center;
-            margin-top: 10px; /* تقليل المسافة */
+            margin-top: 10px;
             padding: 10px 30px;
             border: 2px solid rgba(0, 229, 255, 0.3);
             border-radius: 30px;
@@ -88,7 +87,7 @@
             letter-spacing: 1px;
         }
 
-        /* Home Content - رفع الأسد للأعلى */
+        /* Home Content */
         #home-section { display: flex; flex-direction: column; align-items: center; width: 100%; flex-grow: 1; }
         .lion-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; margin-top: -20px; }
         .lion-circle {
@@ -101,7 +100,7 @@
         .lion-circle img { width: 95%; height: 95%; border-radius: 50%; object-fit: cover; }
 
         /* Sections Handling */
-        #tasks-section, #friends-section {
+        #tasks-section, #friends-section, #exchange-section {
             display: none;
             width: 100%;
             padding: 20px;
@@ -109,6 +108,64 @@
             overflow-y: auto; 
             padding-bottom: 100px; 
         }
+
+        /* Exchange Styling */
+        .exchange-container {
+            background: #111;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #222;
+        }
+        .input-box {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .input-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            outline: none;
+            width: 60%;
+        }
+        .max-btn {
+            color: #00e5ff;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .swap-arrow { text-align: center; font-size: 24px; color: #00e5ff; margin: 10px 0; }
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .swap-btn { background: #00e5ff; color: #000; }
+        .withdraw-btn { background: #222; color: #fff; border: 1px solid #333; margin-top: 20px; }
+
+        .asset-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            border: 1px solid #333;
+        }
+        .asset-logo { width: 30px; height: 30px; }
 
         /* Friends Section Styling */
         .invite-header-card {
@@ -121,31 +178,9 @@
         }
         .invite-header-card h3 { font-size: 24px; color: #fff; margin-bottom: 10px; }
         .invite-header-card p { color: #888; font-size: 14px; margin-bottom: 20px; }
-        
-        .ref-box {
-            background: #1a1a1a;
-            padding: 12px;
-            border-radius: 12px;
-            font-family: monospace;
-            font-size: 12px;
-            color: #00e5ff;
-            word-break: break-all;
-            margin-bottom: 15px;
-            border: 1px dashed #333;
-        }
-
+        .ref-box { background: #1a1a1a; padding: 12px; border-radius: 12px; font-family: monospace; font-size: 12px; color: #00e5ff; word-break: break-all; margin-bottom: 15px; border: 1px dashed #333; }
         .milestone-list { width: 100%; }
-        .milestone-item {
-            background: #111;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-left: 4px solid #333;
-            transition: 0.3s;
-        }
+        .milestone-item { background: #111; border-radius: 15px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; border-left: 4px solid #333; transition: 0.3s; }
         .milestone-item.unlocked { border-left-color: #00e5ff; background: #161616; }
         .m-icon { font-size: 24px; }
         .m-info { flex-grow: 1; }
@@ -155,21 +190,15 @@
         .unlocked .m-status { color: #00e5ff; }
 
         /* Task Cards */
-        .task-card {
-            background: #111; border-radius: 15px; padding: 15px; margin-bottom: 12px;
-            display: flex; justify-content: space-between; align-items: center; border: 1px solid #222;
-        }
+        .task-card { background: #111; border-radius: 15px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; }
         .task-info h4 { font-size: 15px; }
         .task-info p { color: #ffd700; font-size: 12px; }
 
         /* Buttons */
-        .task-btn, .invite-btn {
-            background: #00e5ff; color: #000; padding: 10px 20px; border-radius: 12px;
-            font-weight: bold; border: none; cursor: pointer; transition: 0.3s;
-        }
+        .task-btn, .invite-btn { background: #00e5ff; color: #000; padding: 10px 20px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
         .invite-btn { width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3); }
 
-        /* Energy - إضافة نص الشحن التلقائي */
+        /* Energy */
         .energy-container { width: 85%; margin-bottom: 110px; }
         .energy-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px; }
         .energy-label { font-size: 13px; font-weight: bold; }
@@ -276,32 +305,51 @@
             <div class="ref-box" id="ref-link">loading...</div>
             <button onclick="copyLink()" class="invite-btn">Invite a Friend 🚀</button>
         </div>
-
         <h3 style="margin: 0 0 15px 5px; font-size: 18px; color: #00e5ff;">Referral Rewards</h3>
-        
         <div class="milestone-list">
-            <div class="milestone-item" id="m1">
-                <div class="m-icon">🥉</div><div class="m-info"><h4>1 Referral</h4><p>+5,000 Coins</p></div><div class="m-status" id="s1">Locked</div>
+            <div class="milestone-item" id="m1"><div class="m-icon">🥉</div><div class="m-info"><h4>1 Referral</h4><p>+5,000 Coins</p></div><div class="m-status" id="s1">Locked</div></div>
+            <div class="milestone-item" id="m3"><div class="m-icon">🥈</div><div class="m-info"><h4>3 Referrals</h4><p>+15,000 Coins</p></div><div class="m-status" id="s3">Locked</div></div>
+            <div class="milestone-item" id="m5"><div class="m-icon">🥇</div><div class="m-info"><h4>5 Referrals</h4><p>+30,000 Coins</p></div><div class="m-status" id="s5">Locked</div></div>
+            <div class="milestone-item" id="m10"><div class="m-icon">💎</div><div class="m-info"><h4>10 Referrals</h4><p>+100,000 Coins</p></div><div class="m-status" id="s10">Locked</div></div>
+            <div class="milestone-item" id="m20"><div class="m-icon">🔥</div><div class="m-info"><h4>20 Referrals</h4><p>+200,000 Coins</p></div><div class="m-status" id="s20">Locked</div></div>
+            <div class="milestone-item" id="m50"><div class="m-icon">👑</div><div class="m-info"><h4>50 Referrals</h4><p>+500,000 Coins</p></div><div class="m-status" id="s50">Locked</div></div>
+            <div class="milestone-item" id="m100"><div class="m-icon">🪐</div><div class="m-info"><h4>100 Referrals</h4><p>+1,000,000 Coins</p></div><div class="m-status" id="s100">Locked</div></div>
+        </div>
+    </div>
+
+    <div id="exchange-section">
+        <h3 style="margin-bottom: 20px; color: #00e5ff;">Currency Exchange</h3>
+        
+        <div class="exchange-container">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#888;">
+                <span>From (Points)</span>
+                <span id="user-points-label">Balance: 0</span>
             </div>
-            <div class="milestone-item" id="m3">
-                <div class="m-icon">🥈</div><div class="m-info"><h4>3 Referrals</h4><p>+15,000 Coins</p></div><div class="m-status" id="s3">Locked</div>
+            <div class="input-box">
+                <input type="number" id="swap-input" placeholder="0.00" oninput="calculateSwap()">
+                <span class="max-btn" onclick="setMax()">MAX</span>
             </div>
-            <div class="milestone-item" id="m5">
-                <div class="m-icon">🥇</div><div class="m-info"><h4>5 Referrals</h4><p>+30,000 Coins</p></div><div class="m-status" id="s5">Locked</div>
+
+            <div class="swap-arrow">⬇️</div>
+
+            <div style="font-size:12px; color:#888;">To (Estimated)</div>
+            <div class="input-box">
+                <input type="text" id="swap-output" placeholder="0.00" disabled>
+                <span style="font-weight:bold; color:#00ff88;">USDT</span>
             </div>
-            <div class="milestone-item" id="m10">
-                <div class="m-icon">💎</div><div class="m-info"><h4>10 Referrals</h4><p>+100,000 Coins</p></div><div class="m-status" id="s10">Locked</div>
-            </div>
-            <div class="milestone-item" id="m20">
-                <div class="m-icon">🔥</div><div class="m-info"><h4>20 Referrals</h4><p>+200,000 Coins</p></div><div class="m-status" id="s20">Locked</div>
-            </div>
-            <div class="milestone-item" id="m50">
-                <div class="m-icon">👑</div><div class="m-info"><h4>50 Referrals</h4><p>+500,000 Coins</p></div><div class="m-status" id="s50">Locked</div>
-            </div>
-            <div class="milestone-item" id="m100">
-                <div class="m-icon">🪐</div><div class="m-info"><h4>100 Referrals</h4><p>+1,000,000 Coins</p></div><div class="m-status" id="s100">Locked</div>
+
+            <button class="action-btn swap-btn" onclick="handleSwap()">Swap to USDT</button>
+        </div>
+
+        <div class="asset-row">
+            <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" class="asset-logo">
+            <div style="flex-grow:1;">
+                <div style="font-weight:bold;">Withdrawal (BNB Network)</div>
+                <div style="font-size:10px; color:#888;">Minimum: 10 USDT</div>
             </div>
         </div>
+
+        <button class="action-btn withdraw-btn" onclick="handleWithdraw()">Withdraw Funds</button>
     </div>
 
     <nav class="bottom-nav">
@@ -309,7 +357,7 @@
         <a onclick="showSection('friends')" id="nav-friends" class="nav-link"><i>🤝</i>Friends</a>
         <a onclick="showSection('home')" id="nav-home" class="nav-link active"><i>🏠</i>Home</a>
         <a onclick="showSection('tasks')" id="nav-tasks" class="nav-link"><i>📋</i>Tasks</a>
-        <a class="nav-link"><i>🔄</i>Exchange</a>
+        <a onclick="showSection('exchange')" id="nav-exchange" class="nav-link"><i>🔄</i>Exchange</a>
     </nav>
 
     <script type="module">
@@ -344,9 +392,7 @@
 
         if (user) {
             document.getElementById('user-display').innerText = user.username || user.first_name || "Lion";
-            if (user.photo_url) {
-                document.getElementById('user-photo').src = user.photo_url;
-            }
+            if (user.photo_url) document.getElementById('user-photo').src = user.photo_url;
         }
         document.getElementById('ref-link').innerText = `https://t.me/RegnumOfficialbot?start=${userId}`;
 
@@ -375,6 +421,7 @@
         function updateDisplay() {
             document.getElementById('score').innerText = count.toLocaleString();
             document.getElementById('top-points').innerText = count.toLocaleString();
+            document.getElementById('user-points-label').innerText = `Balance: ${count.toLocaleString()}`;
             document.getElementById('usd-val').innerText = `≈ ${(count * price).toFixed(2)} USDT`;
             document.getElementById('e-val').innerText = energy;
             document.getElementById('e-bar').style.width = (energy / maxEnergy * 100) + "%";
@@ -386,15 +433,50 @@
                 count += 1;
                 energy -= 1;
                 updateDisplay();
-                update(userRef, { 
-                    points: count, 
-                    energy: energy, 
-                    last_active: Date.now() 
-                });
+                update(userRef, { points: count, energy: energy, last_active: Date.now() });
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             }
         }
 
+        // --- EXCHANGE LOGIC ---
+        window.calculateSwap = function() {
+            const inputVal = document.getElementById('swap-input').value;
+            document.getElementById('swap-output').value = (inputVal * price).toFixed(2);
+        }
+
+        window.setMax = function() {
+            document.getElementById('swap-input').value = count;
+            calculateSwap();
+        }
+
+        window.handleSwap = async function() {
+            const amount = parseFloat(document.getElementById('swap-input').value);
+            if (!amount || amount <= 0) return showToast("Enter a valid amount", "❌");
+            if (amount > count) return showToast("Insufficient Balance", "❌");
+
+            const remaining = count - amount;
+            await update(userRef, { points: remaining });
+            showToast("Swap Completed Successfully!", "💰");
+            document.getElementById('swap-input').value = "";
+            document.getElementById('swap-output').value = "";
+        }
+
+        window.handleWithdraw = function() {
+            const currentUSD = count * price;
+            if (currentUSD >= 10) {
+                tg.showPopup({
+                    title: 'Withdraw to BNB Chain',
+                    message: 'Please provide your BEP20 USDT Address:',
+                    buttons: [{type: 'default', text: 'Confirm Address'}]
+                }, (buttonId) => {
+                    showToast("Withdrawal successful!", "✅");
+                });
+            } else {
+                showToast("Minimum withdrawal is 10 USDT", "❌");
+            }
+        }
+
+        // --- PREVIOUS LOGIC (KEEP UNCHANGED) ---
         setInterval(() => {
             if (energy < maxEnergy) {
                 energy = Math.min(maxEnergy, energy + (maxEnergy / (3 * 3600)));
@@ -436,10 +518,7 @@
         window.doTask = async function(btn, taskId, url, reward) {
             if (btn.innerText === "Join") {
                 window.open(url, '_blank');
-                setTimeout(() => {
-                    btn.innerText = "🔴 Claim";
-                    btn.style.background = "#ff4d4d";
-                }, 2000);
+                setTimeout(() => { btn.innerText = "🔴 Claim"; btn.style.background = "#ff4d4d"; }, 2000);
             } else if (btn.innerText === "🔴 Claim") {
                 btn.innerText = "🔄...";
                 const snapshot = await get(userRef);
@@ -449,12 +528,10 @@
                     completedTasks[taskId] = true;
                     await update(userRef, { points: count, completedTasks: completedTasks });
                     showToast("Task Success! +" + reward, "💰");
-                    btn.innerText = "Completed ✅";
-                    btn.disabled = true;
+                    btn.innerText = "Completed ✅"; btn.disabled = true;
                 } else {
                     showToast("Join channel first!", "❌");
-                    btn.innerText = "Join";
-                    btn.style.background = "#00e5ff";
+                    btn.innerText = "Join"; btn.style.background = "#00e5ff";
                 }
             }
         }
@@ -464,21 +541,18 @@
                 let taskKey = 'task' + i;
                 if (completedTasks[taskKey]) {
                     let btn = document.getElementById('btn-' + taskKey);
-                    if (btn) {
-                        btn.innerText = "Completed ✅";
-                        btn.style.background = "#222"; btn.disabled = true;
-                    }
+                    if (btn) { btn.innerText = "Completed ✅"; btn.style.background = "#222"; btn.disabled = true; }
                 }
             }
         }
 
         window.showSection = function(section) {
-            const sections = ['home-section', 'tasks-section', 'friends-section'];
-            const navs = ['nav-home', 'nav-tasks', 'nav-friends'];
+            const sections = ['home-section', 'tasks-section', 'friends-section', 'exchange-section'];
+            const navs = ['nav-home', 'nav-tasks', 'nav-friends', 'nav-exchange'];
             sections.forEach(s => document.getElementById(s).style.display = 'none');
             navs.forEach(n => document.getElementById(n)?.classList.remove('active'));
             document.getElementById(section + '-section').style.display = section === 'home' ? 'flex' : 'block';
-            document.getElementById('nav-' + section).classList.add('active');
+            if (document.getElementById('nav-' + section)) document.getElementById('nav-' + section).classList.add('active');
         }
     </script>
 </body>

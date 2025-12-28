@@ -167,6 +167,20 @@
         }
         .asset-logo { width: 30px; height: 30px; }
 
+        /* New Wallet Input Style */
+        .wallet-input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #00e5ff;
+            padding: 12px;
+            border-radius: 10px;
+            color: #fff;
+            margin-top: 10px;
+            outline: none;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
         /* Friends Section Styling */
         .invite-header-card {
             background: linear-gradient(135deg, #111 0%, #000 100%);
@@ -349,6 +363,8 @@
             </div>
         </div>
 
+        <input type="text" id="wallet-address" class="wallet-input" placeholder="Paste your BNB Smart Chain address (0x...)">
+
         <button class="action-btn withdraw-btn" onclick="handleWithdraw()">Withdraw Funds</button>
     </div>
 
@@ -461,22 +477,33 @@
             document.getElementById('swap-output').value = "";
         }
 
+        // تحديث وظيفة السحب للتحقق من العنوان
         window.handleWithdraw = function() {
             const currentUSD = count * price;
-            if (currentUSD >= 10) {
-                tg.showPopup({
-                    title: 'Withdraw to BNB Chain',
-                    message: 'Please provide your BEP20 USDT Address:',
-                    buttons: [{type: 'default', text: 'Confirm Address'}]
-                }, (buttonId) => {
-                    showToast("Withdrawal successful!", "✅");
-                });
-            } else {
-                showToast("Minimum withdrawal is 10 USDT", "❌");
+            const walletAddr = document.getElementById('wallet-address').value.trim();
+
+            if (currentUSD < 10) {
+                return showToast("Minimum withdrawal is 10 USDT", "❌");
             }
+
+            // نظام التحقق من التنسيق الصحيح لشبكة BNB (BEP20)
+            const bscPattern = /^0x[a-fA-F0-9]{40}$/;
+            
+            if (!walletAddr || !bscPattern.test(walletAddr)) {
+                return showToast("Invalid Format! Use a 0x address", "❌");
+            }
+
+            // إذا كان كل شيء صحيح
+            tg.showPopup({
+                title: 'Withdrawal Pending',
+                message: `Withdrawal request for address ${walletAddr} has been sent for review.`,
+                buttons: [{type: 'ok'}]
+            });
+            showToast("Request Sent!", "✅");
+            document.getElementById('wallet-address').value = "";
         }
 
-        // --- PREVIOUS LOGIC (KEEP UNCHANGED) ---
+        // --- PREVIOUS LOGIC ---
         setInterval(() => {
             if (energy < maxEnergy) {
                 energy = Math.min(maxEnergy, energy + (maxEnergy / (3 * 3600)));

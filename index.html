@@ -109,6 +109,16 @@
             padding-bottom: 100px; 
         }
 
+        /* Wallet/Balance Card */
+        .usdt-wallet-card {
+            background: linear-gradient(135deg, #004e5a, #000);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #00ff88;
+            text-align: center;
+        }
+
         /* Exchange Styling */
         .exchange-container {
             background: #111;
@@ -153,7 +163,7 @@
             margin-top: 10px;
         }
         .swap-btn { background: #00e5ff; color: #000; }
-        .withdraw-btn { background: #222; color: #fff; border: 1px solid #333; margin-top: 20px; }
+        .withdraw-btn { background: #fff; color: #000; margin-top: 20px; }
 
         .asset-row {
             display: flex;
@@ -332,37 +342,45 @@
     </div>
 
     <div id="exchange-section">
-        <h3 style="margin-bottom: 20px; color: #00e5ff;">Currency Exchange</h3>
-        
+        <div class="usdt-wallet-card">
+            <p style="font-size: 12px; opacity: 0.8;">Available USDT Balance</p>
+            <h2 id="usdt-balance" style="font-size: 32px; color: #00ff88; margin: 5px 0;">0.00</h2>
+            <p style="font-size: 10px; color: #888;">This balance is separate from mining points</p>
+        </div>
+
         <div class="exchange-container">
             <div style="display:flex; justify-content:space-between; font-size:12px; color:#888;">
-                <span>From (Points)</span>
+                <span>Convert Points to USDT</span>
                 <span id="user-points-label">Balance: 0</span>
             </div>
             <div class="input-box">
-                <input type="number" id="swap-input" placeholder="0.00" oninput="calculateSwap()">
+                <input type="number" id="swap-input" placeholder="0" oninput="calculateSwap()">
                 <span class="max-btn" onclick="setMax()">MAX</span>
             </div>
 
             <div class="swap-arrow">⬇️</div>
 
-            <div style="font-size:12px; color:#888;">To (Estimated)</div>
+            <div style="font-size:12px; color:#888;">Estimated USDT</div>
             <div class="input-box">
                 <input type="text" id="swap-output" placeholder="0.00" disabled>
                 <span style="font-weight:bold; color:#00ff88;">USDT</span>
             </div>
 
-            <button class="action-btn swap-btn" onclick="handleSwap()">Swap to USDT</button>
+            <button class="action-btn swap-btn" onclick="handleSwap()">Confirm Swap</button>
         </div>
 
         <div class="asset-row">
             <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" class="asset-logo">
             <div style="flex-grow:1;">
-                <div style="font-weight:bold;">Withdrawal (BNB Network)</div>
+                <div style="font-weight:bold;">Withdraw USDT (BEP20)</div>
                 <div style="font-size:10px; color:#888;">Minimum: 10 USDT</div>
             </div>
         </div>
 
+        <div class="input-box">
+            <input type="number" id="withdraw-amount" placeholder="0.00">
+            <span class="max-btn" onclick="setMaxWithdraw()">MAX</span>
+        </div>
         <input type="text" id="wallet-address" class="wallet-input" placeholder="Paste your BNB Smart Chain address (0x...)">
 
         <button class="action-btn withdraw-btn" onclick="handleWithdraw()">Withdraw Funds</button>
@@ -401,6 +419,7 @@
 
         let count = 0;
         let energy = 1000;
+        let usdtWallet = 0.0; // VARIABLE FOR THE NEW WALLET
         let friendsInvited = 0;
         let completedTasks = {};
         const maxEnergy = 1000;
@@ -416,6 +435,7 @@
             const data = snapshot.val();
             if (data) {
                 count = data.points || 0;
+                usdtWallet = data.usdt_balance || 0.0; // LOADING FROM FIREBASE
                 friendsInvited = data.friendsCount || 0;
                 completedTasks = data.completedTasks || {};
                 
@@ -439,6 +459,7 @@
             document.getElementById('top-points').innerText = count.toLocaleString();
             document.getElementById('user-points-label').innerText = `Balance: ${count.toLocaleString()}`;
             document.getElementById('usd-val').innerText = `≈ ${(count * price).toFixed(2)} USDT`;
+            document.getElementById('usdt-balance').innerText = usdtWallet.toFixed(2); // UPDATE WALLET DISPLAY
             document.getElementById('e-val').innerText = energy;
             document.getElementById('e-bar').style.width = (energy / maxEnergy * 100) + "%";
             document.getElementById('friend-count').innerText = `${friendsInvited} Friends`;
@@ -454,7 +475,7 @@
             }
         }
 
-        // --- EXCHANGE LOGIC ---
+        // --- EXCHANGE LOGIC UPDATED ---
         window.calculateSwap = function() {
             const inputVal = document.getElementById('swap-input').value;
             document.getElementById('swap-output').value = (inputVal * price).toFixed(2);
@@ -470,36 +491,52 @@
             if (!amount || amount <= 0) return showToast("Enter a valid amount", "❌");
             if (amount > count) return showToast("Insufficient Balance", "❌");
 
-            const remaining = count - amount;
-            await update(userRef, { points: remaining });
-            showToast("Swap Completed Successfully!", "💰");
+            const gainedUsdt = parseFloat((amount * price).toFixed(2));
+            const newPoints = count - amount;
+            const newUsdtBalance = usdtWallet + gainedUsdt;
+
+            await update(userRef, { 
+                points: newPoints,
+                usdt_balance: newUsdtBalance
+            });
+
+            showToast(`Swapped! +${gainedUsdt} USDT`, "💰");
             document.getElementById('swap-input').value = "";
             document.getElementById('swap-output').value = "";
         }
 
-        // تحديث وظيفة السحب للتحقق من العنوان
-        window.handleWithdraw = function() {
-            const currentUSD = count * price;
-            const walletAddr = document.getElementById('wallet-address').value.trim();
+        // WITHDRAW LOGIC UPDATED
+        window.setMaxWithdraw = function() {
+            document.getElementById('withdraw-amount').value = usdtWallet.toFixed(2);
+        }
 
-            if (currentUSD < 10) {
+        window.handleWithdraw = async function() {
+            const withdrawAmt = parseFloat(document.getElementById('withdraw-amount').value);
+            const walletAddr = document.getElementById('wallet-address').value.trim();
+            const bscPattern = /^0x[a-fA-F0-9]{40}$/;
+
+            if (!withdrawAmt || withdrawAmt < 10) {
                 return showToast("Minimum withdrawal is 10 USDT", "❌");
             }
-
-            // نظام التحقق من التنسيق الصحيح لشبكة BNB (BEP20)
-            const bscPattern = /^0x[a-fA-F0-9]{40}$/;
-            
-            if (!walletAddr || !bscPattern.test(walletAddr)) {
-                return showToast("Invalid Format! Use a 0x address", "❌");
+            if (withdrawAmt > usdtWallet) {
+                return showToast("Insufficient USDT balance", "❌");
+            }
+            if (!bscPattern.test(walletAddr)) {
+                return showToast("Invalid BEP20 address format", "❌");
             }
 
-            // إذا كان كل شيء صحيح
+            // DEDUCT FROM WALLET
+            const finalBalance = usdtWallet - withdrawAmt;
+            await update(userRef, { usdt_balance: finalBalance });
+
             tg.showPopup({
                 title: 'Withdrawal Pending',
-                message: `Withdrawal request for address ${walletAddr} has been sent for review.`,
+                message: `Request for ${withdrawAmt} USDT to ${walletAddr} has been submitted.`,
                 buttons: [{type: 'ok'}]
             });
+            
             showToast("Request Sent!", "✅");
+            document.getElementById('withdraw-amount').value = "";
             document.getElementById('wallet-address').value = "";
         }
 

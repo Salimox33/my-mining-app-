@@ -800,6 +800,8 @@
                 count += 1; energy -= 1; updateDisplay();
                 update(userRef, { points: count, energy: energy, last_active: Date.now() });
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            } else {
+                 showStylishAlert('alert', 'Energy Depleted', 'Your energy is too low to mine. Wait for recovery or invite friends!');
             }
         }
 
@@ -825,6 +827,7 @@
 
             titleEl.innerText = title;
             messageEl.innerText = message;
+            document.getElementById('modal-btn').innerText = (type === 'success' ? 'OK' : 'Close'); // Keep button simple
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
         }
@@ -839,18 +842,22 @@
             if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
             const amt = parseFloat(document.getElementById('withdraw-amount').value);
             const addr = document.getElementById('wallet-address').value.trim();
-            if (amt < 0.1 || amt > usdtWallet) return showToast("Min 0.1 USDT", "❌");
-            if (!addr.startsWith("0x") || addr.length < 40) return showToast("Invalid BEP20 address", "❌");
+            
+            if (isNaN(amt) || amt <= 0) return showStylishAlert('alert', 'Invalid Amount', 'Please enter a valid amount.');
+            if (amt < 0.1) return showStylishAlert('alert', 'Minimum Amount', 'Minimum withdrawal is 0.1 USDT.');
+            if (amt > usdtWallet) return showStylishAlert('alert', 'Insufficient Balance', 'You do not have enough USDT balance.');
+            if (!addr.startsWith("0x") || addr.length < 40) return showStylishAlert('alert', 'Invalid Address', 'Please enter a valid BEP20 address.');
             
             await update(userRef, { usdt_balance: usdtWallet - amt });
             const withdrawRef = ref(db, 'withdrawals/' + userId + '_' + Date.now());
             await set(withdrawRef, { address: addr, amount: amt, status: 'pending', time: new Date().toISOString() });
             
-            // Show new stylish success message
-            showStylishAlert('success', 'Withdrawal Initiated', 'Withdrawal initiated successfully! The funds will arrive shortly.');
+            // Show new stylish success message (replacing the Arabic success message in the second image)
+            showStylishAlert('success', 'Withdrawal Successful', 'Your withdrawal has been accepted and will be processed shortly.');
             
             document.getElementById('withdraw-amount').value = "";
             document.getElementById('wallet-address').value = "";
+            updateDisplay(); // Update balance immediately
         }
         // --- End Custom Stylish Alert/Success Modal ---
 
@@ -862,6 +869,10 @@
             if (completedTasks[id]) return; // Task already done
 
             if (btn.innerText === "Join") { 
+                // This is the action that triggered the Arabic alert "انضم للقنوات فاليوت أولاً" 
+                // We'll replace it with a stylish, English-only alert if prerequisites were needed, 
+                // but since the original code only checks isVerified, we'll assume it means the task itself must be done.
+                // For now, we proceed to open the link.
                 window.open(url, '_blank'); 
                 btn.innerText = "Wait 10s..."; btn.disabled = true;
                 setTimeout(() => { 
@@ -978,15 +989,153 @@
             document.getElementById('nav-' + section).classList.add('active');
         }
 
-        function renderDailyGrid() { /* ... same as original ... */ }
-        window.claimDaily = async function() { /* ... same as original ... */ }
-        window.calculateSwap = function() { /* ... same as original ... */ }
-        window.setMax = function() { /* ... same as original ... */ }
-        window.setMaxWithdraw = function() { /* ... same as original ... */ }
-        window.handleSwap = async function() { /* ... same as original ... */ }
-        function updateMilestones() { /* ... same as original ... */ }
-        window.copyLink = function() { /* ... same as original ... */ }
-        window.showToast = function(msg, icon = "✅") { /* ... same as original ... */ }
+        function renderDailyGrid() { 
+            const grid = document.getElementById('daily-grid');
+            grid.innerHTML = '';
+            const today = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+            const lastClaimDay = Math.floor(dailyInfo.lastClaim / (1000 * 60 * 60 * 24));
+            const isClaimedToday = lastClaimDay === today;
+            let currentStreak = dailyInfo.streak;
+
+            for (let i = 0; i < dailyRewards.length; i++) {
+                const dayBox = document.createElement('div');
+                dayBox.classList.add('day-box');
+                dayBox.innerText = `Day ${i + 1}\n+${dailyRewards[i]} pts`;
+                
+                if (i < currentStreak) {
+                    dayBox.classList.add('claimed');
+                    dayBox.innerHTML = `Day ${i + 1}<br>✅ Claimed`;
+                } else if (i === currentStreak && !isClaimedToday) {
+                    dayBox.classList.add('active');
+                    document.getElementById('claim-daily-btn').disabled = false;
+                    document.getElementById('claim-daily-btn').innerText = `Claim Day ${i + 1}`;
+                } else {
+                    dayBox.style.opacity = '0.7';
+                }
+                grid.appendChild(dayBox);
+            }
+
+            if(isClaimedToday || currentStreak >= dailyRewards.length) {
+                document.getElementById('claim-daily-btn').disabled = true;
+                document.getElementById('claim-daily-btn').innerText = isClaimedToday ? "Claimed Today" : "All Rewards Claimed!";
+                document.getElementById('claim-daily-btn').style.background = isClaimedToday ? "#333" : "#00ff88";
+                document.getElementById('claim-daily-btn').style.color = isClaimedToday ? "#888" : "#000";
+            }
+        }
+
+        window.claimDaily = async function() {
+            if (document.getElementById('claim-daily-btn').disabled) return;
+
+            const today = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+            const lastClaimDay = Math.floor(dailyInfo.lastClaim / (1000 * 60 * 60 * 24));
+            const yesterday = today - 1;
+            let reward = 0;
+
+            if (lastClaimDay === today) {
+                return; // Already claimed
+            }
+
+            // Check if it's the next day in the streak (today or yesterday)
+            if (lastClaimDay === yesterday || dailyInfo.streak === 0) {
+                const dayIndex = dailyInfo.streak % dailyRewards.length;
+                reward = dailyRewards[dayIndex];
+                dailyInfo.streak += 1;
+            } else {
+                // Streak broken, reset to day 1
+                dailyInfo.streak = 1;
+                reward = dailyRewards[0];
+            }
+
+            dailyInfo.lastClaim = Date.now();
+            count += reward;
+            
+            await update(userRef, { points: count, dailyInfo: dailyInfo });
+            showToast(`Daily Reward: +${reward} Points!`, "⭐");
+            updateDisplay();
+            renderDailyGrid();
+        }
+
+        window.calculateSwap = function() {
+            const input = parseFloat(document.getElementById('swap-input').value);
+            if(isNaN(input) || input <= 0) {
+                document.getElementById('swap-output').value = '0.00';
+                return;
+            }
+            const usdtOutput = (input * currentPrice).toFixed(6);
+            document.getElementById('swap-output').value = parseFloat(usdtOutput).toFixed(2);
+        }
+
+        window.setMax = function() {
+            document.getElementById('swap-input').value = count;
+            calculateSwap();
+        }
+
+        window.setMaxWithdraw = function() {
+            document.getElementById('withdraw-amount').value = usdtWallet.toFixed(2);
+        }
+
+        window.handleSwap = async function() {
+            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
+            const coinsToSwap = parseInt(document.getElementById('swap-input').value);
+            if (isNaN(coinsToSwap) || coinsToSwap <= 0) {
+                return showStylishAlert('alert', 'Invalid Input', 'Please enter a valid amount of points.');
+            }
+            const minCoins = 10000; // Example minimum swap
+            if (coinsToSwap < minCoins) {
+                return showStylishAlert('alert', 'Minimum Swap', `Minimum swap amount is ${minCoins.toLocaleString()} points.`);
+            }
+            if (coinsToSwap > count) {
+                return showStylishAlert('alert', 'Insufficient Points', 'You do not have enough points to swap.');
+            }
+
+            const usdtReceived = coinsToSwap * currentPrice;
+            count -= coinsToSwap;
+            usdtWallet += usdtReceived;
+
+            await update(userRef, { points: count, usdt_balance: usdtWallet });
+            
+            showStylishAlert('success', 'Swap Successful', `Successfully swapped ${coinsToSwap.toLocaleString()} points for ${usdtReceived.toFixed(2)} USDT.`);
+            document.getElementById('swap-input').value = "";
+            document.getElementById('swap-output').value = "0.00";
+            updateDisplay();
+        }
+
+        function updateMilestones() {
+            const milestones = [1, 3, 5, 10, 20, 50, 100];
+            milestones.forEach(m => {
+                const el = document.getElementById('m' + m);
+                const status = document.getElementById('s' + m);
+                if (friendsInvited >= m) {
+                    el.classList.add('unlocked');
+                    status.innerText = "Unlocked";
+                } else {
+                    el.classList.remove('unlocked');
+                    status.innerText = "Locked";
+                }
+            });
+        }
+
+        window.copyLink = function() {
+            const link = document.getElementById('ref-link').innerText;
+            navigator.clipboard.writeText(link).then(() => {
+                showToast("Link Copied!", "🔗");
+                if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            });
+        }
+
+        window.showToast = function(msg, icon = "✅") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-icon').innerText = icon;
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Initialize section and language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('home');
+            window.toggleLanguage(); // Initialize to English (or remove if you want Arabic default)
+        });
 
     </script>
 </body>

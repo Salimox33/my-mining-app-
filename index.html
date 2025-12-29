@@ -42,6 +42,12 @@
             gap: 5px;
             transition: all 0.3s;
         }
+        /* Fix RTL button position */
+        body[dir="rtl"] .lang-switch-btn {
+            left: 15px;
+            right: auto;
+        }
+
         .lang-switch-btn:hover {
             background: linear-gradient(45deg, rgba(0, 229, 255, 0.5), rgba(0, 120, 150, 0.5));
             box-shadow: 0 0 10px #00e5ff;
@@ -352,28 +358,14 @@
         .task-info p { color: #ffd700; font-size: 12px; }
         .twitter-input-area { width: 100%; display: none; margin-top: 5px; }
         .twitter-input-area input { 
-            width: calc(100% - 100px); /* Leave space for Cancel button */
+            width: 100%; /* Make input full width */
             padding: 10px; 
             border-radius: 10px; 
             background: #000; 
             border: 1px solid #00e5ff; 
             color: #fff; 
             outline: none;
-            margin-right: 10px;
-            /* RTL adjustment */
-            margin-left: 0;
-        }
-        body[dir="rtl"] .twitter-input-area input {
-            margin-right: 0;
-            margin-left: 10px;
-        }
-
-        .warning-msg { 
-            color: #ff4500; /* Changed to red for warning */
-            font-size: 11px; 
-            margin-top: 5px; 
-            font-weight: bold; 
-            display: none; /* Default hidden */
+            /* Removed margin-right/left adjustment as it is full width */
         }
         .twitter-actions {
             display: flex;
@@ -381,6 +373,23 @@
             justify-content: space-between;
             margin-top: 10px;
         }
+        /* Adjusted input width within twitter-actions */
+        .twitter-actions input {
+            width: calc(100% - 100px); /* Leave space for Cancel button */
+            margin-right: 10px;
+        }
+        body[dir="rtl"] .twitter-actions input {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        .warning-msg { 
+            color: #ff4500; /* Changed to red for warning */
+            font-size: 11px; 
+            margin-top: 5px; 
+            font-weight: bold; 
+            display: none; /* Default hidden */
+        }
+        
         .cancel-btn {
             background: #ff4500;
             color: #fff;
@@ -622,7 +631,7 @@
                     <h4 data-en="Join REGN NETWORK" data-ar="انضم إلى شبكة REGN" data-ru="Присоединиться к REGN NETWORK">Join REGN NETWORK</h4>
                     <p>+5,000 Points</p>
                 </div>
-                <button id="btn-task1" onclick="doTask(this, 'task1', 'https://t.me/REGNNETWORK', 5000)" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
+                <button id="btn-task1" onclick="doTask(this, 'task1', 'https://t.me/REGNNETWORK', 5000, 'group')" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
             </div>
         </div>
 
@@ -632,7 +641,7 @@
                     <h4 data-en="Join Airdrop Channel" data-ar="انضم إلى قناة الإيردروب" data-ru="Присоединиться к каналу Airdrop">Join Airdrop Channel</h4>
                     <p>+5,000 Points</p>
                 </div>
-                <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/airdropxtxt', 5000)" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
+                <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/airdropxtxt', 5000, 'group')" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
             </div>
         </div>
 
@@ -642,7 +651,7 @@
                     <h4 data-en="Join Airdrop Group" data-ar="انضم إلى مجموعة الإيردروب" data-ru="Присоединиться к группе Airdrop">Join Airdrop Group</h4>
                     <p>+5,000 Points</p>
                 </div>
-                <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+TIG-5SDfm5w2MmRk', 5000)" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
+                <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+TIG-5SDfm5w2MmRk', 5000, 'group')" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
             </div>
         </div>
 
@@ -652,7 +661,7 @@
                     <h4 data-en="Join Official Group" data-ar="انضم إلى المجموعة الرسمية" data-ru="Присоединиться к официальной группе">Join Official Group</h4>
                     <p>+5,000 Points</p>
                 </div>
-                <button id="btn-task4" onclick="doTask(this, 'task4', 'https://t.me/+4D6ZjKanoLg1NzI0', 5000)" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
+                <button id="btn-task4" onclick="doTask(this, 'task4', 'https://t.me/+4D6ZjKanoLg1NzI0', 5000, 'group')" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
             </div>
         </div>
 
@@ -662,7 +671,7 @@
                     <h4 data-en="Join XTAIRDRpP" data-ar="انضم إلى XTAIRDRpP" data-ru="Присоединиться к XTAIRDRpP">Join XTAIRDRpP</h4>
                     <p>+5,000 Points</p>
                 </div>
-                <button id="btn-task5" onclick="doTask(this, 'task5', 'https://t.me/XTAIRDRpP', 5000)" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
+                <button id="btn-task5" onclick="doTask(this, 'task5', 'https://t.me/XTAIRDRpP', 5000, 'group')" class="task-btn" data-en="Join" data-ar="انضمام" data-ru="Вступить">Join</button>
             </div>
         </div>
 
@@ -712,7 +721,7 @@
         <div class="exchange-container">
             <div class="input-box">
                 <input type="number" id="swap-input" placeholder="0" oninput="calculateSwap()">
-                <span class="max-btn" onclick="setMax" data-en="MAX" data-ar="الحد الأقصى" data-ru="МАКС">MAX</span>
+                <span class="max-btn" onclick="setMax()" data-en="MAX" data-ar="الحد الأقصى" data-ru="МАКС">MAX</span>
             </div>
             <div class="swap-arrow"><i class="fa-solid fa-arrow-down-long"></i></div>
             <div class="input-box">
@@ -793,6 +802,7 @@
         let dailyInfo = { streak: 0, lastClaim: 0 };
         let isVerified = false;
         let twData = { username: '', submitted: false, done: false };
+        let requiredTasksCount = 5; // Task 1 to Task 5
         
         const dailyRewards = [500, 750, 1000, 1250, 1500, 2000];
         const maxEnergy = 1000;
@@ -823,7 +833,7 @@
                 'Enter a valid @Username': 'Enter a valid @Username',
                 'Successfully swapped': 'Successfully swapped', 'points for': 'points for',
                 // Alerts/Modal Messages
-                'Please complete all joining tasks first!': 'Please complete all joining tasks first!',
+                'Please complete all joining tasks first!': 'Please complete all joining tasks (Task 1-5) first!', // Modified for clarity
                 'Your energy is too low to mine. Wait for recovery or invite friends!': 'Your energy is too low to mine. Wait for recovery or invite friends!',
                 'Please enter a valid amount.': 'Please enter a valid amount.',
                 'Minimum withdrawal is 0.1 USDT.': 'Minimum withdrawal is 0.1 USDT.',
@@ -838,6 +848,8 @@
                 'Locked': 'Locked', 'Unlocked': 'Unlocked',
                 'Cancel Submission': 'Cancel Submission',
                 'Claim Day': 'Claim Day',
+                'Link Copied!': 'Link Copied!',
+                'Day': 'Day'
             },
             ar: {
                 // General
@@ -861,7 +873,7 @@
                 'Enter a valid @Username': 'أدخل اسم مستخدم صالح يبدأ بـ @',
                 'Successfully swapped': 'تم التبديل بنجاح', 'points for': 'نقطة مقابل',
                 // Alerts/Modal Messages
-                'Please complete all joining tasks first!': 'يرجى إكمال جميع مهام الانضمام أولاً!',
+                'Please complete all joining tasks first!': 'يرجى إكمال جميع مهام الانضمام (مهمة 1-5) أولاً!', // Modified for clarity
                 'Your energy is too low to mine. Wait for recovery or invite friends!': 'طاقتك منخفضة جداً للتعدين. انتظر الاسترداد أو قم بدعوة الأصدقاء!',
                 'Please enter a valid amount.': 'يرجى إدخال مبلغ صالح.',
                 'Minimum withdrawal is 0.1 USDT.': 'الحد الأدنى للسحب هو 0.1 USDT.',
@@ -876,6 +888,8 @@
                 'Locked': 'مغلق', 'Unlocked': 'مفتوح',
                 'Cancel Submission': 'إلغاء الإرسال',
                 'Claim Day': 'مطالبة اليوم',
+                'Link Copied!': 'تم نسخ الرابط!',
+                'Day': 'اليوم'
             },
             ru: { // **RUSSIAN TRANSLATION ADDED HERE**
                 // General
@@ -899,7 +913,7 @@
                 'Enter a valid @Username': 'Введите действительный @Никнейм',
                 'Successfully swapped': 'Успешно обменяно', 'points for': 'очков на',
                 // Alerts/Modal Messages
-                'Please complete all joining tasks first!': 'Пожалуйста, выполните сначала все задания по вступлению!',
+                'Please complete all joining tasks first!': 'Пожалуйста, выполните сначала все задания по вступлению (Задания 1-5)!', // Modified for clarity
                 'Your energy is too low to mine. Wait for recovery or invite friends!': 'Ваша энергия слишком низка для майнинга. Дождитесь восстановления или пригласите друзей!',
                 'Please enter a valid amount.': 'Пожалуйста, введите действительную сумму.',
                 'Minimum withdrawal is 0.1 USDT.': 'Минимальный вывод — 0.1 USDT.',
@@ -914,6 +928,8 @@
                 'Locked': 'Закрыто', 'Unlocked': 'Открыто',
                 'Cancel Submission': 'Отменить отправку',
                 'Claim Day': 'Забрать День',
+                'Link Copied!': 'Ссылка скопирована!',
+                'Day': 'День'
             }
         };
 
@@ -985,8 +1001,16 @@
                 completedTasks = data.completedTasks || {};
                 dailyInfo = data.dailyInfo || { streak: 0, lastClaim: 0 };
                 energy = data.energy || maxEnergy;
-                isVerified = data.is_verified || false;
                 twData = data.twData || { username: '', submitted: false, done: false };
+                
+                // FIXED: Check if all initial tasks (1-5) are complete to set isVerified
+                let completedInitialTasksCount = 0;
+                for (let i = 1; i <= requiredTasksCount; i++) {
+                    if (completedTasks['task' + i]) {
+                        completedInitialTasksCount++;
+                    }
+                }
+                isVerified = completedInitialTasksCount === requiredTasksCount;
                 
                 updateDisplay();
                 updateMilestones();
@@ -1018,23 +1042,23 @@
         }
 
         function renderTasksState() {
+            const taskTranslation = translations[currentLang];
             for(let i = 1; i <= 5; i++) {
                 const taskId = 'task' + i;
                 const btn = document.getElementById('btn-' + taskId);
                 if (btn) {
                     if (completedTasks[taskId]) {
-                        btn.innerText = `${translations[currentLang]['Completed']} ✅`;
+                        btn.innerText = `${taskTranslation['Completed']} ✅`;
                         btn.disabled = true;
                         btn.style.background = "#00ff88";
-                    } else if (btn.innerText !== translations['en']['Join'] && btn.innerText !== translations['ar']['Join'] && btn.innerText !== translations['ru']['Join']) {
-                        // Keep Claim state if already set, otherwise default to Join
-                        if (btn.innerText !== `${translations[currentLang]['Wait 10s...']}`) {
-                           btn.innerText = translations[currentLang]['Join'];
-                           btn.disabled = false;
-                           btn.style.background = "#00e5ff";
-                        }
-                    } else {
-                        btn.innerText = translations[currentLang]['Join'];
+                    } else if (btn.innerText.includes(taskTranslation['Wait 10s...'])) {
+                        // Keep Wait state if already set
+                    } else if (btn.innerText.includes(taskTranslation['Claim'])) {
+                        // Keep Claim state if already set
+                    }
+                    else {
+                        // Default to Join (translated)
+                        btn.innerText = taskTranslation['Join'];
                         btn.disabled = false;
                         btn.style.background = "#00e5ff";
                     }
@@ -1043,18 +1067,18 @@
             handleTwitterButtonState();
         }
 
-
+        // FIXED: Added window. prefix for all functions called from HTML
         window.tap = function(e) {
             if(energy > 0) {
                 count += 1; energy -= 1; updateDisplay();
                 update(userRef, { points: count, energy: energy, last_active: Date.now() });
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             } else {
-                 showStylishAlert('alert', translations[currentLang]['Energy Depleted'], translations[currentLang]['Your energy is too low to mine. Wait for recovery or invite friends!']);
+                 window.showStylishAlert('alert', translations[currentLang]['Energy Depleted'], translations[currentLang]['Your energy is too low to mine. Wait for recovery or invite friends!']);
             }
         }
 
-        // --- Custom Stylish Alert/Success Modal with Translation ---
+        // --- Custom Stylish Alert/Success Modal with Translation (window. prefix added) ---
         window.showStylishAlert = function(type, title, message) {
             const modal = document.getElementById('custom-modal');
             const content = modal.querySelector('.modal-content');
@@ -1082,27 +1106,29 @@
             setTimeout(() => modal.classList.add('show'), 10);
         }
 
+        // (window. prefix added)
         window.closeStylishAlert = function() {
             const modal = document.getElementById('custom-modal');
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 300);
         }
 
+        // (window. prefix added)
         window.handleWithdraw = async function() {
-            if(!isVerified) return showStylishAlert('alert', translations[currentLang]['Verification Required'], translations[currentLang]['Please complete all joining tasks first!']);
+            if(!isVerified) return window.showStylishAlert('alert', translations[currentLang]['Verification Required'], translations[currentLang]['Please complete all joining tasks first!']);
             const amt = parseFloat(document.getElementById('withdraw-amount').value);
             const addr = document.getElementById('wallet-address').value.trim();
             
-            if (isNaN(amt) || amt <= 0) return showStylishAlert('alert', translations[currentLang]['Invalid Amount'], translations[currentLang]['Please enter a valid amount.']);
-            if (amt < 0.1) return showStylishAlert('alert', translations[currentLang]['Minimum Amount'], translations[currentLang]['Minimum withdrawal is 0.1 USDT.']);
-            if (amt > usdtWallet) return showStylishAlert('alert', translations[currentLang]['Insufficient Balance'], translations[currentLang]['You do not have enough USDT balance.']);
-            if (!addr.startsWith("0x") || addr.length < 40) return showStylishAlert('alert', translations[currentLang]['Invalid Address'], translations[currentLang]['Please enter a valid BEP20 address.']);
+            if (isNaN(amt) || amt <= 0) return window.showStylishAlert('alert', translations[currentLang]['Invalid Amount'], translations[currentLang]['Please enter a valid amount.']);
+            if (amt < 0.1) return window.showStylishAlert('alert', translations[currentLang]['Minimum Amount'], translations[currentLang]['Minimum withdrawal is 0.1 USDT.']);
+            if (amt > usdtWallet) return window.showStylishAlert('alert', translations[currentLang]['Insufficient Balance'], translations[currentLang]['You do not have enough USDT balance.']);
+            if (!addr.startsWith("0x") || addr.length < 40) return window.showStylishAlert('alert', translations[currentLang]['Invalid Address'], translations[currentLang]['Please enter a valid BEP20 address.']);
             
             await update(userRef, { usdt_balance: usdtWallet - amt });
             const withdrawRef = ref(db, 'withdrawals/' + userId + '_' + Date.now());
             await set(withdrawRef, { address: addr, amount: amt, status: 'pending', time: new Date().toISOString() });
             
-            showStylishAlert('success', translations[currentLang]['Withdrawal Successful'], translations[currentLang]['Your withdrawal has been accepted and will be processed shortly.']);
+            window.showStylishAlert('success', translations[currentLang]['Withdrawal Successful'], translations[currentLang]['Your withdrawal has been accepted and will be processed shortly.']);
             
             document.getElementById('withdraw-amount').value = "";
             document.getElementById('wallet-address').value = "";
@@ -1111,12 +1137,12 @@
         // --- End Custom Stylish Alert/Success Modal ---
 
 
-        // ... (Other functions like claimDaily, calculateSwap, setMax, handleSwap, setMaxWithdraw, updateMilestones, copyLink, showToast remain the same, but use translations where possible) ...
-
-        window.doTask = async function(btn, id, url, reward) {
+        // FIXED: Added window. prefix for all functions called from HTML
+        window.doTask = async function(btn, id, url, reward, type) {
             const taskTranslation = translations[currentLang];
 
-            if(!isVerified) return showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
+            if(!isVerified && type !== 'group') return window.showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
+            
             if (completedTasks[id]) return;
 
             if (btn.innerText.includes(taskTranslation['Join'])) {
@@ -1129,20 +1155,28 @@
             }
             else if (btn.innerText.includes(taskTranslation['Claim'])) {
                 count += reward; completedTasks[id] = true;
-                await update(userRef, { points: count, completedTasks: completedTasks, is_verified: true });
-                showToast(`${taskTranslation['Completed']}! +${reward}`, "💰"); 
+                
+                let completedInitialTasksCount = 0;
+                for (let i = 1; i <= requiredTasksCount; i++) {
+                    if (completedTasks['task' + i]) {
+                        completedInitialTasksCount++;
+                    }
+                }
+                isVerified = completedInitialTasksCount === requiredTasksCount;
+
+                await update(userRef, { points: count, completedTasks: completedTasks, is_verified: isVerified });
+                window.showToast(`${taskTranslation['Completed']}! +${reward}`, "💰"); 
                 btn.innerText = `${taskTranslation['Completed']} ✅`; 
                 btn.disabled = true;
                 btn.style.background = "#00ff88";
-                isVerified = true;
                 updateDisplay();
             }
         }
 
-        // --- Improved Twitter System with Translation ---
+        // FIXED: Added window. prefix for all functions called from HTML
         window.doTwitterTask = async function(btn) {
             const taskTranslation = translations[currentLang];
-            if(!isVerified) return showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
+            if(!isVerified) return window.showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
             if (twData.done) return;
             const inputArea = document.getElementById('twitter-input-area');
             
@@ -1154,7 +1188,7 @@
                 btn.innerText = "Submit"; // Keep submit in English/Latin for consistency
             } else if (btn.innerText === "Submit") {
                 const userTw = document.getElementById('tw-username').value.trim();
-                if (!userTw.startsWith('@') || userTw.length < 2) return showToast(taskTranslation['Enter a valid @Username'], "❌");
+                if (!userTw.startsWith('@') || userTw.length < 2) return window.showToast(taskTranslation['Enter a valid @Username'], "❌");
                 
                 twData = { username: userTw, submitted: true, done: false };
                 await update(userRef, { twData: twData });
@@ -1164,12 +1198,12 @@
                 document.getElementById('tw-username').disabled = true;
                 document.getElementById('cancel-tw-btn').style.display = 'inline-block';
                 document.getElementById('tw-warn-msg').style.display = 'none';
-                showToast(taskTranslation['Username Submitted!'], "✔️");
+                window.showToast(taskTranslation['Username Submitted!'], "✔️");
 
             } else if (btn.innerText.includes(taskTranslation['Claim'])) {
                 count += 10000; twData.done = true;
                 await update(userRef, { points: count, twData: twData });
-                showToast(`${taskTranslation['Completed']} +10k!`, "💰");
+                window.showToast(`${taskTranslation['Completed']} +10k!`, "💰");
                 btn.innerText = `${taskTranslation['Completed']} ✅`;
                 btn.disabled = true;
                 document.getElementById('cancel-tw-btn').style.display = 'none';
@@ -1178,6 +1212,7 @@
             }
         }
         
+        // FIXED: Added window. prefix for all functions called from HTML
         window.cancelTwitterSubmission = async function() {
             const taskTranslation = translations[currentLang];
             const btn = document.getElementById('btn-task6');
@@ -1193,7 +1228,7 @@
             document.getElementById('cancel-tw-btn').style.display = 'none';
             document.getElementById('tw-warn-msg').style.display = 'none';
             inputArea.style.display = 'none';
-            showToast(taskTranslation['Submission Cancelled'], "↩️");
+            window.showToast(taskTranslation['Submission Cancelled'], "↩️");
         }
 
         function handleTwitterButtonState() {
@@ -1233,19 +1268,20 @@
         }
         // --- End Improved Twitter System with Translation ---
 
+        // FIXED: Added window. prefix for all functions called from HTML
         window.handleSwap = async function() {
             const taskTranslation = translations[currentLang];
-            if(!isVerified) return showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
+            if(!isVerified) return window.showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
             const coinsToSwap = parseInt(document.getElementById('swap-input').value);
             if (isNaN(coinsToSwap) || coinsToSwap <= 0) {
-                return showStylishAlert('alert', taskTranslation['Invalid Input'], taskTranslation['Please enter a valid amount of points.']);
+                return window.showStylishAlert('alert', taskTranslation['Invalid Input'], taskTranslation['Please enter a valid amount of points.']);
             }
             const minCoins = 10000;
             if (coinsToSwap < minCoins) {
-                return showStylishAlert('alert', taskTranslation['Minimum Swap'], `${taskTranslation['Minimum Swap']} ${minCoins.toLocaleString()} ${taskTranslation['Points']}.`);
+                return window.showStylishAlert('alert', taskTranslation['Minimum Swap'], `${taskTranslation['Minimum Swap']} ${minCoins.toLocaleString()} ${taskTranslation['Points']}.`);
             }
             if (coinsToSwap > count) {
-                return showStylishAlert('alert', taskTranslation['Insufficient Points'], taskTranslation['You do not have enough points to swap.']);
+                return window.showStylishAlert('alert', taskTranslation['Insufficient Points'], taskTranslation['You do not have enough points to swap.']);
             }
 
             const usdtReceived = coinsToSwap * currentPrice;
@@ -1254,7 +1290,7 @@
 
             await update(userRef, { points: count, usdt_balance: usdtWallet });
             
-            showStylishAlert('success', taskTranslation['Swap Successful'], `${taskTranslation['Successfully swapped']} ${coinsToSwap.toLocaleString()} ${taskTranslation['points for']} ${usdtReceived.toFixed(2)} USDT.`);
+            window.showStylishAlert('success', taskTranslation['Swap Successful'], `${taskTranslation['Successfully swapped']} ${coinsToSwap.toLocaleString()} ${taskTranslation['points for']} ${usdtReceived.toFixed(2)} USDT.`);
             document.getElementById('swap-input').value = "";
             document.getElementById('swap-output').value = "0.00";
             updateDisplay();
@@ -1274,13 +1310,21 @@
                     status.innerText = taskTranslation['Locked'];
                 }
                 // Update dynamic text on load/lang switch
-                let refLabel = m === 1 ? taskTranslation['Referral'] : taskTranslation['Referrals'];
-                if (currentLang === 'ru' && m === 1) refLabel = translations['ru']['Referral']; // Specific RU plural for 1
-                else if (currentLang === 'ru' && m >= 2 && m <= 4) refLabel = translations['ru']['Referrals'].slice(0, -1) + 'а'; // 2, 3, 4 - Реферала
-                else if (currentLang === 'ru' && m >= 5) refLabel = translations['ru']['Referrals']; // 5+ - Рефералов
+                let refLabel = taskTranslation['Referrals'];
+                if (m === 1) refLabel = taskTranslation['Referral']; 
+                // Specific RU pluralization logic (simplified)
+                if (currentLang === 'ru') {
+                    if (m === 1) refLabel = 'Реферал';
+                    else if (m >= 2 && m <= 4) refLabel = 'Реферала';
+                    else if (m >= 5) refLabel = 'Рефералов';
+                } else if (currentLang === 'ar') {
+                    if (m === 1) refLabel = 'إحالة';
+                    else if (m >= 2 && m <= 10) refLabel = 'إحالات';
+                    else refLabel = 'إحالة';
+                }
 
                 el.querySelector('.m-info h4').innerText = `${m} ${refLabel}`;
-                el.querySelector('.m-info p').innerText = `+${m * 5000} ${taskTranslation['Coins']}`; // simplified coin calculation
+                el.querySelector('.m-info p').innerText = `+${(m * 5000).toLocaleString()} ${taskTranslation['Coins']}`; // simplified coin calculation
             });
         }
         
@@ -1296,18 +1340,19 @@
             for (let i = 0; i < dailyRewards.length; i++) {
                 const dayBox = document.createElement('div');
                 dayBox.classList.add('day-box');
-                dayBox.innerText = `Day ${i + 1}\n+${dailyRewards[i]} pts`;
+                
+                let dayText = `${taskTranslation['Day']} ${i + 1}\n+${dailyRewards[i]} pts`;
                 
                 if (i < currentStreak) {
                     dayBox.classList.add('claimed');
-                    dayBox.innerHTML = `${taskTranslation['Day']} ${i + 1}<br>✅ ${taskTranslation['Completed']}`;
+                    dayText = `${taskTranslation['Day']} ${i + 1}<br>✅ ${taskTranslation['Completed']}`;
                 } else if (i === currentStreak && !isClaimedToday) {
                     dayBox.classList.add('active');
-                    document.getElementById('claim-daily-btn').disabled = false;
-                    document.getElementById('claim-daily-btn').innerText = `${taskTranslation['Claim Day']} ${i + 1}`;
                 } else {
                     dayBox.style.opacity = '0.7';
                 }
+                
+                dayBox.innerHTML = dayText.replace('\n', '<br>'); // Use <br> for styling
                 grid.appendChild(dayBox);
             }
 
@@ -1319,12 +1364,13 @@
                 claimBtn.style.color = isClaimedToday ? "#888" : "#000";
             } else {
                  claimBtn.disabled = false;
+                 claimBtn.innerText = `${taskTranslation['Claim Day']} ${currentStreak + 1}`;
                  claimBtn.style.background = "#ffd700";
                  claimBtn.style.color = "#000";
             }
         }
         
-        // Function to switch sections (Keep as is)
+        // FIXED: Added window. prefix for all functions called from HTML
         window.showSection = function(sectionId) {
             document.querySelectorAll('#airdrop-section, #tasks-section, #friends-section, #exchange-section, #home-section').forEach(el => el.style.display = 'none');
             document.getElementById(sectionId + '-section').style.display = 'flex';
@@ -1333,7 +1379,7 @@
             document.getElementById('nav-' + sectionId).classList.add('active');
         }
 
-        // Function to show toast message (Keep as is)
+        // FIXED: Added window. prefix for all functions called from HTML
         window.showToast = function(message, icon) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-msg').innerText = message;
@@ -1343,17 +1389,18 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Function to copy link (Keep as is, but uses translated text for toast)
+        // FIXED: Added window. prefix for all functions called from HTML
         window.copyLink = function() {
             const link = document.getElementById('ref-link').innerText;
             navigator.clipboard.writeText(link).then(() => {
-                showToast(translations[currentLang]['Link Copied!'] || 'Link Copied!', "📋");
+                window.showToast(translations[currentLang]['Link Copied!'] || 'Link Copied!', "📋");
             });
         }
-        // Function to claim daily reward (Keep as is, but uses translations)
+
+        // FIXED: Added window. prefix for all functions called from HTML
         window.claimDaily = async function() {
             const taskTranslation = translations[currentLang];
-            if(!isVerified) return showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
+            if(!isVerified) return window.showStylishAlert('alert', taskTranslation['Verification Required'], taskTranslation['Please complete all joining tasks first!']);
             
             const today = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
             const lastClaimDay = Math.floor(dailyInfo.lastClaim / (1000 * 60 * 60 * 24));
@@ -1361,11 +1408,11 @@
             let currentStreak = dailyInfo.streak;
 
             if (currentStreak >= dailyRewards.length) {
-                return showStylishAlert('alert', taskTranslation['All Rewards Claimed!'], 'All cycle rewards have been claimed. Wait for the next cycle!');
+                return window.showStylishAlert('alert', taskTranslation['All Rewards Claimed!'], 'All cycle rewards have been claimed. Wait for the next cycle!');
             }
 
             if (isClaimedToday) {
-                 return showStylishAlert('alert', taskTranslation['Claimed Today'], 'You have already claimed your reward for today.');
+                 return window.showStylishAlert('alert', taskTranslation['Claimed Today'], 'You have already claimed your reward for today.');
             }
             
             const prevDay = today - 1;
@@ -1382,28 +1429,31 @@
             dailyInfo = { streak: currentStreak, lastClaim: Date.now() };
 
             await update(userRef, { points: count, dailyInfo: dailyInfo });
-            showToast(`${taskTranslation['Claimed']}! +${reward}`, "🎁"); 
+            window.showToast(`${taskTranslation['Claimed']}! +${reward}`, "🎁"); 
             updateDisplay();
             renderDailyGrid();
         }
 
+        // FIXED: Added window. prefix for all functions called from HTML
         window.calculateSwap = function() {
             const coins = parseInt(document.getElementById('swap-input').value) || 0;
             document.getElementById('swap-output').value = (coins * currentPrice).toFixed(6);
         }
 
+        // FIXED: Added window. prefix for all functions called from HTML
         window.setMax = function() {
             document.getElementById('swap-input').value = count;
-            calculateSwap();
+            window.calculateSwap();
         }
 
+        // FIXED: Added window. prefix for all functions called from HTML
         window.setMaxWithdraw = function() {
             document.getElementById('withdraw-amount').value = usdtWallet.toFixed(2);
         }
 
         // Initialize section and language on load
         document.addEventListener('DOMContentLoaded', () => {
-            showSection('home');
+            window.showSection('home');
             // Set default to English, then toggle to show the next language (AR) on the button
             window.toggleLanguage('en'); 
         });

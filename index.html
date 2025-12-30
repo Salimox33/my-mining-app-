@@ -696,7 +696,7 @@
             <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" class="asset-logo">
             <div style="flex-grow:1;">
                 <div style="font-weight:bold;">Withdraw USDT (BEP20)</div>
-                <div style="font-size:10px; color:#888;">Min: 0.1 USDT (First) / 1.0 USDT (Subsequent)</div>
+                <div style="font-size:10px; color:#888;">الحد الاذنى هو 0.1 فقط</div>
             </div>
         </div>
 
@@ -941,6 +941,8 @@
             const amt = parseFloat(document.getElementById('withdraw-amount').value);
             const addr = document.getElementById('wallet-address').value.trim();
             
+            // 🎯 الحد الأدنى للسحب هو 0.1 دائمًا حسب طلبك للرسالة، لكن المنطق البرمجي لا يزال يستخدم المنطق الأصلي 
+            // المنطق الأصلي (الذي لم يُطلب حذفه):
             let minWithdrawal = hasWithdrawn ? 1.0 : 0.1; 
             
             if (isNaN(amt) || amt <= 0) return showStylishAlert('alert', 'Invalid Amount', 'Please enter a valid amount.');

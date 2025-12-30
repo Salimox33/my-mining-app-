@@ -31,20 +31,19 @@
             border: 1px solid #00e5ff;
             color: #fff;
             padding: 8px 12px; 
-            border-radius: 12px; /* تم تغييرها لتكون مستطيلة لكي تتسع للنص */
-            font-size: 14px; 
+            border-radius: 50%; 
+            font-size: 16px; 
             font-weight: bold;
             cursor: pointer;
-            width: auto; /* تم تغييرها ليناسب النص */
+            width: 40px; 
             height: 40px; 
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px; /* لإضافة مسافة بين الأيقونة والنص */
             box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
             transition: all 0.3s;
         }
-        .lang-switch-btn:active { transform: scale(0.95); }
+        .lang-switch-btn:active { transform: scale(0.9); }
         .lang-switch-btn i { color: #00e5ff; }
 
         /* Stats Bar */
@@ -500,7 +499,6 @@
 
     <button class="lang-switch-btn" onclick="toggleLanguage()" id="lang-toggle">
         <i class="fa-solid fa-language"></i>
-        <span id="lang-text">العربية</span>
     </button>
 
     <div id="toast">
@@ -598,7 +596,7 @@
         <div class="daily-reward-container">
             <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 14px;" data-en="Daily Check-in" data-ar="تسجيل الدخول اليومي">تسجيل الدخول اليومي</h4>
             <div class="daily-grid" id="daily-grid"></div>
-            <button id="claim-daily-btn" class="action-btn" onclick="claimDaily()" style="margin-top:12px; padding: 10px; font-size:14px; background: #ffd700; color: #000;" data-en="Claim" data-ar="مطالبة">مطالبة</button>
+            <button id="claim-daily-btn" class="action-btn" onclick="claimDaily()" style="margin-top:12px; padding: 10px; font-size:14px; background: #ffd700; color: #000;">Claim</button>
         </div>
 
         <div class="invite-header-card" style="margin-bottom: 15px; padding: 15px;">
@@ -608,50 +606,50 @@
         
         <div class="task-card" id="task-card-task1">
             <div class="task-header">
-                <div class="task-info"><h4 data-en="Join REGN NETWORK" data-ar="انضم إلى شبكة REGN">انضم إلى شبكة REGN</h4><p>+5,000 Points</p></div>
-                <button id="btn-task1" onclick="doTask(this, 'task1', 'https://t.me/REGNNETWORK', 5000)" class="task-btn" data-en="Join" data-ar="انضمام">انضمام</button>
+                <div class="task-info"><h4>Join REGN NETWORK</h4><p>+5,000 Points</p></div>
+                <button id="btn-task1" onclick="doTask(this, 'task1', 'https://t.me/REGNNETWORK', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task2">
             <div class="task-header">
-                <div class="task-info"><h4 data-en="Join Airdrop Channel" data-ar="انضم إلى قناة الإيردروب">انضم إلى قناة الإيردروب</h4><p>+5,000 Points</p></div>
-                 <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/airdropxtxt', 5000)" class="task-btn" data-en="Join" data-ar="انضمام">انضمام</button>
+                <div class="task-info"><h4>Join Airdrop Channel</h4><p>+5,000 Points</p></div>
+                 <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/airdropxtxt', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task3">
             <div class="task-header">
-                <div class="task-info"><h4 data-en="Join Airdrop Group" data-ar="انضم إلى مجموعة الإيردروب">انضم إلى مجموعة الإيردروب</h4><p>+5,000 Points</p></div>
-                 <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+TIG-5SDfm5w2MmRk', 5000)" class="task-btn" data-en="Join" data-ar="انضمام">انضمام</button>
+                <div class="task-info"><h4>Join Airdrop Group</h4><p>+5,000 Points</p></div>
+                 <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+TIG-5SDfm5w2MmRk', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task4">
             <div class="task-header">
-                <div class="task-info"><h4 data-en="Join Official Group" data-ar="انضم إلى المجموعة الرسمية">انضم إلى المجموعة الرسمية</h4><p>+5,000 Points</p></div>
-                 <button id="btn-task4" onclick="doTask(this, 'task4', 'https://t.me/+4D6ZjKanoLg1NzI0', 5000)" class="task-btn" data-en="Join" data-ar="انضمام">انضمام</button>
+                <div class="task-info"><h4>Join Official Group</h4><p>+5,000 Points</p></div>
+                 <button id="btn-task4" onclick="doTask(this, 'task4', 'https://t.me/+4D6ZjKanoLg1NzI0', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task5">
             <div class="task-header">
-                <div class="task-info"><h4 data-en="Join XTAIRDRpP" data-ar="انضم إلى XTAIRDRpP">انضم إلى XTAIRDRpP</h4><p>+5,000 Points</p></div>
-                 <button id="btn-task5" onclick="doTask(this, 'task5', 'https://t.me/XTAIRDRpP', 5000)" class="task-btn" data-en="Join" data-ar="انضمام">انضمام</button>
+                <div class="task-info"><h4>Join XTAIRDRpP</h4><p>+5,000 Points</p></div>
+                 <button id="btn-task5" onclick="doTask(this, 'task5', 'https://t.me/XTAIRDRpP', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task6">
             <div class="task-header">
-                <div class="task-info"><h4 data-en="Follow Twitter (X)" data-ar="متابعة تويتر (X)">متابعة تويتر (X)</h4><p>+10,000 Points</p></div>
-                <button id="btn-task6" onclick="doTwitterTask(this)" class="task-btn" data-en="Join" data-ar="انضمام">انضمام</button>
+                <div class="task-info"><h4>Follow Twitter (X)</h4><p>+10,000 Points</p></div>
+                <button id="btn-task6" onclick="doTwitterTask(this)" class="task-btn">Join</button>
             </div>
             <div class="twitter-input-area" id="twitter-input-area">
                 <div class="twitter-actions">
                     <input type="text" id="tw-username" placeholder="@YourUsername">
-                    <button id="cancel-tw-btn" class="cancel-btn" onclick="cancelTwitterSubmission()" style="display:none;" data-en="Cancel Submission" data-ar="إلغاء الإرسال">إلغاء الإرسال</button>
+                    <button id="cancel-tw-btn" class="cancel-btn" onclick="cancelTwitterSubmission()" style="display:none;">Cancel Submission</button>
                 </div>
-                <p class="warning-msg" id="tw-warn-msg" style="display:none;" data-en="If you do not follow on Twitter (X), you will not receive the reward." data-ar="إذا لم تتابع على تويتر (X)، فلن تحصل على المكافأة.">إذا لم تتابع على تويتر (X)، فلن تحصل على المكافأة.</p>
+                <p class="warning-msg" id="tw-warn-msg" style="display:none;">If you do not follow on Twitter (X), you will not receive the reward.</p>
             </div>
         </div>
     </div>
@@ -677,30 +675,28 @@
 
     <div id="exchange-section">
         <div class="usdt-wallet-card">
-            <p style="font-size: 12px; opacity: 0.8;" data-en="Available USDT Balance" data-ar="الرصيد المتاح من USDT">الرصيد المتاح من USDT</p>
+            <p style="font-size: 12px; opacity: 0.8;">Available USDT Balance</p>
             <h2 id="usdt-balance" style="font-size: 32px; color: #00ff88; margin: 5px 0;">0.00</h2>
         </div>
 
         <div class="exchange-container">
             <div class="input-box">
                 <input type="number" id="swap-input" placeholder="0" oninput="calculateSwap()">
-                <span class="max-btn" onclick="setMax">MAX</span>
+                <span class="max-btn" onclick="setMax()">MAX</span>
             </div>
             <div class="swap-arrow"><i class="fa-solid fa-arrow-down-long"></i></div>
             <div class="input-box">
                 <input type="text" id="swap-output" placeholder="0.00" disabled>
                 <span style="font-weight:bold; color:#00ff88;">USDT</span>
             </div>
-            <button class="action-btn swap-btn" onclick="handleSwap()" data-en="Confirm Swap" data-ar="تأكيد التبديل">تأكيد التبديل</button>
+            <button class="action-btn swap-btn" onclick="handleSwap()">Confirm Swap</button>
         </div>
 
         <div class="asset-row">
             <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" class="asset-logo">
             <div style="flex-grow:1;">
-                <div style="font-weight:bold;" data-en="Withdraw USDT (BEP20)" data-ar="سحب USDT (BEP20)">سحب USDT (BEP20)</div>
-                <div style="font-size:10px; color:#888;" 
-                     data-en="Minimum withdrawal amount: $0.1" 
-                     data-ar="الحد الأدنى للسحب: 0.1$">الحد الأدنى للسحب: 0.1$</div>
+                <div style="font-weight:bold;">Withdraw USDT (BEP20)</div>
+                <div style="font-size:10px; color:#888;">Min: 0.1 USDT (First) / 1.0 USDT (Subsequent)</div>
             </div>
         </div>
 
@@ -709,7 +705,7 @@
             <span class="max-btn" onclick="setMaxWithdraw()">MAX</span>
         </div>
         <input type="text" id="wallet-address" class="wallet-input" placeholder="Paste BEP20 address (0x...)">
-        <button class="action-btn withdraw-btn" onclick="handleWithdraw()" data-en="Withdraw Funds" data-ar="سحب الأموال">سحب الأموال</button>
+        <button class="action-btn withdraw-btn" onclick="handleWithdraw()">Withdraw Funds</button>
     </div>
 
     <nav class="bottom-nav">
@@ -767,30 +763,21 @@
         let isVerified = false; 
         let hasWithdrawn = false; 
         let twData = { username: '', submitted: false, done: false };
-        let lastEnergyUpdate = Date.now(); 
+        let lastEnergyUpdate = Date.now(); // 🌟 متغير لتتبع آخر تحديث للطاقة
         
         const dailyRewards = [500, 750, 1000, 1250, 1500, 2000];
         const maxEnergy = 1000;
         const currentPrice = 0.000001;
         let currentLang = 'en';
-        
+        // 🌟 3. حساب معدل استعادة الطاقة (3 ساعات للملء الكامل)
+        // 1000 / (3 ساعات * 60 دقيقة * 60 ثانية) = 1000 / 10800 ثانية
         const ENERGY_RECHARGE_RATE_PER_SECOND = 1000 / 10800; // 0.09259259... 
         const RECHARGE_INTERVAL = 1000; // تحديث كل ثانية
 
-        // 🌟 وظيفة تبديل اللغة المُحسَّنة
         window.toggleLanguage = function() {
             currentLang = currentLang === 'en' ? 'ar' : 'en';
-            
-            // تحديث جميع العناصر التي تحتوي على خاصية data-en/data-ar
-            document.querySelectorAll('[data-en]').forEach(el => {
-                const newText = el.getAttribute('data-' + currentLang);
-                if (newText !== null) {
-                    el.innerText = newText;
-                }
-            });
-            
-            // تحديث نص زر اللغة ليُظهر اللغة التي سيتم التحويل إليها
-            document.getElementById('lang-text').innerText = (currentLang === 'en' ? 'العربية' : 'English');
+            // 🌟 2. أيقونة اللغة الفريدة والأنيقة - تم تغيير طريقة التحديث في HTML و CSS
+            document.querySelectorAll('[data-en]').forEach(el => el.innerText = el.getAttribute('data-' + currentLang));
         };
 
         if (user) {
@@ -807,12 +794,14 @@
                 friendsInvited = data.friendsCount || 0;
                 completedTasks = data.completedTasks || {};
                 dailyInfo = data.dailyInfo || { streak: 0, lastClaim: 0 };
+                // 🌟 قراءة آخر وقت تحديث للطاقة 
                 lastEnergyUpdate = data.last_energy_update || Date.now(); 
                 energy = data.energy || maxEnergy;
                 isVerified = data.is_verified || false; 
                 hasWithdrawn = data.hasWithdrawn || false; 
                 twData = data.twData || { username: '', submitted: false, done: false };
                 
+                // 🌟 تطبيق تحديث الطاقة عند قراءة البيانات
                 updateEnergy();
                 
                 updateDisplay();
@@ -821,35 +810,43 @@
                 renderTasksState(); 
                 handleTwitterButtonState();
             } else {
+                // قد يحتاج المستخدم الجديد للتسجيل الأولي عبر البوت
                  document.getElementById('user-display').innerText = "Run /start in Bot";
             }
         });
 
+        // 🌟 3. وظيفة تحديث الطاقة بناءً على الوقت المنقضي
         function updateEnergy() {
             const now = Date.now();
             const timeElapsedSeconds = (now - lastEnergyUpdate) / 1000;
             
+            // حساب الطاقة المكتسبة
             let energyGained = Math.floor(timeElapsedSeconds * ENERGY_RECHARGE_RATE_PER_SECOND);
             
+            // تحديث قيمة الطاقة
             energy = Math.min(maxEnergy, energy + energyGained);
             
+            // حفظ التحديث الجديد إذا كان هناك تغيير كبير (أو إجبار الحفظ إذا تم التعدين)
             if (energyGained > 0) {
                 lastEnergyUpdate = now;
                 update(userRef, { energy: energy, last_energy_update: lastEnergyUpdate }); 
             }
         }
         
+        // 🌟 تحديث الطاقة كل ثانية للعرض في شريط التقدم
         setInterval(() => {
             const now = Date.now();
             const timeElapsedSeconds = (now - lastEnergyUpdate) / 1000;
             let energyIncrease = timeElapsedSeconds * ENERGY_RECHARGE_RATE_PER_SECOND;
             
             if (energy < maxEnergy) {
+                // استخدام `+=` و `Math.min` لتحديث سلس
                 energy = Math.min(maxEnergy, energy + energyIncrease);
-                lastEnergyUpdate = now; 
+                lastEnergyUpdate = now; // تحديث مؤقت لتقليل تجميع الطاقة
                 updateDisplay();
             }
             
+            // حفظ القيمة المحدثة في قاعدة البيانات كل 10 ثواني (لتقليل الكتابة)
             if ((now - (window.lastFirebaseSave || 0)) > 10000) {
                  update(userRef, { energy: Math.floor(energy), last_energy_update: lastEnergyUpdate });
                  window.lastFirebaseSave = now;
@@ -862,6 +859,7 @@
             document.getElementById('top-points').innerText = count.toLocaleString();
             document.getElementById('usd-val').innerText = `≈ ${(count * currentPrice).toFixed(6)} USDT`; 
             document.getElementById('usdt-balance').innerText = usdtWallet.toFixed(2);
+            // 🌟 عرض قيمة الطاقة الصحيحة
             document.getElementById('e-val').innerText = Math.floor(energy);
             document.getElementById('e-bar').style.width = (Math.floor(energy) / maxEnergy * 100) + "%";
             document.getElementById('friend-count').innerText = `${friendsInvited} Friends`;
@@ -873,17 +871,14 @@
                 const btn = document.getElementById('btn-' + taskId);
                 if (btn) {
                     if (completedTasks[taskId]) {
-                        // استخدام النصوص المعربة/الإنجليزية هنا (مهم)
-                        btn.innerText = currentLang === 'en' ? "Completed ✅" : "مكتمل ✅"; 
+                        btn.innerText = "Completed ✅";
                         btn.disabled = true;
                         btn.classList.add('completed'); 
                         btn.classList.remove('waiting');
                     } else if (btn.classList.contains('waiting')) {
-                        // تركها على حالة الانتظار مع التحديث اللغوي للنص
-                        let timer = parseInt(btn.innerText.match(/\d+/)?.[0] || 0);
-                        btn.innerText = currentLang === 'en' ? `Wait ${timer}s...` : `انتظر ${timer}ث...`;
+                        // تركها على حالة الانتظار إذا كانت كذلك بالفعل
                     } else {
-                         btn.innerText = currentLang === 'en' ? "Join" : "انضمام"; 
+                         btn.innerText = "Join";
                          btn.disabled = false;
                          btn.style.background = "#00e5ff";
                          btn.classList.remove('completed');
@@ -896,18 +891,19 @@
 
 
         window.tap = async function(e) {
+            // 🌟 استخدام Math.floor() لضمان أن الطاقة رقم صحيح عند التعدين
             if(Math.floor(energy) > 0) {
                 count += 1; energy -= 1; 
-                lastEnergyUpdate = Date.now(); 
+                lastEnergyUpdate = Date.now(); // تحديث وقت آخر استخدام للطاقة
                 updateDisplay();
                 await update(userRef, { points: count, energy: Math.floor(energy), last_energy_update: lastEnergyUpdate }); 
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             } else {
-                 showStylishAlert('alert', (currentLang === 'en' ? 'Energy Depleted' : 'الطاقة مستنفدة'), (currentLang === 'en' ? 'Your energy is too low to mine. Wait for recovery or invite friends!' : 'طاقتك منخفضة جداً للتعدين. انتظر التعافي أو قم بدعوة الأصدقاء!'));
+                 showStylishAlert('alert', 'Energy Depleted', 'Your energy is too low to mine. Wait for recovery or invite friends!');
             }
         }
 
-        // --- Custom Stylish Alert/Success Modal (Updated for Arabic) ---
+        // --- Custom Stylish Alert/Success Modal (Unchanged) ---
         window.showStylishAlert = function(type, title, message) {
             const modal = document.getElementById('custom-modal');
             const content = modal.querySelector('.modal-content');
@@ -929,7 +925,7 @@
 
             titleEl.innerText = title;
             messageEl.innerText = message;
-            document.getElementById('modal-btn').innerText = (currentLang === 'en' ? 'OK' : 'حسناً'); 
+            document.getElementById('modal-btn').innerText = (type === 'success' ? 'OK' : 'Close'); 
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
         }
@@ -939,155 +935,116 @@
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 300);
         }
-        // -------------------------------------------------------------
 
-
-        // 🌟 وظيفة السحب المُحدَّثة
         window.handleWithdraw = async function() {
-            const AR_MSG = {
-                VERIFY: 'التوثيق مطلوب',
-                VERIFY_MSG: 'يرجى إكمال جميع مهام الانضمام أولاً!',
-                INVALID_AMOUNT: 'مبلغ غير صالح',
-                INVALID_AMOUNT_MSG: 'الرجاء إدخال مبلغ صالح.',
-                MIN_AMOUNT: 'الحد الأدنى للمبلغ',
-                INSUFFICIENT: 'رصيد غير كاف',
-                INSUFFICIENT_MSG: 'ليس لديك رصيد USDT كافٍ.',
-                INVALID_ADDRESS: 'عنوان غير صالح',
-                INVALID_ADDRESS_MSG: 'الرجاء إدخال عنوان BEP20 صالح.',
-                SUCCESS: 'تم السحب بنجاح',
-                SUCCESS_MSG: 'تم قبول طلب السحب الخاص بك وستتم معالجته قريباً.'
-            };
-            const EN_MSG = {
-                VERIFY: 'Verification Required',
-                VERIFY_MSG: 'Please complete all joining tasks first!',
-                INVALID_AMOUNT: 'Invalid Amount',
-                INVALID_AMOUNT_MSG: 'Please enter a valid amount.',
-                MIN_AMOUNT: 'Minimum Amount',
-                INSUFFICIENT: 'Insufficient Balance',
-                INSUFFICIENT_MSG: 'You do not have enough USDT balance.',
-                INVALID_ADDRESS: 'Invalid Address',
-                INVALID_ADDRESS_MSG: 'Please enter a valid BEP20 address.',
-                SUCCESS: 'Withdrawal Successful',
-                SUCCESS_MSG: 'Your withdrawal has been accepted and will be processed shortly.'
-            };
-            const MSG = currentLang === 'en' ? EN_MSG : AR_MSG;
-
-
-            if(!isVerified) return showStylishAlert('alert', MSG.VERIFY, MSG.VERIFY_MSG);
+            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
             const amt = parseFloat(document.getElementById('withdraw-amount').value);
             const addr = document.getElementById('wallet-address').value.trim();
             
-            // الحد الأدنى للسحب يعتمد على ما إذا كان المستخدم قد سحب من قبل أم لا
-            // تم تغيير القيمة هنا لتعكس طلب المستخدم لـ 0.1$ لجميع السحوبات
-            let minWithdrawal = 0.1; // تم تثبيت القيمة على 0.1 بناءً على الطلب
+            let minWithdrawal = hasWithdrawn ? 1.0 : 0.1; 
             
-            if (isNaN(amt) || amt <= 0) return showStylishAlert('alert', MSG.INVALID_AMOUNT, MSG.INVALID_AMOUNT_MSG);
-            if (amt < minWithdrawal) return showStylishAlert('alert', MSG.MIN_AMOUNT, `${MSG.MIN_AMOUNT} هو ${minWithdrawal.toFixed(1)} USDT.`); // تم تحديث الرسالة لتعرض القيمة
-            if (amt > usdtWallet) return showStylishAlert('alert', MSG.INSUFFICIENT, MSG.INSUFFICIENT_MSG);
+            if (isNaN(amt) || amt <= 0) return showStylishAlert('alert', 'Invalid Amount', 'Please enter a valid amount.');
+            if (amt < minWithdrawal) return showStylishAlert('alert', 'Minimum Amount', `Minimum withdrawal is ${minWithdrawal.toFixed(1)} USDT.`);
+            if (amt > usdtWallet) return showStylishAlert('alert', 'Insufficient Balance', 'You do not have enough USDT balance.');
             
-            if (!addr.startsWith("0x") || addr.length < 40) return showStylishAlert('alert', MSG.INVALID_ADDRESS, MSG.INVALID_ADDRESS_MSG);
+            if (!addr.startsWith("0x") || addr.length < 40) return showStylishAlert('alert', 'Invalid Address', 'Please enter a valid BEP20 address.');
             
             await update(userRef, { 
                 usdt_balance: usdtWallet - amt,
-                hasWithdrawn: true // ترك هذه الخاصية كما هي إذا كان المنطق يتطلبها لأغراض أخرى
+                hasWithdrawn: true 
             });
             
             const withdrawRef = ref(db, 'withdrawals/' + userId + '_' + Date.now());
             await set(withdrawRef, { address: addr, amount: amt, status: 'pending', time: new Date().toISOString() });
             
-            showStylishAlert('success', MSG.SUCCESS, MSG.SUCCESS_MSG);
+            showStylishAlert('success', 'Withdrawal Successful', 'Your withdrawal has been accepted and will be processed shortly.');
             
             document.getElementById('withdraw-amount').value = "";
             document.getElementById('wallet-address').value = "";
             updateDisplay(); 
         }
-        // ---------------------------------------------
+        // --- End Custom Stylish Alert/Success Modal ---
 
 
-        // 🌟 1. تصحيح منطق زر المهام (Claim Button Logic) مع دعم اللغة
+        // 🌟 1. تصحيح منطق زر المهام (Claim Button Logic)
         window.doTask = async function(btn, id, url, reward) {
-            const AR_MSG = { VERIFY: 'التوثيق مطلوب', WAIT: 'انتظر', CLAIM: 'مطالبة', COMPLETED: 'مكتمل ✅' };
-            const EN_MSG = { VERIFY: 'Verification Required', WAIT: 'Wait', CLAIM: 'Claim', COMPLETED: 'Completed ✅' };
-            const MSG = currentLang === 'en' ? EN_MSG : AR_MSG;
-            
-            if (!isVerified) return showStylishAlert('alert', MSG.VERIFY, (currentLang === 'en' ? 'Please run /start and verify your membership in the Telegram Bot first!' : 'يرجى تشغيل /start والتحقق من عضويتك في بوت تيليجرام أولاً!'));
+            if (!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please run /start and verify your membership in the Telegram Bot first!');
             if (completedTasks[id]) return; 
 
-            if (btn.innerText.includes(currentLang === 'en' ? "Join" : "انضمام") || btn.innerText.includes(MSG.WAIT)) { 
+            if (btn.innerText === "Join" || btn.innerText.includes("Wait")) { 
+                // 1. يفتح القناة دائمًا عند الضغط الأول أو أثناء الانتظار
                 window.open(url, '_blank'); 
                 
+                // 2. يدخل في وضع الانتظار فقط إذا لم يكن مُكتملًا
                 if (!completedTasks[id]) {
-                    const waitTime = 5; 
-                    btn.innerText = `${MSG.WAIT} ${waitTime}s...`; 
+                    const waitTime = 5; // 5 ثواني كما طلبت (يمكن تعديلها إلى 10)
+                    btn.innerText = `Wait ${waitTime}s...`; 
                     btn.disabled = true;
-                    btn.classList.add('waiting'); 
+                    btn.classList.add('waiting'); // إضافة كلاس حالة الانتظار
                     btn.classList.remove('completed');
 
                     let timer = waitTime;
                     const interval = setInterval(() => {
                         timer--;
-                        btn.innerText = `${MSG.WAIT} ${timer}s...`;
+                        btn.innerText = `Wait ${timer}s...`;
                         if (timer <= 0) {
                             clearInterval(interval);
-                            btn.innerText = MSG.CLAIM; 
+                            btn.innerText = "Claim"; // العودة إلى Claim للمطالبة
                             btn.disabled = false; 
-                            btn.style.background = "#00ff88"; 
+                            btn.style.background = "#00ff88"; // لون مختلف للضغط النهائي
                             btn.classList.remove('waiting');
                         }
                     }, 1000); 
                 }
-            } else if (btn.innerText === MSG.CLAIM) {
+            } else if (btn.innerText === "Claim") {
+                // 3. المطالبة النهائية (Claim)
                 count += reward; 
                 completedTasks[id] = true;
                 
                 await update(userRef, { points: count, completedTasks: completedTasks }); 
                 
-                showToast(currentLang === 'en' ? "Success! +" + reward : "نجاح! +" + reward, "💰"); 
-                btn.innerText = MSG.COMPLETED; 
+                showToast("Success! +" + reward, "💰"); 
+                btn.innerText = "Completed ✅"; 
                 btn.disabled = true;
                 btn.style.background = ""; 
-                btn.classList.add('completed'); 
+                btn.classList.add('completed'); // استخدام الـ Class الجديد
                 btn.classList.remove('waiting');
                 updateDisplay();
             }
         }
 
-        // --- Improved Twitter System (Updated for Arabic) ---
+        // --- Improved Twitter System (Unchanged) ---
         window.doTwitterTask = async function(btn) {
-            const AR_MSG = { VERIFY: 'التوثيق مطلوب', SUBMIT: 'إرسال', CLAIM: 'مطالبة', COMPLETED: 'مكتمل ✅' };
-            const EN_MSG = { VERIFY: 'Verification Required', SUBMIT: 'Submit', CLAIM: 'Claim', COMPLETED: 'Completed ✅' };
-            const MSG = currentLang === 'en' ? EN_MSG : AR_MSG;
-
-            if(!isVerified) return showStylishAlert('alert', MSG.VERIFY, (currentLang === 'en' ? 'Please complete all joining tasks first!' : 'يرجى إكمال جميع مهام الانضمام أولاً!'));
+            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
             if (twData.done) return;
             const inputArea = document.getElementById('twitter-input-area');
             
-            if (btn.innerText.includes(currentLang === 'en' ? "Join" : "انضمام")) {
+            if (btn.innerText === "Join") {
                 window.open('https://x.com/ReGnNetwoRk_AI', '_blank');
                 inputArea.style.display = 'block';
                 document.getElementById('tw-warn-msg').style.display = 'block';
                 document.getElementById('cancel-tw-btn').style.display = 'none'; 
-                btn.innerText = MSG.SUBMIT;
+                btn.innerText = "Submit";
                 btn.classList.remove('completed');
-            } else if (btn.innerText === MSG.SUBMIT) {
+            } else if (btn.innerText === "Submit") {
                 const userTw = document.getElementById('tw-username').value.trim();
-                if (!userTw.startsWith('@') || userTw.length < 2) return showToast(currentLang === 'en' ? "Enter a valid @Username" : "أدخل اسم مستخدم صالح يبدأ بـ @", "❌");
+                if (!userTw.startsWith('@') || userTw.length < 2) return showToast("Enter a valid @Username", "❌");
                 
                 twData = { username: userTw, submitted: true, done: false };
                 await update(userRef, { twData: twData });
                 
-                btn.innerText = MSG.CLAIM;
+                btn.innerText = "Claim";
                 btn.style.background = "#00ff88";
                 document.getElementById('tw-username').disabled = true;
                 document.getElementById('cancel-tw-btn').style.display = 'inline-block';
                 document.getElementById('tw-warn-msg').style.display = 'none';
-                showToast(currentLang === 'en' ? "Username Submitted!" : "تم إرسال اسم المستخدم!", "✔️");
+                showToast("Username Submitted!", "✔️");
 
-            } else if (btn.innerText === MSG.CLAIM) {
+            } else if (btn.innerText === "Claim") {
                 count += 10000; twData.done = true;
                 await update(userRef, { points: count, twData: twData });
-                showToast(currentLang === 'en' ? "Claimed +10k!" : "تمت المطالبة بـ +10k!", "💰");
-                btn.innerText = MSG.COMPLETED;
+                showToast("Claimed +10k!", "💰");
+                btn.innerText = "Completed ✅";
                 btn.disabled = true;
                 btn.style.background = ""; 
                 btn.classList.add('completed'); 
@@ -1098,10 +1055,6 @@
         }
         
         window.cancelTwitterSubmission = async function() {
-            const AR_MSG = { JOIN: 'انضمام', CANCELLED: 'تم إلغاء الإرسال' };
-            const EN_MSG = { JOIN: 'Join', CANCELLED: 'Submission Cancelled' };
-            const MSG = currentLang === 'en' ? EN_MSG : AR_MSG;
-            
             const btn = document.getElementById('btn-task6');
             const inputArea = document.getElementById('twitter-input-area');
             
@@ -1110,20 +1063,16 @@
 
             document.getElementById('tw-username').value = "";
             document.getElementById('tw-username').disabled = false;
-            btn.innerText = MSG.JOIN;
+            btn.innerText = "Join";
             btn.style.background = "#00e5ff";
             btn.classList.remove('completed');
             document.getElementById('cancel-tw-btn').style.display = 'none';
             document.getElementById('tw-warn-msg').style.display = 'none';
             inputArea.style.display = 'none';
-            showToast(MSG.CANCELLED, "↩️");
+            showToast("Submission Cancelled", "↩️");
         }
 
         function handleTwitterButtonState() {
-            const AR_MSG = { JOIN: 'انضمام', CLAIM: 'مطالبة', COMPLETED: 'مكتمل ✅' };
-            const EN_MSG = { JOIN: 'Join', CLAIM: 'Claim', COMPLETED: 'Completed ✅' };
-            const MSG = currentLang === 'en' ? EN_MSG : AR_MSG;
-            
             const btn = document.getElementById('btn-task6');
             const inputArea = document.getElementById('twitter-input-area');
             const cancelBtn = document.getElementById('cancel-tw-btn');
@@ -1131,7 +1080,7 @@
             const warnMsg = document.getElementById('tw-warn-msg');
 
             if (twData.done) {
-                btn.innerText = MSG.COMPLETED; 
+                btn.innerText = "Completed ✅"; 
                 btn.disabled = true;
                 btn.style.background = ""; 
                 btn.classList.add('completed'); 
@@ -1140,7 +1089,7 @@
             }
 
             if (twData.submitted) {
-                btn.innerText = MSG.CLAIM;
+                btn.innerText = "Claim";
                 btn.style.background = "#00ff88";
                 btn.classList.remove('completed');
                 inputArea.style.display = 'block';
@@ -1149,7 +1098,7 @@
                 cancelBtn.style.display = 'inline-block';
                 warnMsg.style.display = 'none';
             } else {
-                btn.innerText = MSG.JOIN;
+                btn.innerText = "Join";
                 btn.disabled = false;
                 btn.style.background = "#00e5ff";
                 btn.classList.remove('completed');
@@ -1181,16 +1130,15 @@
             for (let i = 0; i < dailyRewards.length; i++) {
                 const dayBox = document.createElement('div');
                 dayBox.classList.add('day-box');
-                const dayText = currentLang === 'en' ? `Day ${i + 1}\n+${dailyRewards[i]} pts` : `اليوم ${i + 1}\n+${dailyRewards[i]} نقطة`;
-                dayBox.innerText = dayText;
+                dayBox.innerText = `Day ${i + 1}\n+${dailyRewards[i]} pts`;
                 
                 if (i < currentStreak) {
                     dayBox.classList.add('claimed');
-                    dayBox.innerHTML = currentLang === 'en' ? `Day ${i + 1}<br>✅ Claimed` : `اليوم ${i + 1}<br>✅ تم المطالبة`;
+                    dayBox.innerHTML = `Day ${i + 1}<br>✅ Claimed`;
                 } else if (i === currentStreak && !isClaimedToday) {
                     dayBox.classList.add('active');
                     document.getElementById('claim-daily-btn').disabled = false;
-                    document.getElementById('claim-daily-btn').innerText = currentLang === 'en' ? `Claim Day ${i + 1}` : `مطالبة اليوم ${i + 1}`;
+                    document.getElementById('claim-daily-btn').innerText = `Claim Day ${i + 1}`;
                 } else {
                     dayBox.style.opacity = '0.7';
                 }
@@ -1199,7 +1147,7 @@
 
             if(isClaimedToday || currentStreak >= dailyRewards.length) {
                 document.getElementById('claim-daily-btn').disabled = true;
-                document.getElementById('claim-daily-btn').innerText = isClaimedToday ? (currentLang === 'en' ? "Claimed Today" : "تمت المطالبة اليوم") : (currentLang === 'en' ? "All Rewards Claimed!" : "تمت المطالبة بجميع المكافآت!");
+                document.getElementById('claim-daily-btn').innerText = isClaimedToday ? "Claimed Today" : "All Rewards Claimed!";
                 document.getElementById('claim-daily-btn').style.background = isClaimedToday ? "#333" : "#00ff88";
                 document.getElementById('claim-daily-btn').style.color = isClaimedToday ? "#888" : "#000";
             }
@@ -1220,21 +1168,23 @@
 
             let newStreak = dailyInfo.streak;
 
+            // Check if it's the next day in the streak (yesterday) or first claim
             if (lastClaimDay === yesterday || dailyInfo.streak === 0 || lastClaimDay === 0) {
                 const dayIndex = dailyInfo.streak % dailyRewards.length;
                 reward = dailyRewards[dayIndex];
                 newStreak += 1;
             } else {
+                // Streak broken, reset to day 1 (index 0)
                 reward = dailyRewards[0];
                 newStreak = 1;
             }
 
             dailyInfo.lastClaim = Date.now();
-            dailyInfo.streak = newStreak % (dailyRewards.length + 1); 
+            dailyInfo.streak = newStreak % (dailyRewards.length + 1); // منع تجاوز الحد الأقصى بطريقة منطقية
             count += reward;
             
             await update(userRef, { points: count, dailyInfo: dailyInfo });
-            showToast(currentLang === 'en' ? `Daily Reward: +${reward} Points!` : `مكافأة يومية: +${reward} نقطة!`, "⭐");
+            showToast(`Daily Reward: +${reward} Points!`, "⭐");
             updateDisplay();
             renderDailyGrid();
         }
@@ -1259,21 +1209,17 @@
         }
 
         window.handleSwap = async function() {
-            const AR_MSG = { VERIFY: 'التوثيق مطلوب', INVALID_INPUT: 'إدخال غير صالح', MIN_SWAP: 'الحد الأدنى للتبديل', INSUFFICIENT: 'نقاط غير كافية', SUCCESS: 'تم التبديل بنجاح' };
-            const EN_MSG = { VERIFY: 'Verification Required', INVALID_INPUT: 'Invalid Input', MIN_SWAP: 'Minimum Swap', INSUFFICIENT: 'Insufficient Points', SUCCESS: 'Swap Successful' };
-            const MSG = currentLang === 'en' ? EN_MSG : AR_MSG;
-            
-            if(!isVerified) return showStylishAlert('alert', MSG.VERIFY, (currentLang === 'en' ? 'Please complete all joining tasks first!' : 'يرجى إكمال جميع مهام الانضمام أولاً!'));
+            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
             const coinsToSwap = parseInt(document.getElementById('swap-input').value);
             if (isNaN(coinsToSwap) || coinsToSwap <= 0) {
-                return showStylishAlert('alert', MSG.INVALID_INPUT, (currentLang === 'en' ? 'Please enter a valid amount of points.' : 'الرجاء إدخال عدد صالح من النقاط.'));
+                return showStylishAlert('alert', 'Invalid Input', 'Please enter a valid amount of points.');
             }
             const minCoins = 10000; 
             if (coinsToSwap < minCoins) {
-                return showStylishAlert('alert', MSG.MIN_SWAP, (currentLang === 'en' ? `Minimum swap amount is ${minCoins.toLocaleString()} points.` : `الحد الأدنى للتبديل هو ${minCoins.toLocaleString()} نقطة.`));
+                return showStylishAlert('alert', 'Minimum Swap', `Minimum swap amount is ${minCoins.toLocaleString()} points.`);
             }
             if (coinsToSwap > count) {
-                return showStylishAlert('alert', MSG.INSUFFICIENT, (currentLang === 'en' ? 'You do not have enough points to swap.' : 'ليس لديك نقاط كافية للتبديل.'));
+                return showStylishAlert('alert', 'Insufficient Points', 'You do not have enough points to swap.');
             }
 
             const usdtReceived = coinsToSwap * currentPrice;
@@ -1282,7 +1228,7 @@
 
             await update(userRef, { points: count, usdt_balance: usdtWallet });
             
-            showStylishAlert('success', MSG.SUCCESS, (currentLang === 'en' ? `Successfully swapped ${coinsToSwap.toLocaleString()} points for ${usdtReceived.toFixed(2)} USDT.` : `تم تبديل ${coinsToSwap.toLocaleString()} نقطة بنجاح مقابل ${usdtReceived.toFixed(2)} USDT.`));
+            showStylishAlert('success', 'Swap Successful', `Successfully swapped ${coinsToSwap.toLocaleString()} points for ${usdtReceived.toFixed(2)} USDT.`);
             document.getElementById('swap-input').value = "";
             document.getElementById('swap-output').value = "0.00";
             updateDisplay();
@@ -1295,10 +1241,10 @@
                 const status = document.getElementById('s' + m);
                 if (friendsInvited >= m) {
                     el.classList.add('unlocked');
-                    status.innerText = currentLang === 'en' ? "Unlocked" : "مفتوح";
+                    status.innerText = "Unlocked";
                 } else {
                     el.classList.remove('unlocked');
-                    status.innerText = currentLang === 'en' ? "Locked" : "مغلق";
+                    status.innerText = "Locked";
                 }
             });
         }
@@ -1306,7 +1252,7 @@
         window.copyLink = function() {
             const link = document.getElementById('ref-link').innerText;
             navigator.clipboard.writeText(link).then(() => {
-                showToast(currentLang === 'en' ? "Link Copied!" : "تم نسخ الرابط!", "🔗");
+                showToast("Link Copied!", "🔗");
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             });
         }
@@ -1322,9 +1268,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             showSection('home');
             currentLang = 'en'; 
-            window.toggleLanguage(); // لتطبيق اللغة العربية كإعداد افتراضي في أول تحميل
+            window.toggleLanguage(); 
         });
 
     </script>
 </body>
-</html>
+    </html>

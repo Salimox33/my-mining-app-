@@ -753,6 +753,11 @@
         const user = tg.initDataUnsafe?.user;
         const userId = user ? user.id.toString() : "guest";
         const userRef = ref(db, 'users/' + userId);
+        
+        // --- 🔴 منطق الإحالة الجديد (الإصلاح المطلوب) 🔴 ---
+        const referrerId = new URLSearchParams(tg.initData).get('start');
+        const REFERRAL_REWARD = 20000; // مكافأة الإحالة (يمكنك تعديلها)
+        // --------------------------------------------------
 
         let count = 0;
         let energy = 1000;
@@ -774,6 +779,49 @@
         
         const ENERGY_RECHARGE_RATE_PER_SECOND = 1000 / 10800; // 0.09259259... 
         const RECHARGE_INTERVAL = 1000; 
+        
+        // --- 🔴 الدالة المحدثة لإعداد المستخدم الجديد (لتضمين الإحالة) 🔴 ---
+        async function setupNewUser(referrer) {
+            const initialUserData = {
+                id: userId,
+                username: user.username || null,
+                firstName: user.first_name || "Lion",
+                points: 0,
+                usdt_balance: 0.0,
+                friendsCount: 0,
+                completedTasks: {},
+                dailyInfo: { streak: 0, lastClaim: 0 },
+                energy: maxEnergy,
+                last_energy_update: Date.now(),
+                is_verified: false,
+                hasWithdrawn: false,
+                twData: { username: '', submitted: false, done: false },
+                // 🌟 هذا هو الحقل الأهم لتسجيل المُحيل!
+                referrer_id: referrer || null 
+            };
+            await set(userRef, initialUserData);
+
+            // 🌟 منطق مكافأة المُحيل
+            if (referrer && referrer !== userId) {
+                const referrerRef = ref(db, 'users/' + referrer);
+                const referrerSnapshot = await get(referrerRef);
+                const referrerData = referrerSnapshot.val();
+
+                if (referrerData) {
+                    // زيادة عدد الأصدقاء ونقاط المُحيل (الداعي)
+                    const newFriendsCount = (referrerData.friendsCount || 0) + 1;
+                    const newPoints = (referrerData.points || 0) + REFERRAL_REWARD;
+                    
+                    await update(referrerRef, {
+                        friendsCount: newFriendsCount,
+                        points: newPoints
+                    });
+                    console.log(`Referral registered for ${referrer}. +${REFERRAL_REWARD} points.`);
+                }
+            }
+        }
+        // ----------------------------------------------------------------------
+
 
         window.toggleLanguage = function() {
             // التبديل بين الإنجليزية (en) والعربية (ar)
@@ -795,33 +843,45 @@
             if (user.photo_url) document.getElementById('user-photo').src = user.photo_url;
         }
         document.getElementById('ref-link').innerText = `https://t.me/RegnumOfficialbot?start=${userId}`;
-
-        onValue(userRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                count = data.points || 0;
-                usdtWallet = data.usdt_balance || 0.0;
-                friendsInvited = data.friendsCount || 0;
-                completedTasks = data.completedTasks || {};
-                dailyInfo = data.dailyInfo || { streak: 0, lastClaim: 0 };
-                
-                lastEnergyUpdate = data.last_energy_update || Date.now(); 
-                energy = data.energy || maxEnergy;
-                isVerified = data.is_verified || false; 
-                hasWithdrawn = data.hasWithdrawn || false; 
-                twData = data.twData || { username: '', submitted: false, done: false };
-                
-                updateEnergy();
-                
-                updateDisplay();
-                updateMilestones();
-                renderDailyGrid();
-                renderTasksState(); 
-                handleTwitterButtonState();
-            } else {
-                 document.getElementById('user-display').innerText = "Run /start in Bot";
+        
+        // --- 🔴 منطق التحقق من وجود المستخدم وإعداد الإحالة 🔴 ---
+        get(userRef).then(async (snapshot) => {
+            if (!snapshot.exists()) {
+                await setupNewUser(referrerId);
+                console.log("New user setup complete.");
             }
+            // بعد التحقق أو الإنشاء، نبدأ الاستماع للتحديثات
+            onValue(userRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    count = data.points || 0;
+                    usdtWallet = data.usdt_balance || 0.0;
+                    friendsInvited = data.friendsCount || 0;
+                    completedTasks = data.completedTasks || {};
+                    dailyInfo = data.dailyInfo || { streak: 0, lastClaim: 0 };
+                    
+                    lastEnergyUpdate = data.last_energy_update || Date.now(); 
+                    energy = data.energy || maxEnergy;
+                    isVerified = data.is_verified || false; 
+                    hasWithdrawn = data.hasWithdrawn || false; 
+                    twData = data.twData || { username: '', submitted: false, done: false };
+                    
+                    updateEnergy();
+                    
+                    updateDisplay();
+                    updateMilestones();
+                    renderDailyGrid();
+                    renderTasksState(); 
+                    handleTwitterButtonState();
+                } else {
+                    // هذا الجزء يخدم حالة نادرة جداً
+                    document.getElementById('user-display').innerText = "Run /start in Bot";
+                }
+            });
+        }).catch(error => {
+            console.error("Error checking user existence:", error);
         });
+        // ----------------------------------------------------------
 
         function updateEnergy() {
             const now = Date.now();
@@ -1284,14 +1344,9 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             showSection('home');
-            // **التعديل الهام هنا:** استدعاء الدالة لفرض اللغة الإنجليزية بعد تحميل DOM
-            // يتم ضبط currentLang = 'en' في البداية، ثم نقوم بتبديل وهمي لتطبيق النصوص الإنجليزية.
-            currentLang = 'ar'; // يتم تغييرها إلى 'en' في الدالة التالية
-            window.toggleLanguage(); // تبدأ بالإنجليزية وتضبط body.dir على 'ltr'
-            // إذا كنت تريد التأكد 100% أن التطبيق يبدأ إنجليزي، استخدم هذا:
-            // currentLang = 'en';
-            // document.body.dir = 'ltr';
-            // document.querySelectorAll('[data-en]').forEach(el => el.innerText = el.getAttribute('data-en'));
+            // يتم استدعاء toggleLanguage لتطبيق اللغة الإنجليزية الافتراضية وضبط اتجاه الصفحة
+            currentLang = 'ar'; 
+            window.toggleLanguage(); 
         });
 
     </script>

@@ -763,21 +763,31 @@
         let isVerified = false; 
         let hasWithdrawn = false; 
         let twData = { username: '', submitted: false, done: false };
-        let lastEnergyUpdate = Date.now(); // 🌟 متغير لتتبع آخر تحديث للطاقة
+        let lastEnergyUpdate = Date.now(); 
         
         const dailyRewards = [500, 750, 1000, 1250, 1500, 2000];
         const maxEnergy = 1000;
         const currentPrice = 0.000001;
-        let currentLang = 'en';
-        // 🌟 3. حساب معدل استعادة الطاقة (3 ساعات للملء الكامل)
-        // 1000 / (3 ساعات * 60 دقيقة * 60 ثانية) = 1000 / 10800 ثانية
+        
+        // **التعديل هنا:** البدء باللغة الإنجليزية كقيمة أولية
+        let currentLang = 'en'; 
+        
         const ENERGY_RECHARGE_RATE_PER_SECOND = 1000 / 10800; // 0.09259259... 
-        const RECHARGE_INTERVAL = 1000; // تحديث كل ثانية
+        const RECHARGE_INTERVAL = 1000; 
 
         window.toggleLanguage = function() {
+            // التبديل بين الإنجليزية (en) والعربية (ar)
             currentLang = currentLang === 'en' ? 'ar' : 'en';
-            // 🌟 2. أيقونة اللغة الفريدة والأنيقة - تم تغيير طريقة التحديث في HTML و CSS
-            document.querySelectorAll('[data-en]').forEach(el => el.innerText = el.getAttribute('data-' + currentLang));
+            
+            document.querySelectorAll('[data-en]').forEach(el => {
+                // التأكد من أن النص الداخلي يتم تحديثه من الخاصية المناسبة
+                const langText = el.getAttribute('data-' + currentLang);
+                if (langText) {
+                    el.innerText = langText;
+                }
+            });
+            // إذا كانت اللغة عربية، نضبط اتجاه النص ليعكس ذلك
+            document.body.dir = (currentLang === 'ar' ? 'rtl' : 'ltr');
         };
 
         if (user) {
@@ -794,14 +804,13 @@
                 friendsInvited = data.friendsCount || 0;
                 completedTasks = data.completedTasks || {};
                 dailyInfo = data.dailyInfo || { streak: 0, lastClaim: 0 };
-                // 🌟 قراءة آخر وقت تحديث للطاقة 
+                
                 lastEnergyUpdate = data.last_energy_update || Date.now(); 
                 energy = data.energy || maxEnergy;
                 isVerified = data.is_verified || false; 
                 hasWithdrawn = data.hasWithdrawn || false; 
                 twData = data.twData || { username: '', submitted: false, done: false };
                 
-                // 🌟 تطبيق تحديث الطاقة عند قراءة البيانات
                 updateEnergy();
                 
                 updateDisplay();
@@ -810,43 +819,35 @@
                 renderTasksState(); 
                 handleTwitterButtonState();
             } else {
-                // قد يحتاج المستخدم الجديد للتسجيل الأولي عبر البوت
                  document.getElementById('user-display').innerText = "Run /start in Bot";
             }
         });
 
-        // 🌟 3. وظيفة تحديث الطاقة بناءً على الوقت المنقضي
         function updateEnergy() {
             const now = Date.now();
             const timeElapsedSeconds = (now - lastEnergyUpdate) / 1000;
             
-            // حساب الطاقة المكتسبة
             let energyGained = Math.floor(timeElapsedSeconds * ENERGY_RECHARGE_RATE_PER_SECOND);
             
-            // تحديث قيمة الطاقة
             energy = Math.min(maxEnergy, energy + energyGained);
             
-            // حفظ التحديث الجديد إذا كان هناك تغيير كبير (أو إجبار الحفظ إذا تم التعدين)
             if (energyGained > 0) {
                 lastEnergyUpdate = now;
                 update(userRef, { energy: energy, last_energy_update: lastEnergyUpdate }); 
             }
         }
         
-        // 🌟 تحديث الطاقة كل ثانية للعرض في شريط التقدم
         setInterval(() => {
             const now = Date.now();
             const timeElapsedSeconds = (now - lastEnergyUpdate) / 1000;
             let energyIncrease = timeElapsedSeconds * ENERGY_RECHARGE_RATE_PER_SECOND;
             
             if (energy < maxEnergy) {
-                // استخدام `+=` و `Math.min` لتحديث سلس
                 energy = Math.min(maxEnergy, energy + energyIncrease);
-                lastEnergyUpdate = now; // تحديث مؤقت لتقليل تجميع الطاقة
+                lastEnergyUpdate = now; 
                 updateDisplay();
             }
             
-            // حفظ القيمة المحدثة في قاعدة البيانات كل 10 ثواني (لتقليل الكتابة)
             if ((now - (window.lastFirebaseSave || 0)) > 10000) {
                  update(userRef, { energy: Math.floor(energy), last_energy_update: lastEnergyUpdate });
                  window.lastFirebaseSave = now;
@@ -859,10 +860,13 @@
             document.getElementById('top-points').innerText = count.toLocaleString();
             document.getElementById('usd-val').innerText = `≈ ${(count * currentPrice).toFixed(6)} USDT`; 
             document.getElementById('usdt-balance').innerText = usdtWallet.toFixed(2);
-            // 🌟 عرض قيمة الطاقة الصحيحة
             document.getElementById('e-val').innerText = Math.floor(energy);
             document.getElementById('e-bar').style.width = (Math.floor(energy) / maxEnergy * 100) + "%";
-            document.getElementById('friend-count').innerText = `${friendsInvited} Friends`;
+            
+            // تحديث نص عرض الأصدقاء بناءً على اللغة الحالية
+            const friendTextEn = `${friendsInvited} Friends`;
+            const friendTextAr = `${friendsInvited} أصدقاء`;
+            document.getElementById('friend-count').innerText = currentLang === 'en' ? friendTextEn : friendTextAr;
         }
 
         function renderTasksState() {
@@ -876,9 +880,9 @@
                         btn.classList.add('completed'); 
                         btn.classList.remove('waiting');
                     } else if (btn.classList.contains('waiting')) {
-                        // تركها على حالة الانتظار إذا كانت كذلك بالفعل
+                        // Keep waiting state
                     } else {
-                         btn.innerText = "Join";
+                         btn.innerText = currentLang === 'en' ? "Join" : "انضمام";
                          btn.disabled = false;
                          btn.style.background = "#00e5ff";
                          btn.classList.remove('completed');
@@ -891,10 +895,9 @@
 
 
         window.tap = async function(e) {
-            // 🌟 استخدام Math.floor() لضمان أن الطاقة رقم صحيح عند التعدين
             if(Math.floor(energy) > 0) {
                 count += 1; energy -= 1; 
-                lastEnergyUpdate = Date.now(); // تحديث وقت آخر استخدام للطاقة
+                lastEnergyUpdate = Date.now(); 
                 updateDisplay();
                 await update(userRef, { points: count, energy: Math.floor(energy), last_energy_update: lastEnergyUpdate }); 
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -966,48 +969,49 @@
         // --- End Custom Stylish Alert/Success Modal ---
 
 
-        // 🌟 1. تصحيح منطق زر المهام (Claim Button Logic)
+        // 🌟 1. تصحيح منطق زر المهام
         window.doTask = async function(btn, id, url, reward) {
             if (!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please run /start and verify your membership in the Telegram Bot first!');
             if (completedTasks[id]) return; 
 
-            if (btn.innerText === "Join" || btn.innerText.includes("Wait")) { 
-                // 1. يفتح القناة دائمًا عند الضغط الأول أو أثناء الانتظار
+            const joinText = currentLang === 'en' ? "Join" : "انضمام";
+            const waitText = currentLang === 'en' ? "Wait" : "انتظر";
+            const claimText = currentLang === 'en' ? "Claim" : "مطالبة";
+
+            if (btn.innerText === joinText || btn.innerText.includes(waitText)) { 
                 window.open(url, '_blank'); 
                 
-                // 2. يدخل في وضع الانتظار فقط إذا لم يكن مُكتملًا
                 if (!completedTasks[id]) {
-                    const waitTime = 5; // 5 ثواني كما طلبت (يمكن تعديلها إلى 10)
-                    btn.innerText = `Wait ${waitTime}s...`; 
+                    const waitTime = 5; 
+                    btn.innerText = `${waitText} ${waitTime}s...`; 
                     btn.disabled = true;
-                    btn.classList.add('waiting'); // إضافة كلاس حالة الانتظار
+                    btn.classList.add('waiting'); 
                     btn.classList.remove('completed');
 
                     let timer = waitTime;
                     const interval = setInterval(() => {
                         timer--;
-                        btn.innerText = `Wait ${timer}s...`;
+                        btn.innerText = `${waitText} ${timer}s...`;
                         if (timer <= 0) {
                             clearInterval(interval);
-                            btn.innerText = "Claim"; // العودة إلى Claim للمطالبة
+                            btn.innerText = claimText; 
                             btn.disabled = false; 
-                            btn.style.background = "#00ff88"; // لون مختلف للضغط النهائي
+                            btn.style.background = "#00ff88"; 
                             btn.classList.remove('waiting');
                         }
                     }, 1000); 
                 }
-            } else if (btn.innerText === "Claim") {
-                // 3. المطالبة النهائية (Claim)
+            } else if (btn.innerText === claimText) {
                 count += reward; 
                 completedTasks[id] = true;
                 
                 await update(userRef, { points: count, completedTasks: completedTasks }); 
                 
-                showToast("Success! +" + reward, "💰"); 
+                showToast(currentLang === 'en' ? "Success! +" + reward : "نجاح! +" + reward, "💰"); 
                 btn.innerText = "Completed ✅"; 
                 btn.disabled = true;
                 btn.style.background = ""; 
-                btn.classList.add('completed'); // استخدام الـ Class الجديد
+                btn.classList.add('completed'); 
                 btn.classList.remove('waiting');
                 updateDisplay();
             }
@@ -1018,32 +1022,35 @@
             if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
             if (twData.done) return;
             const inputArea = document.getElementById('twitter-input-area');
+            const joinText = currentLang === 'en' ? "Join" : "انضمام";
+            const submitText = currentLang === 'en' ? "Submit" : "إرسال";
+            const claimText = currentLang === 'en' ? "Claim" : "مطالبة";
             
-            if (btn.innerText === "Join") {
+            if (btn.innerText === joinText) {
                 window.open('https://x.com/ReGnNetwoRk_AI', '_blank');
                 inputArea.style.display = 'block';
                 document.getElementById('tw-warn-msg').style.display = 'block';
                 document.getElementById('cancel-tw-btn').style.display = 'none'; 
-                btn.innerText = "Submit";
+                btn.innerText = submitText;
                 btn.classList.remove('completed');
-            } else if (btn.innerText === "Submit") {
+            } else if (btn.innerText === submitText) {
                 const userTw = document.getElementById('tw-username').value.trim();
-                if (!userTw.startsWith('@') || userTw.length < 2) return showToast("Enter a valid @Username", "❌");
+                if (!userTw.startsWith('@') || userTw.length < 2) return showToast(currentLang === 'en' ? "Enter a valid @Username" : "أدخل اسم مستخدم صحيح", "❌");
                 
                 twData = { username: userTw, submitted: true, done: false };
                 await update(userRef, { twData: twData });
                 
-                btn.innerText = "Claim";
+                btn.innerText = claimText;
                 btn.style.background = "#00ff88";
                 document.getElementById('tw-username').disabled = true;
                 document.getElementById('cancel-tw-btn').style.display = 'inline-block';
                 document.getElementById('tw-warn-msg').style.display = 'none';
-                showToast("Username Submitted!", "✔️");
+                showToast(currentLang === 'en' ? "Username Submitted!" : "تم إرسال اسم المستخدم!", "✔️");
 
-            } else if (btn.innerText === "Claim") {
+            } else if (btn.innerText === claimText) {
                 count += 10000; twData.done = true;
                 await update(userRef, { points: count, twData: twData });
-                showToast("Claimed +10k!", "💰");
+                showToast(currentLang === 'en' ? "Claimed +10k!" : "تمت المطالبة بـ 10K+", "💰");
                 btn.innerText = "Completed ✅";
                 btn.disabled = true;
                 btn.style.background = ""; 
@@ -1063,13 +1070,13 @@
 
             document.getElementById('tw-username').value = "";
             document.getElementById('tw-username').disabled = false;
-            btn.innerText = "Join";
+            btn.innerText = currentLang === 'en' ? "Join" : "انضمام";
             btn.style.background = "#00e5ff";
             btn.classList.remove('completed');
             document.getElementById('cancel-tw-btn').style.display = 'none';
             document.getElementById('tw-warn-msg').style.display = 'none';
             inputArea.style.display = 'none';
-            showToast("Submission Cancelled", "↩️");
+            showToast(currentLang === 'en' ? "Submission Cancelled" : "تم إلغاء الإرسال", "↩️");
         }
 
         function handleTwitterButtonState() {
@@ -1078,6 +1085,8 @@
             const cancelBtn = document.getElementById('cancel-tw-btn');
             const usernameInput = document.getElementById('tw-username');
             const warnMsg = document.getElementById('tw-warn-msg');
+            const joinText = currentLang === 'en' ? "Join" : "انضمام";
+            const claimText = currentLang === 'en' ? "Claim" : "مطالبة";
 
             if (twData.done) {
                 btn.innerText = "Completed ✅"; 
@@ -1089,7 +1098,7 @@
             }
 
             if (twData.submitted) {
-                btn.innerText = "Claim";
+                btn.innerText = claimText;
                 btn.style.background = "#00ff88";
                 btn.classList.remove('completed');
                 inputArea.style.display = 'block';
@@ -1098,7 +1107,7 @@
                 cancelBtn.style.display = 'inline-block';
                 warnMsg.style.display = 'none';
             } else {
-                btn.innerText = "Join";
+                btn.innerText = joinText;
                 btn.disabled = false;
                 btn.style.background = "#00e5ff";
                 btn.classList.remove('completed');
@@ -1127,18 +1136,24 @@
             const isClaimedToday = lastClaimDay === today;
             let currentStreak = dailyInfo.streak;
 
+            const dayText = currentLang === 'en' ? 'Day' : 'يوم';
+            const claimedText = currentLang === 'en' ? 'Claimed' : 'تمت المطالبة';
+            const claimBtnText = currentLang === 'en' ? "Claim" : "مطالبة";
+            const claimedTodayText = currentLang === 'en' ? "Claimed Today" : "تمت المطالبة اليوم";
+            const allClaimedText = currentLang === 'en' ? "All Rewards Claimed!" : "تمت المطالبة بكل الجوائز!";
+
             for (let i = 0; i < dailyRewards.length; i++) {
                 const dayBox = document.createElement('div');
                 dayBox.classList.add('day-box');
-                dayBox.innerText = `Day ${i + 1}\n+${dailyRewards[i]} pts`;
+                dayBox.innerText = `${dayText} ${i + 1}\n+${dailyRewards[i]} pts`;
                 
                 if (i < currentStreak) {
                     dayBox.classList.add('claimed');
-                    dayBox.innerHTML = `Day ${i + 1}<br>✅ Claimed`;
+                    dayBox.innerHTML = `${dayText} ${i + 1}<br>✅ ${claimedText}`;
                 } else if (i === currentStreak && !isClaimedToday) {
                     dayBox.classList.add('active');
                     document.getElementById('claim-daily-btn').disabled = false;
-                    document.getElementById('claim-daily-btn').innerText = `Claim Day ${i + 1}`;
+                    document.getElementById('claim-daily-btn').innerText = `${claimBtnText} ${dayText} ${i + 1}`;
                 } else {
                     dayBox.style.opacity = '0.7';
                 }
@@ -1147,7 +1162,7 @@
 
             if(isClaimedToday || currentStreak >= dailyRewards.length) {
                 document.getElementById('claim-daily-btn').disabled = true;
-                document.getElementById('claim-daily-btn').innerText = isClaimedToday ? "Claimed Today" : "All Rewards Claimed!";
+                document.getElementById('claim-daily-btn').innerText = isClaimedToday ? claimedTodayText : allClaimedText;
                 document.getElementById('claim-daily-btn').style.background = isClaimedToday ? "#333" : "#00ff88";
                 document.getElementById('claim-daily-btn').style.color = isClaimedToday ? "#888" : "#000";
             }
@@ -1168,23 +1183,22 @@
 
             let newStreak = dailyInfo.streak;
 
-            // Check if it's the next day in the streak (yesterday) or first claim
             if (lastClaimDay === yesterday || dailyInfo.streak === 0 || lastClaimDay === 0) {
                 const dayIndex = dailyInfo.streak % dailyRewards.length;
                 reward = dailyRewards[dayIndex];
                 newStreak += 1;
             } else {
-                // Streak broken, reset to day 1 (index 0)
                 reward = dailyRewards[0];
                 newStreak = 1;
             }
 
             dailyInfo.lastClaim = Date.now();
-            dailyInfo.streak = newStreak % (dailyRewards.length + 1); // منع تجاوز الحد الأقصى بطريقة منطقية
+            dailyInfo.streak = newStreak % (dailyRewards.length + 1); 
             count += reward;
             
+            showToast(currentLang === 'en' ? `Daily Reward: +${reward} Points!` : `المكافأة اليومية: +${reward} نقطة!`, "⭐");
+
             await update(userRef, { points: count, dailyInfo: dailyInfo });
-            showToast(`Daily Reward: +${reward} Points!`, "⭐");
             updateDisplay();
             renderDailyGrid();
         }
@@ -1236,15 +1250,18 @@
 
         function updateMilestones() {
             const milestones = [1, 3, 5, 10, 20, 50, 100];
+            const lockedText = currentLang === 'en' ? "Locked" : "مغلق";
+            const unlockedText = currentLang === 'en' ? "Unlocked" : "مفتوح";
+
             milestones.forEach(m => {
                 const el = document.getElementById('m' + m);
                 const status = document.getElementById('s' + m);
                 if (friendsInvited >= m) {
                     el.classList.add('unlocked');
-                    status.innerText = "Unlocked";
+                    status.innerText = unlockedText;
                 } else {
                     el.classList.remove('unlocked');
-                    status.innerText = "Locked";
+                    status.innerText = lockedText;
                 }
             });
         }
@@ -1252,7 +1269,7 @@
         window.copyLink = function() {
             const link = document.getElementById('ref-link').innerText;
             navigator.clipboard.writeText(link).then(() => {
-                showToast("Link Copied!", "🔗");
+                showToast(currentLang === 'en' ? "Link Copied!" : "تم نسخ الرابط!", "🔗");
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             });
         }
@@ -1267,8 +1284,14 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             showSection('home');
-            currentLang = 'en'; 
-            window.toggleLanguage(); 
+            // **التعديل الهام هنا:** استدعاء الدالة لفرض اللغة الإنجليزية بعد تحميل DOM
+            // يتم ضبط currentLang = 'en' في البداية، ثم نقوم بتبديل وهمي لتطبيق النصوص الإنجليزية.
+            currentLang = 'ar'; // يتم تغييرها إلى 'en' في الدالة التالية
+            window.toggleLanguage(); // تبدأ بالإنجليزية وتضبط body.dir على 'ltr'
+            // إذا كنت تريد التأكد 100% أن التطبيق يبدأ إنجليزي، استخدم هذا:
+            // currentLang = 'en';
+            // document.body.dir = 'ltr';
+            // document.querySelectorAll('[data-en]').forEach(el => el.innerText = el.getAttribute('data-en'));
         });
 
     </script>

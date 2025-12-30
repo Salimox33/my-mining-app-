@@ -20,21 +20,31 @@
             overflow: hidden;
         }
 
-        /* Language Switcher Button */
+        /* 🌟 2. أيقونة اللغة الفريدة والأنيقة - CSS مُحدَّث */
         .lang-switch-btn {
             position: absolute;
             top: 15px;
             right: 15px;
             z-index: 1001;
-            background: rgba(0, 229, 255, 0.15);
+            /* التغييرات هنا */
+            background: linear-gradient(135deg, #00e5ff33, #00ff8833); 
             border: 1px solid #00e5ff;
-            color: #00e5ff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
+            color: #fff;
+            padding: 8px 12px; 
+            border-radius: 50%; 
+            font-size: 16px; 
             font-weight: bold;
             cursor: pointer;
+            width: 40px; 
+            height: 40px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+            transition: all 0.3s;
         }
+        .lang-switch-btn:active { transform: scale(0.9); }
+        .lang-switch-btn i { color: #00e5ff; }
 
         /* Stats Bar */
         .stats-bar {
@@ -384,6 +394,12 @@
             box-shadow: none;
             cursor: default;
         }
+        /* 🌟 CSS لحالة الانتظار */
+        .task-btn.waiting {
+            background: #4a4e69; /* لون رمادي أو بنفسجي خفيف */
+            color: #fff;
+            cursor: wait;
+        }
 
         .invite-btn { width: 100%; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3); }
 
@@ -481,7 +497,9 @@
 </head>
 <body>
 
-    <button class="lang-switch-btn" onclick="toggleLanguage()" id="lang-toggle">العربية</button>
+    <button class="lang-switch-btn" onclick="toggleLanguage()" id="lang-toggle">
+        <i class="fa-solid fa-language"></i>
+    </button>
 
     <div id="toast">
         <span id="toast-icon">✅</span>
@@ -576,14 +594,14 @@
 
     <div id="tasks-section">
         <div class="daily-reward-container">
-            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 14px;" data-en="Daily Check-in" data-ar="تسجيل الدخول اليومي">Daily Check-in</h4>
+            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 14px;" data-en="Daily Check-in" data-ar="تسجيل الدخول اليومي">تسجيل الدخول اليومي</h4>
             <div class="daily-grid" id="daily-grid"></div>
             <button id="claim-daily-btn" class="action-btn" onclick="claimDaily()" style="margin-top:12px; padding: 10px; font-size:14px; background: #ffd700; color: #000;">Claim</button>
         </div>
 
         <div class="invite-header-card" style="margin-bottom: 15px; padding: 15px;">
-            <h3 data-en="Social Tasks" data-ar="مهام التواصل">Social Tasks</h3>
-            <p data-en="Verify membership to earn points!" data-ar="تحقق من الانضمام لربح النقاط!">Verify membership to earn points!</p>
+            <h3 data-en="Social Tasks" data-ar="مهام التواصل">مهام التواصل</h3>
+            <p data-en="Verify membership to earn points!" data-ar="تحقق من الانضمام لربح النقاط!">تحقق من الانضمام لربح النقاط!</p>
         </div>
         
         <div class="task-card" id="task-card-task1">
@@ -596,28 +614,28 @@
         <div class="task-card" id="task-card-task2">
             <div class="task-header">
                 <div class="task-info"><h4>Join Airdrop Channel</h4><p>+5,000 Points</p></div>
-                <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/airdropxtxt', 5000)" class="task-btn">Join</button>
+                 <button id="btn-task2" onclick="doTask(this, 'task2', 'https://t.me/airdropxtxt', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task3">
             <div class="task-header">
                 <div class="task-info"><h4>Join Airdrop Group</h4><p>+5,000 Points</p></div>
-                <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+TIG-5SDfm5w2MmRk', 5000)" class="task-btn">Join</button>
+                 <button id="btn-task3" onclick="doTask(this, 'task3', 'https://t.me/+TIG-5SDfm5w2MmRk', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task4">
             <div class="task-header">
                 <div class="task-info"><h4>Join Official Group</h4><p>+5,000 Points</p></div>
-                <button id="btn-task4" onclick="doTask(this, 'task4', 'https://t.me/+4D6ZjKanoLg1NzI0', 5000)" class="task-btn">Join</button>
+                 <button id="btn-task4" onclick="doTask(this, 'task4', 'https://t.me/+4D6ZjKanoLg1NzI0', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
         <div class="task-card" id="task-card-task5">
             <div class="task-header">
                 <div class="task-info"><h4>Join XTAIRDRpP</h4><p>+5,000 Points</p></div>
-                <button id="btn-task5" onclick="doTask(this, 'task5', 'https://t.me/XTAIRDRpP', 5000)" class="task-btn">Join</button>
+                 <button id="btn-task5" onclick="doTask(this, 'task5', 'https://t.me/XTAIRDRpP', 5000)" class="task-btn">Join</button>
             </div>
         </div>
 
@@ -639,11 +657,11 @@
     <div id="friends-section">
         <div class="invite-header-card">
             <h3 id="friend-count">0 Friends</h3>
-            <p data-en="Your referral link:" data-ar="رابط الإحالة الخاص بك:">Your referral link:</p>
+            <p data-en="Your referral link:" data-ar="رابط الإحالة الخاص بك:">رابط الإحالة الخاص بك:</p>
             <div class="ref-box" id="ref-link">loading...</div>
-            <button onclick="copyLink()" class="invite-btn" data-en="Invite a Friend 🚀" data-ar="دعوة صديق 🚀">Invite a Friend 🚀</button>
+            <button onclick="copyLink()" class="invite-btn" data-en="Invite a Friend 🚀" data-ar="دعوة صديق 🚀">دعوة صديق 🚀</button>
         </div>
-        <h3 style="margin: 0 0 15px 5px; font-size: 18px; color: #00e5ff;" data-en="Referral Rewards" data-ar="جوائز الإحالة">Referral Rewards</h3>
+        <h3 style="margin: 0 0 15px 5px; font-size: 18px; color: #00e5ff;" data-en="Referral Rewards" data-ar="جوائز الإحالة">جوائز الإحالة</h3>
         <div class="milestone-list">
             <div class="milestone-item" id="m1"><div class="m-icon"><i class="fa-solid fa-medal" style="color: #cd7f32;"></i></div><div class="m-info"><h4>1 Referral</h4><p>+5,000 Coins</p></div><div class="m-status" id="s1">Locked</div></div>
             <div class="milestone-item" id="m3"><div class="m-icon"><i class="fa-solid fa-medal" style="color: #c0c0c0;"></i></div><div class="m-info"><h4>3 Referrals</h4><p>+15,000 Coins</p></div><div class="m-status" id="s3">Locked</div></div>
@@ -693,23 +711,23 @@
     <nav class="bottom-nav">
         <a onclick="showSection('airdrop')" id="nav-airdrop" class="nav-link">
             <i class="fa-solid fa-parachute-box"></i>
-            <span data-en="Airdrop" data-ar="إيردروب">Airdrop</span>
+            <span data-en="Airdrop" data-ar="إيردروب">إيردروب</span>
         </a>
         <a onclick="showSection('friends')" id="nav-friends" class="nav-link">
             <i class="fa-solid fa-user-group"></i>
-            <span data-en="Friends" data-ar="الأصدقاء">Friends</span>
+            <span data-en="Friends" data-ar="الأصدقاء">الأصدقاء</span>
         </a>
         <a onclick="showSection('home')" id="nav-home" class="nav-link active">
             <i class="fa-solid fa-house-chimney"></i>
-            <span data-en="Home" data-ar="الرئيسية">Home</span>
+            <span data-en="Home" data-ar="الرئيسية">الرئيسية</span>
         </a>
         <a onclick="showSection('tasks')" id="nav-tasks" class="nav-link">
             <i class="fa-solid fa-list-check"></i>
-            <span data-en="Tasks" data-ar="المهام">Tasks</span>
+            <span data-en="Tasks" data-ar="المهام">المهام</span>
         </a>
         <a onclick="showSection('exchange')" id="nav-exchange" class="nav-link">
             <i class="fa-solid fa-right-left"></i>
-            <span data-en="Exchange" data-ar="تبديل">Exchange</span>
+            <span data-en="Exchange" data-ar="تبديل">تبديل</span>
         </a>
     </nav>
 
@@ -743,17 +761,22 @@
         let completedTasks = {};
         let dailyInfo = { streak: 0, lastClaim: 0 };
         let isVerified = false; 
-        let hasWithdrawn = false; // 🌟 1. التهيئة: متغير جديد لتتبع السحب الأول
+        let hasWithdrawn = false; 
         let twData = { username: '', submitted: false, done: false };
+        let lastEnergyUpdate = Date.now(); // 🌟 متغير لتتبع آخر تحديث للطاقة
         
         const dailyRewards = [500, 750, 1000, 1250, 1500, 2000];
         const maxEnergy = 1000;
         const currentPrice = 0.000001;
         let currentLang = 'en';
+        // 🌟 3. حساب معدل استعادة الطاقة (3 ساعات للملء الكامل)
+        // 1000 / (3 ساعات * 60 دقيقة * 60 ثانية) = 1000 / 10800 ثانية
+        const ENERGY_RECHARGE_RATE_PER_SECOND = 1000 / 10800; // 0.09259259... 
+        const RECHARGE_INTERVAL = 1000; // تحديث كل ثانية
 
         window.toggleLanguage = function() {
             currentLang = currentLang === 'en' ? 'ar' : 'en';
-            document.getElementById('lang-toggle').innerText = currentLang === 'en' ? 'العربية' : 'English';
+            // 🌟 2. أيقونة اللغة الفريدة والأنيقة - تم تغيير طريقة التحديث في HTML و CSS
             document.querySelectorAll('[data-en]').forEach(el => el.innerText = el.getAttribute('data-' + currentLang));
         };
 
@@ -771,10 +794,15 @@
                 friendsInvited = data.friendsCount || 0;
                 completedTasks = data.completedTasks || {};
                 dailyInfo = data.dailyInfo || { streak: 0, lastClaim: 0 };
+                // 🌟 قراءة آخر وقت تحديث للطاقة 
+                lastEnergyUpdate = data.last_energy_update || Date.now(); 
                 energy = data.energy || maxEnergy;
                 isVerified = data.is_verified || false; 
-                hasWithdrawn = data.hasWithdrawn || false; // 🌟 2. القراءة: قراءة حالة السحب من Firebase
+                hasWithdrawn = data.hasWithdrawn || false; 
                 twData = data.twData || { username: '', submitted: false, done: false };
+                
+                // 🌟 تطبيق تحديث الطاقة عند قراءة البيانات
+                updateEnergy();
                 
                 updateDisplay();
                 updateMilestones();
@@ -787,13 +815,53 @@
             }
         });
 
+        // 🌟 3. وظيفة تحديث الطاقة بناءً على الوقت المنقضي
+        function updateEnergy() {
+            const now = Date.now();
+            const timeElapsedSeconds = (now - lastEnergyUpdate) / 1000;
+            
+            // حساب الطاقة المكتسبة
+            let energyGained = Math.floor(timeElapsedSeconds * ENERGY_RECHARGE_RATE_PER_SECOND);
+            
+            // تحديث قيمة الطاقة
+            energy = Math.min(maxEnergy, energy + energyGained);
+            
+            // حفظ التحديث الجديد إذا كان هناك تغيير كبير (أو إجبار الحفظ إذا تم التعدين)
+            if (energyGained > 0) {
+                lastEnergyUpdate = now;
+                update(userRef, { energy: energy, last_energy_update: lastEnergyUpdate }); 
+            }
+        }
+        
+        // 🌟 تحديث الطاقة كل ثانية للعرض في شريط التقدم
+        setInterval(() => {
+            const now = Date.now();
+            const timeElapsedSeconds = (now - lastEnergyUpdate) / 1000;
+            let energyIncrease = timeElapsedSeconds * ENERGY_RECHARGE_RATE_PER_SECOND;
+            
+            if (energy < maxEnergy) {
+                // استخدام `+=` و `Math.min` لتحديث سلس
+                energy = Math.min(maxEnergy, energy + energyIncrease);
+                lastEnergyUpdate = now; // تحديث مؤقت لتقليل تجميع الطاقة
+                updateDisplay();
+            }
+            
+            // حفظ القيمة المحدثة في قاعدة البيانات كل 10 ثواني (لتقليل الكتابة)
+            if ((now - (window.lastFirebaseSave || 0)) > 10000) {
+                 update(userRef, { energy: Math.floor(energy), last_energy_update: lastEnergyUpdate });
+                 window.lastFirebaseSave = now;
+            }
+        }, RECHARGE_INTERVAL);
+
+
         function updateDisplay() {
             document.getElementById('score').innerText = count.toLocaleString();
             document.getElementById('top-points').innerText = count.toLocaleString();
-            document.getElementById('usd-val').innerText = `≈ ${(count * currentPrice).toFixed(6)} USDT`; // عرض 6 منازل عشرية للسعر الصغير
+            document.getElementById('usd-val').innerText = `≈ ${(count * currentPrice).toFixed(6)} USDT`; 
             document.getElementById('usdt-balance').innerText = usdtWallet.toFixed(2);
-            document.getElementById('e-val').innerText = energy;
-            document.getElementById('e-bar').style.width = (energy / maxEnergy * 100) + "%";
+            // 🌟 عرض قيمة الطاقة الصحيحة
+            document.getElementById('e-val').innerText = Math.floor(energy);
+            document.getElementById('e-bar').style.width = (Math.floor(energy) / maxEnergy * 100) + "%";
             document.getElementById('friend-count').innerText = `${friendsInvited} Friends`;
         }
 
@@ -805,13 +873,16 @@
                     if (completedTasks[taskId]) {
                         btn.innerText = "Completed ✅";
                         btn.disabled = true;
-                        btn.classList.add('completed'); // 🌟 استخدام الـ Class الجديد
-                    } else if (isVerified) {
-                        // إذا تم التحقق من البوت ولكن لم يتم إكمال هذه المهمة بعد
-                         btn.innerText = "Claim";
+                        btn.classList.add('completed'); 
+                        btn.classList.remove('waiting');
+                    } else if (btn.classList.contains('waiting')) {
+                        // تركها على حالة الانتظار إذا كانت كذلك بالفعل
+                    } else {
+                         btn.innerText = "Join";
                          btn.disabled = false;
                          btn.style.background = "#00e5ff";
                          btn.classList.remove('completed');
+                         btn.classList.remove('waiting');
                     }
                 }
             }
@@ -820,9 +891,12 @@
 
 
         window.tap = async function(e) {
-            if(energy > 0) {
-                count += 1; energy -= 1; updateDisplay();
-                await update(userRef, { points: count, energy: energy, last_active: Date.now() }); 
+            // 🌟 استخدام Math.floor() لضمان أن الطاقة رقم صحيح عند التعدين
+            if(Math.floor(energy) > 0) {
+                count += 1; energy -= 1; 
+                lastEnergyUpdate = Date.now(); // تحديث وقت آخر استخدام للطاقة
+                updateDisplay();
+                await update(userRef, { points: count, energy: Math.floor(energy), last_energy_update: lastEnergyUpdate }); 
                 if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             } else {
                  showStylishAlert('alert', 'Energy Depleted', 'Your energy is too low to mine. Wait for recovery or invite friends!');
@@ -867,16 +941,14 @@
             const amt = parseFloat(document.getElementById('withdraw-amount').value);
             const addr = document.getElementById('wallet-address').value.trim();
             
-            let minWithdrawal = hasWithdrawn ? 1.0 : 0.1; // 🌟 3. المنطق: تحديد الحد الأدنى للسحب
+            let minWithdrawal = hasWithdrawn ? 1.0 : 0.1; 
             
             if (isNaN(amt) || amt <= 0) return showStylishAlert('alert', 'Invalid Amount', 'Please enter a valid amount.');
-            // 🌟 3. المنطق: تطبيق الحد الأدنى الجديد
             if (amt < minWithdrawal) return showStylishAlert('alert', 'Minimum Amount', `Minimum withdrawal is ${minWithdrawal.toFixed(1)} USDT.`);
             if (amt > usdtWallet) return showStylishAlert('alert', 'Insufficient Balance', 'You do not have enough USDT balance.');
             
             if (!addr.startsWith("0x") || addr.length < 40) return showStylishAlert('alert', 'Invalid Address', 'Please enter a valid BEP20 address.');
             
-            // 🌟 4. الحفظ: تحديث hasWithdrawn في Firebase بعد نجاح الخصم
             await update(userRef, { 
                 usdt_balance: usdtWallet - amt,
                 hasWithdrawn: true 
@@ -894,26 +966,38 @@
         // --- End Custom Stylish Alert/Success Modal ---
 
 
+        // 🌟 1. تصحيح منطق زر المهام (Claim Button Logic)
         window.doTask = async function(btn, id, url, reward) {
             if (!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please run /start and verify your membership in the Telegram Bot first!');
             if (completedTasks[id]) return; 
 
-            if (btn.innerText === "Join" || btn.innerText === "Claim") { 
+            if (btn.innerText === "Join" || btn.innerText.includes("Wait")) { 
+                // 1. يفتح القناة دائمًا عند الضغط الأول أو أثناء الانتظار
                 window.open(url, '_blank'); 
                 
+                // 2. يدخل في وضع الانتظار فقط إذا لم يكن مُكتملًا
                 if (!completedTasks[id]) {
-                    btn.innerText = "Wait 5s..."; 
+                    const waitTime = 5; // 5 ثواني كما طلبت (يمكن تعديلها إلى 10)
+                    btn.innerText = `Wait ${waitTime}s...`; 
                     btn.disabled = true;
+                    btn.classList.add('waiting'); // إضافة كلاس حالة الانتظار
                     btn.classList.remove('completed');
-                    setTimeout(() => { 
-                        btn.innerText = "Claim"; 
-                        btn.disabled = false; 
-                        btn.style.background = "#00e5ff"; 
-                    }, 5000); 
-                }
-            }
 
-            if (btn.innerText === "Claim") {
+                    let timer = waitTime;
+                    const interval = setInterval(() => {
+                        timer--;
+                        btn.innerText = `Wait ${timer}s...`;
+                        if (timer <= 0) {
+                            clearInterval(interval);
+                            btn.innerText = "Claim"; // العودة إلى Claim للمطالبة
+                            btn.disabled = false; 
+                            btn.style.background = "#00ff88"; // لون مختلف للضغط النهائي
+                            btn.classList.remove('waiting');
+                        }
+                    }, 1000); 
+                }
+            } else if (btn.innerText === "Claim") {
+                // 3. المطالبة النهائية (Claim)
                 count += reward; 
                 completedTasks[id] = true;
                 
@@ -922,8 +1006,9 @@
                 showToast("Success! +" + reward, "💰"); 
                 btn.innerText = "Completed ✅"; 
                 btn.disabled = true;
-                btn.style.background = ""; // نزيل اللون القديم
-                btn.classList.add('completed'); // 🌟 استخدام الـ Class الجديد
+                btn.style.background = ""; 
+                btn.classList.add('completed'); // استخدام الـ Class الجديد
+                btn.classList.remove('waiting');
                 updateDisplay();
             }
         }
@@ -961,8 +1046,8 @@
                 showToast("Claimed +10k!", "💰");
                 btn.innerText = "Completed ✅";
                 btn.disabled = true;
-                btn.style.background = ""; // نزيل اللون القديم
-                btn.classList.add('completed'); // 🌟 استخدام الـ Class الجديد
+                btn.style.background = ""; 
+                btn.classList.add('completed'); 
                 document.getElementById('cancel-tw-btn').style.display = 'none';
                 inputArea.style.display = 'none';
                 updateDisplay();
@@ -997,8 +1082,8 @@
             if (twData.done) {
                 btn.innerText = "Completed ✅"; 
                 btn.disabled = true;
-                btn.style.background = ""; // نزيل اللون القديم
-                btn.classList.add('completed'); // 🌟 استخدام الـ Class الجديد
+                btn.style.background = ""; 
+                btn.classList.add('completed'); 
                 inputArea.style.display = 'none';
                 return;
             }
@@ -1110,7 +1195,7 @@
                 document.getElementById('swap-output').value = '0.00';
                 return;
             }
-            const usdtOutput = (input * currentPrice).toFixed(6); // عرض 6 منازل عشرية للتفاصيل
+            const usdtOutput = (input * currentPrice).toFixed(6); 
             document.getElementById('swap-output').value = parseFloat(usdtOutput).toFixed(2);
         }
 

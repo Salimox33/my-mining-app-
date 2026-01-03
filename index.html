@@ -20,13 +20,72 @@
             overflow: hidden;
         }
 
-        /* 🌟 2. أيقونة اللغة الفريدة والأنيقة - CSS مُحدَّث */
+        /* 🌟 1. CSS شريط إثباتات السحب الجديد (News Ticker) */
+        .payout-ticker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 0;
+            z-index: 1000;
+            overflow: hidden;
+            font-size: 11px;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            margin-top: 40px; /* ليتناسب مع موقع زر اللغة */
+        }
+        .payout-ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            /* يتم التحكم في الحركة عبر JS */
+        }
+        /* ---------------------------------------------------- */
+
+        /* 🌟 3. CSS زر التعدين الجديد (Bot.jpg) */
+        .lion-circle {
+            width: 260px; height: 260px; border-radius: 50%; border: 6px solid #00e5ff;
+            box-shadow: 0 0 30px #00e5ff; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%);
+            position: relative; cursor: pointer; transition: transform 0.1s;
+        }
+        .lion-circle:active { transform: scale(0.95); }
+        .lion-circle img { 
+            width: 95%; height: 95%; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            /* 🔴 تغيير الصورة إلى Bot.jpg */
+            content: url('Bot.jpg'); /* تأكد من وجود الصورة بهذا الاسم على GitHub */
+        }
+        /* ---------------------------------------------------- */
+
+        /* 🌟 4. شريط تقدم الضغط المطول */
+        .long-press-progress-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 0 0 130px 130px; /* لتتبع شكل الدائرة */
+            overflow: hidden;
+            transform: translateY(10px); /* إخفائه جزئياً في الأسفل */
+        }
+        .long-press-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4500, #ffd700);
+            transition: width 0.1s linear;
+        }
+        /* ---------------------------------------------------- */
+
+
+        /* CSS remains unchanged */
         .lang-switch-btn {
             position: absolute;
             top: 15px;
             right: 15px;
             z-index: 1001;
-            /* التغييرات هنا */
             background: linear-gradient(135deg, #00e5ff33, #00ff8833); 
             border: 1px solid #00e5ff;
             color: #fff;
@@ -46,13 +105,12 @@
         .lang-switch-btn:active { transform: scale(0.9); }
         .lang-switch-btn i { color: #00e5ff; }
 
-        /* Stats Bar */
         .stats-bar {
             display: flex;
             justify-content: space-between;
             width: 95%;
             padding: 10px;
-            margin-top: 40px;
+            margin-top: 65px; /* تم زيادة الهامش بسبب شريط الأخبار */
             gap: 8px;
             z-index: 10;
         }
@@ -81,7 +139,6 @@
             max-width: 100%;
         }
 
-        /* Main Score Area */
         .score-box {
             text-align: center;
             margin-top: 10px;
@@ -115,18 +172,9 @@
             letter-spacing: 1px;
         }
 
-        /* Home Content */
         #home-section { display: flex; flex-direction: column; align-items: center; width: 100%; flex-grow: 1; }
         .lion-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; width: 100%; margin-top: -20px; }
-        .lion-circle {
-            width: 260px; height: 260px; border-radius: 50%; border: 6px solid #00e5ff;
-            box-shadow: 0 0 30px #00e5ff; display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%);
-            position: relative; cursor: pointer; transition: transform 0.1s;
-        }
-        .lion-circle:active { transform: scale(0.95); }
-        .lion-circle img { width: 95%; height: 95%; border-radius: 50%; object-fit: cover; }
-
+        
         /* Airdrop/Roadmap Section */
         #airdrop-section {
             display: none;
@@ -335,7 +383,7 @@
         .task-info p { color: #ffd700; font-size: 12px; }
         .twitter-input-area { width: 100%; display: none; margin-top: 5px; }
         .twitter-input-area input { 
-            width: calc(100% - 100px); /* Leave space for Cancel button */
+            width: calc(100% - 100px); 
             padding: 10px; 
             border-radius: 10px; 
             background: #000; 
@@ -345,11 +393,11 @@
             margin-right: 10px;
         }
         .warning-msg { 
-            color: #ff4500; /* Changed to red for warning */
+            color: #ff4500; 
             font-size: 11px; 
             margin-top: 5px; 
             font-weight: bold; 
-            display: none; /* Default hidden */
+            display: none; 
         }
         .twitter-actions {
             display: flex;
@@ -385,18 +433,16 @@
             color: #888;
             cursor: not-allowed;
         }
-        /* 🌟 CSS مُعدَّل لزر Completed */
         .task-btn.completed {
-            background: #004d40; /* لون أخضر داكن */
-            color: #00e5ff; /* لون نص فاتح */
-            border: 1px solid #00e5ff; /* حدود باللون المائي */
+            background: #004d40; 
+            color: #00e5ff; 
+            border: 1px solid #00e5ff; 
             font-weight: normal;
             box-shadow: none;
             cursor: default;
         }
-        /* 🌟 CSS لحالة الانتظار */
         .task-btn.waiting {
-            background: #4a4e69; /* لون رمادي أو بنفسجي خفيف */
+            background: #4a4e69; 
             color: #fff;
             cursor: wait;
         }
@@ -496,7 +542,10 @@
     </style>
 </head>
 <body>
-
+    
+    <div class="payout-ticker">
+        <div class="payout-ticker-content" id="payout-ticker-content"></div>
+    </div>
     <button class="lang-switch-btn" onclick="toggleLanguage()" id="lang-toggle">
         <i class="fa-solid fa-language"></i>
     </button>
@@ -543,10 +592,13 @@
 
     <div id="home-section">
         <div class="lion-wrapper">
-            <div class="lion-circle" onclick="tap(event)">
-                <img src="lion.png" alt="Lion">
+            <div class="lion-circle" id="mining-btn">
+                <img src="Bot.jpg" alt="Mining Bot">
+                 <div class="long-press-progress-container">
+                    <div class="long-press-progress" id="long-press-progress"></div>
+                </div>
             </div>
-        </div>
+            </div>
         <div class="energy-container">
             <div class="energy-header">
                 <div class="energy-label">⚡ <span id="e-val">1000</span>/1000</div>
@@ -754,10 +806,8 @@
         const userId = user ? user.id.toString() : "guest";
         const userRef = ref(db, 'users/' + userId);
         
-        // --- 🔴 منطق الإحالة الجديد (الإصلاح المطلوب) 🔴 ---
         const referrerId = new URLSearchParams(tg.initData).get('start');
-        const REFERRAL_REWARD = 20000; // مكافأة الإحالة (يمكنك تعديلها)
-        // --------------------------------------------------
+        const REFERRAL_REWARD = 20000; 
 
         let count = 0;
         let energy = 1000;
@@ -765,7 +815,7 @@
         let friendsInvited = 0;
         let completedTasks = {};
         let dailyInfo = { streak: 0, lastClaim: 0 };
-        let isVerified = false; 
+        let isVerified = true; // 🌟 التعديل 2: تم جعلها 'true' افتراضياً
         let hasWithdrawn = false; 
         let twData = { username: '', submitted: false, done: false };
         let lastEnergyUpdate = Date.now(); 
@@ -774,13 +824,69 @@
         const maxEnergy = 1000;
         const currentPrice = 0.00000117;
         
-        // **التعديل هنا:** البدء باللغة الإنجليزية كقيمة أولية
         let currentLang = 'en'; 
         
-        const ENERGY_RECHARGE_RATE_PER_SECOND = 1000 / 10800; // 0.09259259... 
+        const ENERGY_RECHARGE_RATE_PER_SECOND = 1000 / 10800; 
         const RECHARGE_INTERVAL = 1000; 
         
-        // --- 🔴 الدالة المحدثة لإعداد المستخدم الجديد (لتضمين الإحالة) 🔴 ---
+        // 🌟 3. متغيرات الضغط المطول (Mining)
+        let longPressTimer = null;
+        let isLongPressing = false;
+        const FULL_PRESS_DURATION = 120000; // دقيقتان بالمللي ثانية (120 ثانية)
+        const PRESS_TICK_RATE = 100; // تحديث كل 100 مللي ثانية
+        const COINS_PER_FULL_PRESS = 1000; // عدد النقاط المكتسبة لكل ضغطة مطولة
+        // ----------------------------------------------------------------------
+        
+        // --- 🌟 1. بيانات شريط إثباتات السحب ---
+        const PAYOUT_EXAMPLES = [
+            { amount: "0.5 USDT", user: "Mohamed" },
+            { amount: "1.2 USDT", user: "Ali" },
+            { amount: "0.8 USDT", user: "Yong22" },
+            { amount: "0.6 USDT", user: "Iman" },
+            { amount: "2.1 USDT", user: "LionKing" },
+            { amount: "0.9 USDT", user: "CryptoGirl" }
+        ];
+
+        function generateTickerText(lang) {
+            let text = "";
+            const templateEn = "💰 Recent Payout: ${amount} received by ${user} | ";
+            const templateAr = "💸 تم استلام ${amount} من قبل ${user} | ";
+            
+            const template = lang === 'en' ? templateEn : templateAr;
+
+            for (let i = 0; i < 5; i++) { // نكرر البيانات لضمان شريط طويل
+                PAYOUT_EXAMPLES.forEach(payout => {
+                    text += template.replace("${amount}", payout.amount).replace("${user}", payout.user);
+                });
+            }
+            return text;
+        }
+        
+        let tickerAnimation = null;
+        function startTicker() {
+            const tickerEl = document.getElementById('payout-ticker-content');
+            
+            // نستخدم اللغة الحالية لتوليد النص
+            tickerEl.innerText = generateTickerText(currentLang);
+            
+            // إيقاف الحركة القديمة إذا كانت موجودة
+            if (tickerAnimation) {
+                tickerAnimation.cancel();
+            }
+
+            const duration = tickerEl.scrollWidth / 50 * 1000; // سرعة تعتمد على طول النص
+            
+            tickerAnimation = tickerEl.animate(
+                [{ transform: 'translateX(0)' }, { transform: `translateX(-${tickerEl.scrollWidth}px)` }],
+                {
+                    duration: duration,
+                    iterations: Infinity,
+                    easing: 'linear'
+                }
+            );
+        }
+        // ---------------------------------------------------
+
         async function setupNewUser(referrer) {
             const initialUserData = {
                 id: userId,
@@ -793,22 +899,19 @@
                 dailyInfo: { streak: 0, lastClaim: 0 },
                 energy: maxEnergy,
                 last_energy_update: Date.now(),
-                is_verified: false,
+                is_verified: true, // 🌟 التعديل 2: البدء كـ 'verified'
                 hasWithdrawn: false,
                 twData: { username: '', submitted: false, done: false },
-                // 🌟 هذا هو الحقل الأهم لتسجيل المُحيل!
                 referrer_id: referrer || null 
             };
             await set(userRef, initialUserData);
 
-            // 🌟 منطق مكافأة المُحيل
             if (referrer && referrer !== userId) {
                 const referrerRef = ref(db, 'users/' + referrer);
                 const referrerSnapshot = await get(referrerRef);
                 const referrerData = referrerSnapshot.val();
 
                 if (referrerData) {
-                    // زيادة عدد الأصدقاء ونقاط المُحيل (الداعي)
                     const newFriendsCount = (referrerData.friendsCount || 0) + 1;
                     const newPoints = (referrerData.points || 0) + REFERRAL_REWARD;
                     
@@ -816,26 +919,27 @@
                         friendsCount: newFriendsCount,
                         points: newPoints
                     });
-                    console.log(`Referral registered for ${referrer}. +${REFERRAL_REWARD} points.`);
                 }
             }
         }
-        // ----------------------------------------------------------------------
-
 
         window.toggleLanguage = function() {
-            // التبديل بين الإنجليزية (en) والعربية (ar)
             currentLang = currentLang === 'en' ? 'ar' : 'en';
             
             document.querySelectorAll('[data-en]').forEach(el => {
-                // التأكد من أن النص الداخلي يتم تحديثه من الخاصية المناسبة
                 const langText = el.getAttribute('data-' + currentLang);
                 if (langText) {
                     el.innerText = langText;
                 }
             });
-            // إذا كانت اللغة عربية، نضبط اتجاه النص ليعكس ذلك
             document.body.dir = (currentLang === 'ar' ? 'rtl' : 'ltr');
+            
+            // 🌟 1. إعادة تشغيل شريط الأخبار باللغة الجديدة
+            startTicker(); 
+            // ----------------------------------------------------
+
+            // تحديث نصوص الأزرار بعد التبديل
+            renderTasksState(); 
         };
 
         if (user) {
@@ -844,13 +948,10 @@
         }
         document.getElementById('ref-link').innerText = `https://t.me/RegnumOfficialbot?start=${userId}`;
         
-        // --- 🔴 منطق التحقق من وجود المستخدم وإعداد الإحالة 🔴 ---
         get(userRef).then(async (snapshot) => {
             if (!snapshot.exists()) {
                 await setupNewUser(referrerId);
-                console.log("New user setup complete.");
             }
-            // بعد التحقق أو الإنشاء، نبدأ الاستماع للتحديثات
             onValue(userRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
@@ -862,7 +963,7 @@
                     
                     lastEnergyUpdate = data.last_energy_update || Date.now(); 
                     energy = data.energy || maxEnergy;
-                    isVerified = data.is_verified || false; 
+                    isVerified = data.is_verified || true; // 🌟 التعديل 2: الحفاظ على 'true'
                     hasWithdrawn = data.hasWithdrawn || false; 
                     twData = data.twData || { username: '', submitted: false, done: false };
                     
@@ -874,14 +975,12 @@
                     renderTasksState(); 
                     handleTwitterButtonState();
                 } else {
-                    // هذا الجزء يخدم حالة نادرة جداً
                     document.getElementById('user-display').innerText = "Run /start in Bot";
                 }
             });
         }).catch(error => {
             console.error("Error checking user existence:", error);
         });
-        // ----------------------------------------------------------
 
         function updateEnergy() {
             const now = Date.now();
@@ -923,7 +1022,6 @@
             document.getElementById('e-val').innerText = Math.floor(energy);
             document.getElementById('e-bar').style.width = (Math.floor(energy) / maxEnergy * 100) + "%";
             
-            // تحديث نص عرض الأصدقاء بناءً على اللغة الحالية
             const friendTextEn = `${friendsInvited} Friends`;
             const friendTextAr = `${friendsInvited} أصدقاء`;
             document.getElementById('friend-count').innerText = currentLang === 'en' ? friendTextEn : friendTextAr;
@@ -935,7 +1033,7 @@
                 const btn = document.getElementById('btn-' + taskId);
                 if (btn) {
                     if (completedTasks[taskId]) {
-                        btn.innerText = "Completed ✅";
+                        btn.innerText = currentLang === 'en' ? "Completed ✅" : "مكتمل ✅";
                         btn.disabled = true;
                         btn.classList.add('completed'); 
                         btn.classList.remove('waiting');
@@ -953,18 +1051,77 @@
             handleTwitterButtonState(); 
         }
 
+        // 🌟 3. منطق الضغط المطول الجديد 
+        const miningBtn = document.getElementById('mining-btn');
+        const progressEl = document.getElementById('long-press-progress');
 
-        window.tap = async function(e) {
-            if(Math.floor(energy) > 0) {
-                count += 1; energy -= 1; 
-                lastEnergyUpdate = Date.now(); 
-                updateDisplay();
-                await update(userRef, { points: count, energy: Math.floor(energy), last_energy_update: lastEnergyUpdate }); 
-                if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            } else {
-                 showStylishAlert('alert', 'Energy Depleted', 'Your energy is too low to mine. Wait for recovery or invite friends!');
+        function startLongPress(e) {
+            e.preventDefault(); // منع سلوك اللمس الافتراضي
+            if(Math.floor(energy) <= 0) {
+                return showStylishAlert('alert', 'Energy Depleted', 'Your energy is too low to mine. Wait for recovery or invite friends!');
+            }
+
+            isLongPressing = true;
+            let progress = 0;
+            let startTime = Date.now();
+            
+            // اهتزاز خفيف عند البدء
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+
+            const pressInterval = setInterval(() => {
+                if (!isLongPressing) {
+                    clearInterval(pressInterval);
+                    progressEl.style.width = '0%';
+                    return;
+                }
+
+                const elapsed = Date.now() - startTime;
+                progress = (elapsed / FULL_PRESS_DURATION) * 100;
+                
+                progressEl.style.width = `${progress}%`;
+
+                if (elapsed >= FULL_PRESS_DURATION) {
+                    clearInterval(pressInterval);
+                    isLongPressing = false;
+                    progressEl.style.width = '0%';
+                    
+                    // المكافأة
+                    count += COINS_PER_FULL_PRESS;
+                    energy = Math.max(0, energy - COINS_PER_FULL_PRESS / 100); // استهلاك الطاقة
+                    lastEnergyUpdate = Date.now();
+                    updateDisplay();
+                    update(userRef, { 
+                        points: count, 
+                        energy: Math.floor(energy), 
+                        last_energy_update: lastEnergyUpdate 
+                    });
+                    
+                    // اهتزاز قوي للمكافأة
+                    if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+                    showToast(currentLang === 'en' ? `+${COINS_PER_FULL_PRESS} Coins (Long Press!)` : `+${COINS_PER_FULL_PRESS} عملة (ضغطة مطولة!)`, "✨");
+
+                }
+            }, PRESS_TICK_RATE);
+
+            longPressTimer = pressInterval;
+        }
+
+        function endLongPress() {
+            if (longPressTimer) {
+                clearInterval(longPressTimer);
+                longPressTimer = null;
+                isLongPressing = false;
+                progressEl.style.width = '0%';
             }
         }
+        
+        // ربط الأحداث بالزر
+        miningBtn.addEventListener('mousedown', startLongPress);
+        miningBtn.addEventListener('mouseup', endLongPress);
+        miningBtn.addEventListener('touchstart', startLongPress);
+        miningBtn.addEventListener('touchend', endLongPress);
+        miningBtn.addEventListener('touchcancel', endLongPress);
+        // ----------------------------------------------------
 
         // --- Custom Stylish Alert/Success Modal (Unchanged) ---
         window.showStylishAlert = function(type, title, message) {
@@ -1000,7 +1157,8 @@
         }
 
         window.handleWithdraw = async function() {
-            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
+            // 🌟 التعديل 2: لم نعد نحتاج للتحقق الفوري من isVerified، لكن سنتركها كتحقق من المتطلبات العامة للسحب 
+            if(!isVerified) return showStylishAlert('alert', 'General Verification Required', 'Please run /start and ensure your account is verified by the bot admin before withdrawing!');
             const amt = parseFloat(document.getElementById('withdraw-amount').value);
             const addr = document.getElementById('wallet-address').value.trim();
             
@@ -1020,7 +1178,7 @@
             const withdrawRef = ref(db, 'withdrawals/' + userId + '_' + Date.now());
             await set(withdrawRef, { address: addr, amount: amt, status: 'pending', time: new Date().toISOString() });
             
-            showStylishAlert('success', 'Withdrawal Successful', 'Your withdrawal has been accepted and will be processed shortly.');
+            showStylishAlert('success', 'Withdrawal Successful', 'Your withdrawal has been accepted and will be processed shortly. Note: Admin will manually verify channel membership before processing.');
             
             document.getElementById('withdraw-amount').value = "";
             document.getElementById('wallet-address').value = "";
@@ -1029,9 +1187,9 @@
         // --- End Custom Stylish Alert/Success Modal ---
 
 
-        // 🌟 1. تصحيح منطق زر المهام
+        // 🌟 2. منطق زر المهام المحدث (إزالة شرط isVerified الأولي + تغيير العد التنازلي)
         window.doTask = async function(btn, id, url, reward) {
-            if (!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please run /start and verify your membership in the Telegram Bot first!');
+            // إزالة التحقق من isVerified هنا لتسهيل الانضمام
             if (completedTasks[id]) return; 
 
             const joinText = currentLang === 'en' ? "Join" : "انضمام";
@@ -1042,7 +1200,7 @@
                 window.open(url, '_blank'); 
                 
                 if (!completedTasks[id]) {
-                    const waitTime = 5; 
+                    const waitTime = 10; // 🌟 التعديل 2: وقت الانتظار 10 ثوانٍ
                     btn.innerText = `${waitText} ${waitTime}s...`; 
                     btn.disabled = true;
                     btn.classList.add('waiting'); 
@@ -1068,7 +1226,7 @@
                 await update(userRef, { points: count, completedTasks: completedTasks }); 
                 
                 showToast(currentLang === 'en' ? "Success! +" + reward : "نجاح! +" + reward, "💰"); 
-                btn.innerText = "Completed ✅"; 
+                btn.innerText = currentLang === 'en' ? "Completed ✅" : "مكتمل ✅";
                 btn.disabled = true;
                 btn.style.background = ""; 
                 btn.classList.add('completed'); 
@@ -1077,9 +1235,9 @@
             }
         }
 
-        // --- Improved Twitter System (Unchanged) ---
+        // --- Improved Twitter System (تحديث بسيط للنصوص) ---
         window.doTwitterTask = async function(btn) {
-            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
+            // 🌟 التعديل 2: إزالة التحقق من isVerified هنا أيضاً
             if (twData.done) return;
             const inputArea = document.getElementById('twitter-input-area');
             const joinText = currentLang === 'en' ? "Join" : "انضمام";
@@ -1111,7 +1269,7 @@
                 count += 10000; twData.done = true;
                 await update(userRef, { points: count, twData: twData });
                 showToast(currentLang === 'en' ? "Claimed +10k!" : "تمت المطالبة بـ 10K+", "💰");
-                btn.innerText = "Completed ✅";
+                btn.innerText = currentLang === 'en' ? "Completed ✅" : "مكتمل ✅";
                 btn.disabled = true;
                 btn.style.background = ""; 
                 btn.classList.add('completed'); 
@@ -1149,7 +1307,7 @@
             const claimText = currentLang === 'en' ? "Claim" : "مطالبة";
 
             if (twData.done) {
-                btn.innerText = "Completed ✅"; 
+                btn.innerText = currentLang === 'en' ? "Completed ✅" : "مكتمل ✅"; 
                 btn.disabled = true;
                 btn.style.background = ""; 
                 btn.classList.add('completed'); 
@@ -1238,7 +1396,7 @@
             let reward = 0;
 
             if (lastClaimDay === today) {
-                return; // already checked by button state but safety check
+                return; 
             }
 
             let newStreak = dailyInfo.streak;
@@ -1283,7 +1441,7 @@
         }
 
         window.handleSwap = async function() {
-            if(!isVerified) return showStylishAlert('alert', 'Verification Required', 'Please complete all joining tasks first!');
+            // 🌟 التعديل 2: إزالة التحقق من isVerified هنا أيضاً
             const coinsToSwap = parseInt(document.getElementById('swap-input').value);
             if (isNaN(coinsToSwap) || coinsToSwap <= 0) {
                 return showStylishAlert('alert', 'Invalid Input', 'Please enter a valid amount of points.');
@@ -1344,11 +1502,12 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             showSection('home');
-            // يتم استدعاء toggleLanguage لتطبيق اللغة الإنجليزية الافتراضية وضبط اتجاه الصفحة
             currentLang = 'ar'; 
             window.toggleLanguage(); 
+            // 🌟 1. بدء شريط الأخبار
+            startTicker();
         });
 
     </script>
 </body>
-                </html>
+</html>
